@@ -62,6 +62,11 @@
           "start": 9,
           "end": 18,
           "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 33,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -87,6 +92,12 @@
           "start": 4,
           "end": 7,
           "label": "simple-subject"
+        },
+        {
+          "start": 0,
+          "end": 3,
+          "label": "simple-predicate",
+          "note": "The verb — in a question it moves ahead of the subject."
         },
         {
           "start": 8,
@@ -123,6 +134,11 @@
           "start": 26,
           "end": 31,
           "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 31,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -138,6 +154,12 @@
           "end": 4,
           "label": "verb",
           "note": "A command — the subject “you” is understood."
+        },
+        {
+          "start": 0,
+          "end": 4,
+          "label": "understood-subject",
+          "note": "The unstated “(you)” that the command is aimed at."
         },
         {
           "start": 0,
@@ -179,6 +201,11 @@
           "start": 17,
           "end": 20,
           "label": "pronoun"
+        },
+        {
+          "start": 0,
+          "end": 20,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -233,6 +260,11 @@
           "start": 15,
           "end": 32,
           "label": "direct-object"
+        },
+        {
+          "start": 0,
+          "end": 32,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -286,11 +318,46 @@
         },
         {
           "start": 0,
+          "end": 8,
+          "label": "complete-subject"
+        },
+        {
+          "start": 4,
+          "end": 8,
+          "label": "simple-subject"
+        },
+        {
+          "start": 9,
+          "end": 17,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 22,
+          "end": 29,
+          "label": "complete-subject"
+        },
+        {
+          "start": 26,
+          "end": 29,
+          "label": "simple-subject"
+        },
+        {
+          "start": 30,
+          "end": 39,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 30,
+          "end": 34,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
           "end": 17,
           "label": "independent-clause"
         },
         {
-          "start": 22,
+          "start": 18,
           "end": 39,
           "label": "independent-clause"
         }
@@ -333,6 +400,31 @@
           "start": 32,
           "end": 37,
           "label": "adverb"
+        },
+        {
+          "start": 8,
+          "end": 10,
+          "label": "simple-subject"
+        },
+        {
+          "start": 11,
+          "end": 21,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 22,
+          "end": 24,
+          "label": "simple-subject"
+        },
+        {
+          "start": 25,
+          "end": 37,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 25,
+          "end": 31,
+          "label": "simple-predicate"
         },
         {
           "start": 0,
@@ -413,6 +505,51 @@
           "start": 58,
           "end": 69,
           "label": "verb"
+        },
+        {
+          "start": 5,
+          "end": 16,
+          "label": "complete-subject"
+        },
+        {
+          "start": 9,
+          "end": 16,
+          "label": "simple-subject"
+        },
+        {
+          "start": 17,
+          "end": 22,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 23,
+          "end": 32,
+          "label": "complete-subject"
+        },
+        {
+          "start": 27,
+          "end": 32,
+          "label": "simple-subject"
+        },
+        {
+          "start": 33,
+          "end": 41,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 46,
+          "end": 57,
+          "label": "complete-subject"
+        },
+        {
+          "start": 50,
+          "end": 57,
+          "label": "simple-subject"
+        },
+        {
+          "start": 58,
+          "end": 69,
+          "label": "simple-predicate"
         },
         {
           "start": 0,

@@ -22,7 +22,7 @@
         {
           "start": 0,
           "end": 6,
-          "label": "subject"
+          "label": "simple-subject"
         },
         {
           "start": 7,
@@ -120,6 +120,37 @@
           "start": 89,
           "end": 92,
           "label": "pronoun"
+        },
+        {
+          "start": 7,
+          "end": 92,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 7,
+          "end": 15,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 56,
+          "end": 60,
+          "label": "simple-subject",
+          "note": "The relative pronoun is the subject of its own clause."
+        },
+        {
+          "start": 74,
+          "end": 92,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 74,
+          "end": 81,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 92,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -130,11 +161,6 @@
     {
       "text": "It eluded us then, but that's no matter.",
       "annotations": [
-        {
-          "start": 0,
-          "end": 18,
-          "label": "independent-clause"
-        },
         {
           "start": 0,
           "end": 2,
@@ -163,11 +189,6 @@
         },
         {
           "start": 23,
-          "end": 40,
-          "label": "independent-clause"
-        },
-        {
-          "start": 23,
           "end": 29,
           "label": "pronoun"
         },
@@ -180,6 +201,53 @@
           "start": 33,
           "end": 40,
           "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 2,
+          "label": "simple-subject"
+        },
+        {
+          "start": 3,
+          "end": 18,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 3,
+          "end": 9,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 10,
+          "end": 12,
+          "label": "direct-object"
+        },
+        {
+          "start": 23,
+          "end": 29,
+          "label": "simple-subject",
+          "note": "The contraction “that’s” = “that is” — “that” is the subject and “’s” is the linking verb."
+        },
+        {
+          "start": 23,
+          "end": 40,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 30,
+          "end": 40,
+          "label": "predicate-nominative",
+          "note": "Renames “that” after the linking verb “is.”"
+        },
+        {
+          "start": 0,
+          "end": 18,
+          "label": "independent-clause"
+        },
+        {
+          "start": 19,
+          "end": 40,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -251,6 +319,32 @@
           "start": 54,
           "end": 62,
           "label": "adverb"
+        },
+        {
+          "start": 9,
+          "end": 11,
+          "label": "simple-subject"
+        },
+        {
+          "start": 12,
+          "end": 62,
+          "label": "compound-predicate",
+          "note": "One subject, two verbs joined by “and.”"
+        },
+        {
+          "start": 12,
+          "end": 20,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 33,
+          "end": 40,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 62,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -352,6 +446,26 @@
           "start": 74,
           "end": 79,
           "label": "noun"
+        },
+        {
+          "start": 3,
+          "end": 5,
+          "label": "simple-subject"
+        },
+        {
+          "start": 6,
+          "end": 79,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 6,
+          "end": 10,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 79,
+          "label": "independent-clause"
         }
       ],
       "types": {

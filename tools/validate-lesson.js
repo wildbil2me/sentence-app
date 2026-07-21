@@ -3,9 +3,14 @@
  *   node tools/validate-lesson.js my-lesson.json           one file
  *   node tools/validate-lesson.js samples/*.json           several
  *   node tools/validate-lesson.js docs/custom-gpt-instructions.md
+ *   node tools/validate-lesson.js --complete samples/*.json   strict coverage
  *
  * A .md argument is scanned for ```json fenced blocks that look like lessons —
  * that's how the documented examples are kept honest.
+ *
+ * With --complete, each lesson is additionally checked for full annotation
+ * coverage (every word has a part of speech; every complete sentence has a
+ * subject and predicate per clause) via tools/completeness.js.
  *
  * Exits non-zero if any file is rejected or produces an import warning, so it
  * doubles as a check on hand-written and AI-generated lessons before a teacher
@@ -14,6 +19,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { checkLesson } = require("./completeness.js");
 
 const root = path.join(__dirname, "..");
 const store = new Map();
@@ -34,9 +40,11 @@ for (const f of ["labels.js", "tokenize.js", "store.js"]) {
 }
 const wjt = sandbox.wjt;
 
-const files = process.argv.slice(2);
+const args = process.argv.slice(2);
+const strict = args.includes("--complete");
+const files = args.filter((a) => a !== "--complete");
 if (!files.length) {
-  console.error("usage: node tools/validate-lesson.js <file.json|file.md> [...]");
+  console.error("usage: node tools/validate-lesson.js [--complete] <file.json|file.md> [...]");
   process.exit(2);
 }
 
@@ -61,6 +69,15 @@ function validate(where, data) {
     problems++;
   } else {
     console.log("     ok    " + where + " — " + summary);
+  }
+  if (strict) {
+    const comp = checkLesson(result.lesson, wjt);
+    comp.notes.forEach((n) => console.log("           ~ " + n));
+    if (comp.errors.length) {
+      console.log(" INCOMPLETE " + where);
+      comp.errors.forEach((e) => console.log("           · " + e));
+      problems++;
+    }
   }
 }
 

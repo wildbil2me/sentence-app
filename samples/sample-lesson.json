@@ -144,6 +144,27 @@
           "label": "adverb"
         },
         {
+          "start": 8,
+          "end": 15,
+          "label": "complete-subject",
+          "note": "The dependent clause has its own subject and predicate."
+        },
+        {
+          "start": 12,
+          "end": 15,
+          "label": "simple-subject"
+        },
+        {
+          "start": 16,
+          "end": 25,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 16,
+          "end": 19,
+          "label": "simple-predicate"
+        },
+        {
           "start": 26,
           "end": 29,
           "label": "complete-subject",

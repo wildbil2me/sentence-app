@@ -6,6 +6,8 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
+const { checkLesson } = require("./completeness.js");
+
 const root = path.join(__dirname, "..");
 const storage = new Map();
 const sandbox = {
@@ -185,6 +187,11 @@ for (const s of sample.sentences) {
 }
 check("sample lesson: every sentence carries a type", sample.sentences.every((s) => s.types && s.types.structure && s.types.purpose));
 
+const sampleComp = checkLesson(sample, wjt);
+sampleComp.notes.forEach((n) => console.log("  note: " + n));
+check("sample lesson: complete at every layer (POS on every word, subject+predicate per clause)", sampleComp.errors.length === 0);
+sampleComp.errors.forEach((e) => console.log("       · " + e));
+
 // --- export -> import round trip ---
 const exported = wjt.exportLesson(sample);
 const { lesson: reimported, warnings } = wjt.importLesson(exported);
@@ -301,6 +308,11 @@ wjt.EXAMPLES.forEach((ex) => {
 
   const rt = wjt.importLesson(wjt.exportLesson(lesson));
   check("example " + ex.id + ": round-trips with no warnings", rt.warnings.length === 0);
+
+  const comp = checkLesson(lesson, wjt);
+  comp.notes.forEach((n) => console.log("  note: " + n));
+  check("example " + ex.id + ": complete at every layer (POS on every word, subject+predicate per clause)", comp.errors.length === 0);
+  comp.errors.forEach((e) => console.log("       · " + e));
 
   fs.writeFileSync(
     path.join(root, "samples", ex.id + ".sentence-forge.json"),

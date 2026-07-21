@@ -146,6 +146,31 @@
           "start": 106,
           "end": 111,
           "label": "noun"
+        },
+        {
+          "start": 13,
+          "end": 28,
+          "label": "complete-subject"
+        },
+        {
+          "start": 24,
+          "end": 28,
+          "label": "simple-subject"
+        },
+        {
+          "start": 0,
+          "end": 12,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 7,
+          "end": 12,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 111,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -164,7 +189,7 @@
         {
           "start": 0,
           "end": 2,
-          "label": "subject"
+          "label": "simple-subject"
         },
         {
           "start": 3,
@@ -314,6 +339,62 @@
           "start": 123,
           "end": 128,
           "label": "noun"
+        },
+        {
+          "start": 3,
+          "end": 43,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 3,
+          "end": 7,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 20,
+          "end": 43,
+          "label": "direct-object"
+        },
+        {
+          "start": 44,
+          "end": 49,
+          "label": "simple-subject",
+          "note": "The relative pronoun is the subject of its clause."
+        },
+        {
+          "start": 50,
+          "end": 79,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 50,
+          "end": 55,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 56,
+          "end": 79,
+          "label": "direct-object"
+        },
+        {
+          "start": 83,
+          "end": 85,
+          "label": "simple-subject"
+        },
+        {
+          "start": 86,
+          "end": 128,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 86,
+          "end": 95,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 128,
+          "label": "independent-clause"
         }
       ],
       "types": {

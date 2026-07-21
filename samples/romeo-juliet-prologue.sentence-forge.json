@@ -320,6 +320,31 @@
           "start": 41,
           "end": 46,
           "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 29,
+          "label": "complete-subject"
+        },
+        {
+          "start": 2,
+          "end": 6,
+          "label": "simple-subject"
+        },
+        {
+          "start": 30,
+          "end": 46,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 30,
+          "end": 34,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 46,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -725,6 +750,47 @@
           "end": 52,
           "label": "infinitive",
           "note": "The infinitive — “to” plus the base verb."
+        },
+        {
+          "start": 0,
+          "end": 4,
+          "label": "simple-subject",
+          "note": "The pronoun “what” is the subject of its noun clause."
+        },
+        {
+          "start": 5,
+          "end": 21,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 10,
+          "end": 21,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 22,
+          "end": 30,
+          "label": "complete-subject"
+        },
+        {
+          "start": 26,
+          "end": 30,
+          "label": "simple-subject"
+        },
+        {
+          "start": 31,
+          "end": 52,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 31,
+          "end": 43,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 22,
+          "end": 52,
+          "label": "independent-clause"
         }
       ],
       "types": {

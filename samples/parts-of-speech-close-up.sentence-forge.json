@@ -4,7 +4,10 @@
   "title": "Parts of Speech Close-Up",
   "description": "Drill-down practice: each word labeled with its specific type — common vs. proper nouns, action vs. linking vs. helping verbs, the pronoun and adjective types, articles, and more.",
   "layers": [
-    "pos"
+    "pos",
+    "part",
+    "phrase",
+    "clause"
   ],
   "sentences": [
     {
@@ -75,6 +78,36 @@
           "start": 72,
           "end": 78,
           "label": "concrete-noun"
+        },
+        {
+          "start": 0,
+          "end": 36,
+          "label": "complete-subject"
+        },
+        {
+          "start": 17,
+          "end": 24,
+          "label": "simple-subject"
+        },
+        {
+          "start": 37,
+          "end": 78,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 37,
+          "end": 43,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 44,
+          "end": 55,
+          "label": "direct-object"
+        },
+        {
+          "start": 0,
+          "end": 78,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -139,6 +172,57 @@
           "start": 48,
           "end": 56,
           "label": "adverb-of-manner"
+        },
+        {
+          "start": 0,
+          "end": 3,
+          "label": "simple-subject"
+        },
+        {
+          "start": 4,
+          "end": 23,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 4,
+          "end": 6,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 7,
+          "end": 23,
+          "label": "predicate-nominative",
+          "note": "A subject complement that renames “She.”"
+        },
+        {
+          "start": 28,
+          "end": 31,
+          "label": "simple-subject"
+        },
+        {
+          "start": 32,
+          "end": 56,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 32,
+          "end": 40,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 41,
+          "end": 47,
+          "label": "direct-object"
+        },
+        {
+          "start": 0,
+          "end": 23,
+          "label": "independent-clause"
+        },
+        {
+          "start": 24,
+          "end": 56,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -189,6 +273,48 @@
           "start": 36,
           "end": 42,
           "label": "possessive-pronoun"
+        },
+        {
+          "start": 0,
+          "end": 4,
+          "label": "simple-subject"
+        },
+        {
+          "start": 5,
+          "end": 19,
+          "label": "complete-predicate",
+          "note": "The whole predicate — a verb phrase with no object."
+        },
+        {
+          "start": 24,
+          "end": 28,
+          "label": "simple-subject"
+        },
+        {
+          "start": 29,
+          "end": 42,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 29,
+          "end": 31,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 36,
+          "end": 42,
+          "label": "predicate-nominative",
+          "note": "A subject complement that renames “that.”"
+        },
+        {
+          "start": 0,
+          "end": 19,
+          "label": "independent-clause"
+        },
+        {
+          "start": 20,
+          "end": 42,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -254,6 +380,57 @@
           "start": 57,
           "end": 67,
           "label": "adverb-of-manner"
+        },
+        {
+          "start": 0,
+          "end": 14,
+          "label": "complete-subject"
+        },
+        {
+          "start": 10,
+          "end": 14,
+          "label": "simple-subject"
+        },
+        {
+          "start": 15,
+          "end": 38,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 15,
+          "end": 18,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 19,
+          "end": 38,
+          "label": "predicate-adjective",
+          "note": "A subject complement describing the path."
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "simple-subject"
+        },
+        {
+          "start": 45,
+          "end": 67,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 45,
+          "end": 51,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 0,
+          "end": 38,
+          "label": "independent-clause"
+        },
+        {
+          "start": 39,
+          "end": 67,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -318,6 +495,53 @@
           "start": 49,
           "end": 58,
           "label": "descriptive-adjective"
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "simple-subject"
+        },
+        {
+          "start": 36,
+          "end": 40,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 27,
+          "end": 40,
+          "label": "relative-clause",
+          "note": "Describes “books.”"
+        },
+        {
+          "start": 0,
+          "end": 40,
+          "label": "complete-subject"
+        },
+        {
+          "start": 0,
+          "end": 5,
+          "label": "simple-subject"
+        },
+        {
+          "start": 41,
+          "end": 58,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 41,
+          "end": 43,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 44,
+          "end": 58,
+          "label": "predicate-nominative",
+          "note": "A subject complement that renames “Which.”"
+        },
+        {
+          "start": 0,
+          "end": 58,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -353,6 +577,32 @@
           "start": 27,
           "end": 33,
           "label": "adverb-of-time"
+        },
+        {
+          "start": 7,
+          "end": 14,
+          "label": "understood-subject",
+          "note": "The subject “(you)” is understood in a command."
+        },
+        {
+          "start": 0,
+          "end": 33,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 7,
+          "end": 14,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 15,
+          "end": 26,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 0,
+          "end": 33,
+          "label": "independent-clause"
         }
       ],
       "types": {
@@ -428,6 +678,59 @@
           "start": 66,
           "end": 74,
           "label": "descriptive-adjective"
+        },
+        {
+          "start": 5,
+          "end": 35,
+          "label": "compound-subject",
+          "note": "Two subjects joined by “neither … nor.”"
+        },
+        {
+          "start": 17,
+          "end": 21,
+          "label": "simple-subject"
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "simple-subject"
+        },
+        {
+          "start": 36,
+          "end": 41,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 50,
+          "end": 54,
+          "label": "simple-subject"
+        },
+        {
+          "start": 55,
+          "end": 74,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 55,
+          "end": 59,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 66,
+          "end": 74,
+          "label": "predicate-adjective",
+          "note": "A subject complement describing “they.”"
+        },
+        {
+          "start": 5,
+          "end": 41,
+          "label": "independent-clause"
+        },
+        {
+          "start": 42,
+          "end": 74,
+          "label": "adverbial-clause",
+          "note": "Tells WHY they stayed."
         }
       ],
       "types": {
