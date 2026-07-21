@@ -96,6 +96,7 @@ body {
   display: flex;
   align-items: center;
 }
+.topbar .kofi img { height: 36px; width: auto; border: 0; display: block; }
 
 #theme-toggle {
   border: 1px solid var(--line);
