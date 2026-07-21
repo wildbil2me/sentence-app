@@ -122,11 +122,16 @@ const outputs = [
   ["docs/product/grammar-reference.md", ref],
 ];
 
+// Compare on content, not bytes: a Windows checkout can land these files with
+// CRLF, and a spurious STALE would send someone hunting a taxonomy change that
+// never happened. We always *write* LF (.gitattributes keeps it that way).
+const sameContent = (a, b) => a !== null && a.replace(/\r\n/g, "\n") === b;
+
 let stale = 0;
 for (const [rel, content] of outputs) {
   const file = path.join(root, rel);
   const current = fs.existsSync(file) ? fs.readFileSync(file, "utf8") : null;
-  if (current === content) {
+  if (sameContent(current, content)) {
     console.log("  ok    " + rel);
   } else if (check) {
     console.log(" STALE  " + rel);
