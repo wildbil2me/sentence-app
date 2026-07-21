@@ -1,6 +1,6 @@
 # Deploying
 
-Grammar Lab has no build step, so "deploying" means **serving the repository
+Sentence Forge has no build step, so "deploying" means **serving the repository
 root**. `index.html` is at the root; every path in it is relative.
 
 **Live site:** <https://wildbil2me.github.io/sentence-app/> ·
@@ -76,7 +76,7 @@ pushing anything to `main` during the pilot:
       This is the one true breaking change available to us — a teacher's saved
       lessons live only in their browser and in files they exported.
 - [ ] If `localStorage` keys changed: existing lessons survive. The keys are
-      `grammarLab.lessons.v1`, `grammarLab.theme`, and `grammarLab.seeded`.
+      `sentenceForge.lessons.v1`, `sentenceForge.theme`, and `sentenceForge.seeded`.
 
 That last pair is the whole backward-compatibility story. There is no server to
 migrate and no way to reach a teacher's browser, so **a format break during the

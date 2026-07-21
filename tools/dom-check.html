@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <title>Grammar Lab — DOM check</title>
+  <title>Sentence Forge — DOM check</title>
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
 <!--
@@ -53,13 +53,13 @@
     // 1. Every label renders its mark over a real sentence: POS labels become
     //    chips above the word, the other three layers become span bars.
     //    One annotation per sentence keeps the lane packing trivial.
-    Object.keys(GL.LABELS).forEach(function (id) {
-      var label = GL.LABELS[id];
+    Object.keys(wjt.LABELS).forEach(function (id) {
+      var label = wjt.LABELS[id];
       var sentence = {
-        id: GL.uid(), text: "The curious fox darted across the frozen river.",
-        annotations: [{ id: GL.uid(), start: 4, end: 15, label: id, note: "" }],
+        id: wjt.uid(), text: "The curious fox darted across the frozen river.",
+        annotations: [{ id: wjt.uid(), start: 4, end: 15, label: id, note: "" }],
       };
-      var r = GL.renderSentence(sentence, { layers: [label.layer] });
+      var r = wjt.renderSentence(sentence, { layers: [label.layer] });
       app.appendChild(r.root);
       var isPos = label.layer === "pos";
       var mark = r.root.querySelector(isPos ? ".gl-chip" : ".gl-bar");
@@ -76,12 +76,12 @@
     });
 
     // 2. Each sample lesson renders every one of its annotations.
-    GL.EXAMPLES.forEach(function (ex) {
+    wjt.EXAMPLES.forEach(function (ex) {
       var lesson = ex.build();
       var marks = 0, expected = 0;
       lesson.sentences.forEach(function (s) {
         expected += s.annotations.length;
-        var r = GL.renderSentence(s, { layers: lesson.layers });
+        var r = wjt.renderSentence(s, { layers: lesson.layers });
         app.appendChild(r.root);
         // Count one mark per annotation: bars, plus the *specific* chips only
         // (a POS subtype adds a second, parent chip that isn't its own mark).
@@ -94,17 +94,17 @@
 
     // 3. The editor palette builds for all four layers, in both tier modes.
     [false, true].forEach(function (essentialOnly) {
-      GL.LAYER_ORDER.forEach(function (layerId) {
+      wjt.LAYER_ORDER.forEach(function (layerId) {
         var groups = 0, buttons = 0;
-        if (GL.layerHasSubtypes(layerId)) {
-          GL.baseLabelsForLayer(layerId).forEach(function (baseId) {
-            var children = GL.filterTier(GL.childrenOf(baseId), essentialOnly);
-            if (essentialOnly && !GL.isEssential(baseId) && !children.length) return;
+        if (wjt.layerHasSubtypes(layerId)) {
+          wjt.baseLabelsForLayer(layerId).forEach(function (baseId) {
+            var children = wjt.filterTier(wjt.childrenOf(baseId), essentialOnly);
+            if (essentialOnly && !wjt.isEssential(baseId) && !children.length) return;
             groups++;
             buttons += 1 + children.length;
           });
         } else {
-          buttons = groups = GL.filterTier(GL.labelsForLayer(layerId), essentialOnly).length;
+          buttons = groups = wjt.filterTier(wjt.labelsForLayer(layerId), essentialOnly).length;
         }
         check("palette layer " + layerId + " (essentialOnly=" + essentialOnly + "): " +
           groups + " groups / " + buttons + " buttons", groups > 0 && buttons > 0);

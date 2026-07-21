@@ -1,6 +1,6 @@
 # Security & privacy
 
-## What Grammar Lab does with data
+## What Sentence Forge does with data
 
 Nothing leaves the browser. There is no server, no account, no analytics, and no
 network request of any kind: the app is static HTML/CSS/JS, and every lesson is
@@ -21,12 +21,12 @@ Consequences worth knowing before you use it with students:
   with a warning rather than executed or trusted.
 
 Because no student information is collected, transmitted, or stored off-device,
-using Grammar Lab does not create a student-data record to manage. Confirm that
+using Sentence Forge does not create a student-data record to manage. Confirm that
 against your own district's policy before a class-wide rollout.
 
 ## Reporting a vulnerability
 
-Email **wildbil2me@gmail.com** with "Grammar Lab security" in the subject.
+Email **wildbil2me@gmail.com** with "Sentence Forge security" in the subject.
 Please don't open a public issue for anything exploitable.
 
 Things worth reporting: any way an imported lesson file could execute script

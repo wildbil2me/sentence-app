@@ -1,13 +1,13 @@
-/* Grammar Lab — label taxonomy.
+/* Sentence Forge — label taxonomy.
  * Layers are ordered from smallest unit (word) to largest (clause).
  * Every label id is unique across all layers, so an annotation only
  * needs to store its label id; the layer is derived from here.
  */
 (function () {
   "use strict";
-  window.GL = window.GL || {};
+  window.wjt = window.wjt || {};
 
-  GL.LAYERS = {
+  wjt.LAYERS = {
     pos: {
       id: "pos",
       name: "Parts of Speech",
@@ -42,9 +42,9 @@
     },
   };
 
-  GL.LAYER_ORDER = ["pos", "part", "phrase", "clause"];
+  wjt.LAYER_ORDER = ["pos", "part", "phrase", "clause"];
 
-  GL.LABELS = {
+  wjt.LABELS = {
     /* ---- Parts of speech (word level) ----
      * Each base part of speech can be labelled on its own, or you can drill
      * down to a specific type. Subtypes carry a `parent` id and inherit their
@@ -500,10 +500,10 @@
    * ("essential" | "advanced"): only the Advanced ones are written out above,
    * and anything still untagged defaults to "essential" so partial data can
    * never hide a label from the palette. */
-  Object.keys(GL.LABELS).forEach(function (id) {
-    var l = GL.LABELS[id];
+  Object.keys(wjt.LABELS).forEach(function (id) {
+    var l = wjt.LABELS[id];
     if (l.parent) {
-      var p = GL.LABELS[l.parent];
+      var p = wjt.LABELS[l.parent];
       if (p) {
         if (!l.layer) l.layer = p.layer;
         if (!l.color) l.color = p.color;
@@ -513,51 +513,51 @@
     if (l.tier !== "advanced") l.tier = "essential";
   });
 
-  GL.TIERS = ["essential", "advanced"];
+  wjt.TIERS = ["essential", "advanced"];
 
   /** True if a label is in the Essential (classroom-core) set. */
-  GL.isEssential = function (labelId) {
-    var l = GL.LABELS[labelId];
+  wjt.isEssential = function (labelId) {
+    var l = wjt.LABELS[labelId];
     return !!l && l.tier !== "advanced";
   };
 
   /** Keep only Essential labels when `essentialOnly` is on; otherwise pass through. */
-  GL.filterTier = function (labelIds, essentialOnly) {
-    return essentialOnly ? labelIds.filter(GL.isEssential) : labelIds;
+  wjt.filterTier = function (labelIds, essentialOnly) {
+    return essentialOnly ? labelIds.filter(wjt.isEssential) : labelIds;
   };
 
   /** Label ids belonging to a layer, in definition order. */
-  GL.labelsForLayer = function (layerId) {
-    return Object.keys(GL.LABELS).filter(function (id) {
-      return GL.LABELS[id].layer === layerId;
+  wjt.labelsForLayer = function (layerId) {
+    return Object.keys(wjt.LABELS).filter(function (id) {
+      return wjt.LABELS[id].layer === layerId;
     });
   };
 
   /** Base (parent-less) label ids in a layer, in definition order. */
-  GL.baseLabelsForLayer = function (layerId) {
-    return GL.labelsForLayer(layerId).filter(function (id) { return !GL.LABELS[id].parent; });
+  wjt.baseLabelsForLayer = function (layerId) {
+    return wjt.labelsForLayer(layerId).filter(function (id) { return !wjt.LABELS[id].parent; });
   };
 
   /** Subtype label ids whose parent is `parentId`, in definition order. */
-  GL.childrenOf = function (parentId) {
-    return Object.keys(GL.LABELS).filter(function (id) { return GL.LABELS[id].parent === parentId; });
+  wjt.childrenOf = function (parentId) {
+    return Object.keys(wjt.LABELS).filter(function (id) { return wjt.LABELS[id].parent === parentId; });
   };
 
   /** The family id a label belongs to: its parent's id, or its own if a base. */
-  GL.familyOf = function (labelId) {
-    var l = GL.LABELS[labelId];
+  wjt.familyOf = function (labelId) {
+    var l = wjt.LABELS[labelId];
     return l ? (l.parent || labelId) : labelId;
   };
 
   /** True if a layer defines any drill-down subtypes. */
-  GL.layerHasSubtypes = function (layerId) {
-    return GL.labelsForLayer(layerId).some(function (id) { return GL.LABELS[id].parent; });
+  wjt.layerHasSubtypes = function (layerId) {
+    return wjt.labelsForLayer(layerId).some(function (id) { return wjt.LABELS[id].parent; });
   };
 
   /** The layer object an annotation's label belongs to (or null). */
-  GL.layerOf = function (labelId) {
-    var label = GL.LABELS[labelId];
-    return label ? GL.LAYERS[label.layer] : null;
+  wjt.layerOf = function (labelId) {
+    var label = wjt.LABELS[labelId];
+    return label ? wjt.LAYERS[label.layer] : null;
   };
 
   /* ------------------------------------------------------------------ *
@@ -566,7 +566,7 @@
    * PURPOSE (what the sentence does). A sentence may carry one of each,
    * shown as a badge for quick, at-a-glance identification.
    * ------------------------------------------------------------------ */
-  GL.SENTENCE_TYPES = {
+  wjt.SENTENCE_TYPES = {
     structure: {
       id: "structure",
       name: "Structure",
@@ -625,16 +625,16 @@
     },
   };
 
-  GL.SENTENCE_TYPE_ORDER = ["structure", "purpose"];
+  wjt.SENTENCE_TYPE_ORDER = ["structure", "purpose"];
 
   /** The option object for a type axis + value (or null). */
-  GL.sentenceTypeOption = function (categoryId, optionId) {
-    var cat = GL.SENTENCE_TYPES[categoryId];
+  wjt.sentenceTypeOption = function (categoryId, optionId) {
+    var cat = wjt.SENTENCE_TYPES[categoryId];
     return cat && cat.options[optionId] ? cat.options[optionId] : null;
   };
 
   /** True if the value is a valid option for the given axis. */
-  GL.isSentenceType = function (categoryId, optionId) {
-    return !!GL.sentenceTypeOption(categoryId, optionId);
+  wjt.isSentenceType = function (categoryId, optionId) {
+    return !!wjt.sentenceTypeOption(categoryId, optionId);
   };
 })();

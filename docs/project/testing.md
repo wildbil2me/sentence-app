@@ -59,7 +59,7 @@ commit the result.
 
 ## `node tools/validate-lesson.js <files>`
 
-Runs any lesson file through the **real** `GL.importLesson`, outside the browser,
+Runs any lesson file through the **real** `wjt.importLesson`, outside the browser,
 and fails on a rejection *or* on any import warning:
 
 ```bash

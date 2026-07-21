@@ -1,10 +1,10 @@
 # Lesson JSON — format specification
 
-The lesson file is the only interface Grammar Lab exposes: it is what
+The lesson file is the only interface Sentence Forge exposes: it is what
 **⬇ Export** writes, what **⬆ Import JSON** reads, what the samples in
 [`samples/`](../../samples/) are, and what a custom GPT produces.
 
-The authoritative implementation is `GL.importLesson` / `GL.exportLesson` in
+The authoritative implementation is `wjt.importLesson` / `wjt.exportLesson` in
 [`js/store.js`](../../js/store.js). This document describes it; where the two
 disagree, the code wins and this document is a bug.
 
@@ -22,7 +22,7 @@ disagree, the code wins and this document is a bug.
 
 ```json
 {
-  "format": "grammar-lab-lesson",
+  "format": "sentence-forge-lesson",
   "version": 1,
   "title": "The Fox and the River",
   "description": "A one-sentence starter labeled at every level.",
@@ -47,7 +47,7 @@ disagree, the code wins and this document is a bug.
 
 | Field | Type | Required | Behavior |
 |---|---|---|---|
-| `format` | string | recommended | If present it **must** be `"grammar-lab-lesson"`, or the import is rejected outright. Absent is fine. |
+| `format` | string | recommended | If present it **must** be `"sentence-forge-lesson"`, or the import is rejected outright. Absent is fine. |
 | `version` | number | optional | Currently `1`. Not validated. |
 | `title` | string | recommended | Defaults to `"Imported lesson"`. Coerced with `String()`. |
 | `description` | string | optional | Shown on the lesson card. Defaults to `""`. |
@@ -114,12 +114,12 @@ the normal case, not a conflict.
 **Rejected** — the whole file fails with a message in a toast:
 
 - Not a JSON object.
-- `format` present and not `"grammar-lab-lesson"`.
+- `format` present and not `"sentence-forge-lesson"`.
 - `sentences` missing or not an array.
 - No usable sentences after processing.
 
 **Skipped with a warning** — the rest of the file still imports, and the warning
-goes to the browser console (`[Grammar Lab import]`) with a count in the toast:
+goes to the browser console (`[Sentence Forge import]`) with a count in the toast:
 
 - An unrecognized entry in `layers`.
 - An empty sentence.
@@ -135,7 +135,7 @@ worked rather than a rejected file, and finds the 2 that didn't in the console.
 
 ## Export differs from import
 
-`GL.exportLesson` writes a strict subset:
+`wjt.exportLesson` writes a strict subset:
 
 - **Drops** `id`, `createdAt`, `updatedAt`, and each annotation's `id` — those
   are per-device and regenerated on import.

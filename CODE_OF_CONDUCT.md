@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Grammar Lab is a small classroom tool built and used mostly by teachers. The
+Sentence Forge is a small classroom tool built and used mostly by teachers. The
 rules follow from that.
 
 ## The short version
@@ -13,7 +13,7 @@ rules follow from that.
 - **No harassment, personal attacks, demeaning comments, or unwelcome attention** —
   in issues, pull requests, discussions, or commit messages.
 - **Keep student data out of the repository.** Never paste student names, work, or
-  grades into an issue. Grammar Lab stores nothing on a server; keep it that way
+  grades into an issue. Sentence Forge stores nothing on a server; keep it that way
   in the issue tracker too. See [SECURITY.md](SECURITY.md).
 - **Passages should be classroom-appropriate.** Example lessons and bug reports
   get read by other people's students.

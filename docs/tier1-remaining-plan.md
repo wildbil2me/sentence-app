@@ -50,7 +50,7 @@ The roadmap says to write `tier` literally onto all ~85 entries. Instead:
   untagged defaults to `"essential"`.
 
 Rationale: the pass already supplies `layer` and `color` defaults, so this
-matches the file's own idiom; after load, `GL.LABELS[id].tier` is always
+matches the file's own idiom; after load, `wjt.LABELS[id].tier` is always
 populated — which is the property Tier 1.5's palette filter and the exports
 actually depend on. Writing `tier: "essential"` on 76 entries adds ~76 lines of
 noise for identical runtime behavior. Inheriting from the parent is also the

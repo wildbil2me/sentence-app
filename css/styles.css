@@ -1,5 +1,5 @@
 /* ====================================================================
-   Grammar Lab — design system
+   Sentence Forge — design system
    ==================================================================== */
 
 :root[data-theme="dark"] {
@@ -83,7 +83,12 @@ body {
   gap: 8px;
 }
 
-.topbar .brand .flask { font-size: 20px; }
+.topbar .brand .anvil {
+  width: 22px;
+  height: 22px;
+  fill: var(--accent);
+  flex: none;
+}
 .topbar .brand em { font-style: normal; color: var(--accent); }
 
 .topbar .kofi {
@@ -216,6 +221,12 @@ body {
 
 .empty-state { text-align: center; padding: 44px 24px; }
 .empty-emoji { font-size: 42px; margin-bottom: 10px; }
+.empty-anvil {
+  width: 48px;
+  height: 48px;
+  fill: var(--muted);
+  margin-bottom: 10px;
+}
 .empty-state p { color: var(--muted); max-width: 420px; margin: 6px auto 0; }
 
 .hint-strip {

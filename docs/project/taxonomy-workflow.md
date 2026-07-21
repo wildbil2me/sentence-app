@@ -1,7 +1,7 @@
 # Changing the taxonomy
 
 Adding, renaming, reparenting, or retiring a grammar label. This is the most
-common change to Grammar Lab and the one with the most places to keep in sync,
+common change to Sentence Forge and the one with the most places to keep in sync,
 so it gets its own page.
 
 The app is entirely data-driven off [`js/labels.js`](../../js/labels.js). Almost
@@ -53,7 +53,7 @@ Then, by hand:
 
 The **normalization pass at the bottom of `labels.js`** fills in `layer`,
 `color`, and `tier` from the parent (defaulting `tier` to `"essential"`), so
-`GL.LABELS[id]` always has all three at read time. Only write them out when you
+`wjt.LABELS[id]` always has all three at read time. Only write them out when you
 mean to override.
 
 `desc` and `example` use `<b>` for emphasis because they render into the

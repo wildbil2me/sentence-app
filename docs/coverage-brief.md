@@ -1,4 +1,4 @@
-# Grammar Lab — Coverage Brief
+# Sentence Forge — Coverage Brief
 
 **Purpose:** This document is a complete, authoritative inventory of the grammar
 labels the app currently supports. It is written for a reviewer (human or AI)
@@ -6,7 +6,7 @@ whose job is to **find gaps** — categories a comprehensive English-grammar
 curriculum would include that are missing, under-divided, or mislabeled here.
 
 **Source of truth:** All labels live in a single file, [`js/labels.js`](../js/labels.js),
-as the `GL.LABELS` object (span labels) and `GL.SENTENCE_TYPES` object
+as the `wjt.LABELS` object (span labels) and `wjt.SENTENCE_TYPES` object
 (whole-sentence badges). Nothing else defines the taxonomy; there is no
 enable/disable flag, so every entry listed below is live and selectable.
 
@@ -17,7 +17,7 @@ whether it belongs to the classroom-core set. Four labels are currently Advanced
 (`object-complement`, `particle`, `relative-adverb`, `emphatic-pronoun`); the
 other 83 are Essential. Only Advanced labels are written out in `labels.js`; the
 normalization pass gives children their parent's tier and defaults everything
-else to Essential, so `GL.LABELS[id].tier` is always populated. A per-lesson
+else to Essential, so `wjt.LABELS[id].tier` is always populated. A per-lesson
 **"Essential only"** toggle narrows the editor palette to the Essential set;
 it never hides an already-placed annotation, so **every label listed below is
 live and selectable** with the toggle off (the default).

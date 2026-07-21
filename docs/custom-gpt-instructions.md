@@ -1,4 +1,4 @@
-# Grammar Lab — custom GPT instructions
+# Sentence Forge — custom GPT instructions
 
 A teacher can label a passage far faster by having a model draft it and then
 correcting the draft than by starting from a blank editor. This page is the
@@ -7,13 +7,13 @@ prompt that makes that possible.
 **How to use it**
 
 1. ChatGPT → *Explore GPTs* → *Create* → *Configure*.
-2. Name it something like "Grammar Lab Lesson Builder."
+2. Name it something like "Sentence Forge Lesson Builder."
 3. Paste **everything below the horizontal rule** into the **Instructions** field.
 4. Optionally upload [`coverage-labels.csv`](coverage-labels.csv) as a knowledge
    file — the prompt is self-contained, but the CSV gives the model an exact,
    machine-readable label list to check itself against.
 5. Paste a passage into a chat. Save the JSON it returns as `something.json` and
-   click **⬆ Import JSON** on the Grammar Lab library page.
+   click **⬆ Import JSON** on the Sentence Forge library page.
 
 If you have Node available, `node tools/validate-lesson.js something.json` runs
 the file through the app's real importer first and names anything that would be
@@ -35,7 +35,7 @@ which cannot go stale.
 
 ## ROLE
 
-You are a grammar-annotation assistant for **Grammar Lab**, a classroom app that
+You are a grammar-annotation assistant for **Sentence Forge**, a classroom app that
 teaches sentence structure. A teacher gives you a passage — a sentence, a
 paragraph, a poem, a quotation. You return **one JSON object** that labels that
 passage's words, sentence parts, phrases, and clauses, and classifies each
@@ -62,7 +62,7 @@ distinctions an English teacher makes and a student is expected to identify.
 ```jsonc
 // shape only — "label-id" and the strings below are placeholders
 {
-  "format": "grammar-lab-lesson",
+  "format": "sentence-forge-lesson",
   "version": 1,
   "title": "Short lesson title",
   "description": "One line shown on the lesson card.",
@@ -82,7 +82,7 @@ distinctions an English teacher makes and a student is expected to identify.
 
 | Field | Required | Notes |
 |---|---|---|
-| `format` | recommended | Must be exactly `"grammar-lab-lesson"`. |
+| `format` | recommended | Must be exactly `"sentence-forge-lesson"`. |
 | `version` | optional | Always `1`. |
 | `title` | recommended | Short and human-readable. Infer one from the passage if the teacher doesn't give one. |
 | `description` | optional | One sentence naming what the lesson shows. |
@@ -280,7 +280,7 @@ Output:
 
 ```json
 {
-  "format": "grammar-lab-lesson",
+  "format": "sentence-forge-lesson",
   "version": 1,
   "title": "The Fox and the River",
   "description": "Two sentences labeled at every level — a simple sentence and a complex one.",
@@ -352,6 +352,6 @@ label repeats in its sentence: count the characters and use `start`/`end`.
   can't tell where sentences end, or it's not in English). Otherwise, answer with
   the JSON.
 - If the teacher asks what to do with the file: save it as `.json` and click
-  **⬆ Import JSON** on the Grammar Lab library page.
+  **⬆ Import JSON** on the Sentence Forge library page.
 - If asked for a change ("more phrases", "drop the parts of speech", "simpler"),
   return the **complete revised JSON**, not a diff.

@@ -1,4 +1,4 @@
-/* Grammar Lab — shared sentence renderer + drag-selection.
+/* Sentence Forge — shared sentence renderer + drag-selection.
  *
  * A sentence renders as one CSS grid with a column per token:
  *   row 1        part-of-speech chips (when the pos layer is visible)
@@ -10,7 +10,7 @@
  */
 (function () {
   "use strict";
-  window.GL = window.GL || {};
+  window.wjt = window.wjt || {};
 
   var BAR_LAYERS = ["part", "phrase", "clause"];
 
@@ -27,11 +27,11 @@
    * }
    * Returns { root, grid, tokens, tokenEls, selection }.
    */
-  GL.renderSentence = function (sentence, opts) {
+  wjt.renderSentence = function (sentence, opts) {
     opts = opts || {};
-    var layers = opts.layers || GL.LAYER_ORDER;
+    var layers = opts.layers || wjt.LAYER_ORDER;
     var show = opts.showAnnotations !== false;
-    var tokens = GL.tokenize(sentence.text);
+    var tokens = wjt.tokenize(sentence.text);
     var anns = (sentence.annotations || []).slice();
 
     var root = document.createElement("div");
@@ -47,17 +47,17 @@
      * the chips stack in two rows: the broad class on top, the specific type
      * just above the word. Otherwise a single chip row sits above the words. */
     var posAnns = show && layers.indexOf("pos") !== -1
-      ? anns.filter(function (a) { return GL.layerOf(a.label) && GL.layerOf(a.label).id === "pos"; })
+      ? anns.filter(function (a) { return wjt.layerOf(a.label) && wjt.layerOf(a.label).id === "pos"; })
       : [];
     var anySubtype = posAnns.some(function (a) {
-      return GL.LABELS[a.label] && GL.LABELS[a.label].parent;
+      return wjt.LABELS[a.label] && wjt.LABELS[a.label].parent;
     });
     var baseRow = anySubtype ? 1 : 0;                                  // broad-class chips
     var specRow = posAnns.length ? (anySubtype ? 2 : 1) : 0;           // specific chips (nearest word)
     var tokenRow = posAnns.length ? (anySubtype ? 3 : 2) : 1;
 
     /* --- token cells --- */
-    var hlRange = opts.highlight ? GL.spanToTokens(tokens, opts.highlight.start, opts.highlight.end) : null;
+    var hlRange = opts.highlight ? wjt.spanToTokens(tokens, opts.highlight.start, opts.highlight.end) : null;
     var tokenEls = tokens.map(function (t) {
       var el = document.createElement("span");
       el.className = "gl-token";
@@ -76,14 +76,14 @@
 
     /* --- part-of-speech chips + colored underlines --- */
     posAnns.forEach(function (a) {
-      var label = GL.LABELS[a.label];
+      var label = wjt.LABELS[a.label];
       if (!label) return;
-      var range = GL.spanToTokens(tokens, a.start, a.end);
+      var range = wjt.spanToTokens(tokens, a.start, a.end);
       if (!range) return;
       var col = (range.first + 1) + " / " + (range.last + 2);
 
       // Family chip (the parent's broad class), shown above a drilled-down type.
-      var parent = label.parent ? GL.LABELS[label.parent] : null;
+      var parent = label.parent ? wjt.LABELS[label.parent] : null;
       if (parent) {
         var pchip = document.createElement("button");
         pchip.type = "button";
@@ -127,9 +127,9 @@
         if (layers.indexOf(layerId) === -1) return;
         var layerAnns = anns
           .map(function (a) {
-            var l = GL.layerOf(a.label);
+            var l = wjt.layerOf(a.label);
             if (!l || l.id !== layerId) return null;
-            var range = GL.spanToTokens(tokens, a.start, a.end);
+            var range = wjt.spanToTokens(tokens, a.start, a.end);
             return range ? { ann: a, range: range } : null;
           })
           .filter(Boolean)
@@ -152,7 +152,7 @@
         });
 
         layerAnns.forEach(function (item) {
-          var label = GL.LABELS[item.ann.label];
+          var label = wjt.LABELS[item.ann.label];
           var bar = document.createElement("button");
           bar.type = "button";
           bar.className = "gl-bar";
@@ -160,8 +160,8 @@
           bar.style.gridColumn = (item.range.first + 1) + " / " + (item.range.last + 2);
           bar.style.setProperty("--c", label.color);
           bar.innerHTML =
-            '<span class="gl-bar-abbr">' + GL.escapeHtml(label.abbr) + "</span>" +
-            '<span class="gl-bar-name">' + GL.escapeHtml(label.name) + "</span>" +
+            '<span class="gl-bar-abbr">' + wjt.escapeHtml(label.abbr) + "</span>" +
+            '<span class="gl-bar-name">' + wjt.escapeHtml(label.name) + "</span>" +
             (item.ann.note ? '<span class="gl-bar-note" title="Has a note">✎</span>' : "");
           bar.title = label.name + (item.ann.note ? " — " + item.ann.note : "");
           if (opts.onAnnClick) {
@@ -174,7 +174,7 @@
     }
 
     var selection = opts.interactive
-      ? GL.attachSelection(grid, tokenEls, opts.onSelect || function () {})
+      ? wjt.attachSelection(grid, tokenEls, opts.onSelect || function () {})
       : null;
 
     return { root: root, grid: grid, tokens: tokens, tokenEls: tokenEls, selection: selection };
@@ -185,23 +185,23 @@
    * Returns a DOM element, or null if the sentence carries no types.
    * If `onClick` is given, each badge calls onClick(categoryId, optionId).
    */
-  GL.renderTypeBadges = function (sentence, onClick) {
+  wjt.renderTypeBadges = function (sentence, onClick) {
     var types = sentence && sentence.types;
     if (!types) return null;
-    var present = GL.SENTENCE_TYPE_ORDER.filter(function (cat) { return types[cat]; });
+    var present = wjt.SENTENCE_TYPE_ORDER.filter(function (cat) { return types[cat]; });
     if (!present.length) return null;
 
     var row = document.createElement("div");
     row.className = "type-badges";
     present.forEach(function (cat) {
-      var opt = GL.sentenceTypeOption(cat, types[cat]);
+      var opt = wjt.sentenceTypeOption(cat, types[cat]);
       if (!opt) return;
       var el = document.createElement(onClick ? "button" : "span");
       el.className = "type-badge";
       el.style.setProperty("--c", opt.color);
       el.innerHTML =
-        '<span class="type-badge-cat">' + GL.escapeHtml(GL.SENTENCE_TYPES[cat].name) + "</span>" +
-        '<span class="type-badge-name">' + GL.escapeHtml(opt.name) + "</span>";
+        '<span class="type-badge-cat">' + wjt.escapeHtml(wjt.SENTENCE_TYPES[cat].name) + "</span>" +
+        '<span class="type-badge-name">' + wjt.escapeHtml(opt.name) + "</span>";
       el.title = opt.desc;
       if (onClick) {
         el.type = "button";
@@ -217,7 +217,7 @@
    * (tokens set touch-action: none in CSS). Single click selects one token.
    * Returns { clear(), set(range), get() }.
    */
-  GL.attachSelection = function (grid, tokenEls, onDone) {
+  wjt.attachSelection = function (grid, tokenEls, onDone) {
     var anchor = -1, head = -1;
 
     function paint() {
@@ -269,14 +269,14 @@
   var popEl = null;
   var popCleanup = null;
 
-  GL.closePopover = function () {
+  wjt.closePopover = function () {
     if (popCleanup) { popCleanup(); popCleanup = null; }
     if (popEl) { popEl.remove(); popEl = null; }
   };
 
   /** Show `contentEl` in a popover anchored near DOMRect `rect`. */
-  GL.showPopover = function (rect, contentEl) {
-    GL.closePopover();
+  wjt.showPopover = function (rect, contentEl) {
+    wjt.closePopover();
     popEl = document.createElement("div");
     popEl.className = "gl-popover";
     popEl.appendChild(contentEl);
@@ -292,8 +292,8 @@
     popEl.style.left = x + "px";
     popEl.style.top = y + "px";
 
-    function onDown(e) { if (popEl && !popEl.contains(e.target)) GL.closePopover(); }
-    function onKey(e) { if (e.key === "Escape") GL.closePopover(); }
+    function onDown(e) { if (popEl && !popEl.contains(e.target)) wjt.closePopover(); }
+    function onKey(e) { if (e.key === "Escape") wjt.closePopover(); }
     setTimeout(function () {
       document.addEventListener("pointerdown", onDown);
       document.addEventListener("keydown", onKey);

@@ -4,7 +4,7 @@ Guidance for Claude Code working in this repository.
 
 ## What this is
 
-**Grammar Lab** — a build-free vanilla-JS web app where teachers annotate a
+**Sentence Forge** — a build-free vanilla-JS web app where teachers annotate a
 paragraph with grammar labels at four layers, then present it or quiz students on
 it. ~3,300 lines of JS in nine files, no dependencies, no framework, no build
 step, no server.
@@ -15,7 +15,7 @@ current and it explains the constraints below in detail.
 ## Hard constraints — don't violate these without asking
 
 1. **No build step, no bundler, no npm dependency, no `package.json`.** Classic
-   `<script>` tags under a `GL` global namespace.
+   `<script>` tags under a `wjt` global namespace.
 2. **No ES modules.** The app must run from `file://` when a teacher
    double-clicks `index.html` on a school machine; modules are CORS-blocked
    there. Same reason there is **no `fetch()` of local files** — example lessons

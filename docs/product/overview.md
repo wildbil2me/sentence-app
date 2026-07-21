@@ -1,4 +1,4 @@
-# Grammar Lab — product overview
+# Sentence Forge — product overview
 
 **One sentence:** a teacher pastes any paragraph, labels its grammar once, and
 gets both a projector-ready walkthrough and a self-checking student quiz out of
@@ -23,7 +23,7 @@ and it is the one no textbook has an answer key for. Making one by hand costs an
 evening. So the modeling happens on the board, the practice happens on generic
 sentences, and the connection between them is left to the student.
 
-## What Grammar Lab does
+## What Sentence Forge does
 
 One artifact — a **lesson** — serves all three jobs.
 

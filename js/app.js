@@ -1,11 +1,11 @@
-/* Grammar Lab — app shell: routing, library view, import, theme, toasts. */
+/* Sentence Forge — app shell: routing, library view, import, theme, toasts. */
 (function () {
   "use strict";
-  window.GL = window.GL || {};
-  GL.views = GL.views || {};
+  window.wjt = window.wjt || {};
+  wjt.views = wjt.views || {};
 
   /* ---------------- toasts ---------------- */
-  GL.toast = function (msg, ms) {
+  wjt.toast = function (msg, ms) {
     var host = document.getElementById("toasts");
     var t = document.createElement("div");
     t.className = "toast";
@@ -17,7 +17,7 @@
 
   /* ---------------- per-view cleanup ---------------- */
   var cleanups = [];
-  GL.onViewCleanup = function (fn) { cleanups.push(fn); };
+  wjt.onViewCleanup = function (fn) { cleanups.push(fn); };
   function runCleanups() {
     cleanups.splice(0).forEach(function (fn) {
       try { fn(); } catch (e) { /* view teardown must never break routing */ }
@@ -27,13 +27,13 @@
   /* ---------------- theme ---------------- */
   function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
-    localStorage.setItem("grammarLab.theme", theme);
+    localStorage.setItem("sentenceForge.theme", theme);
     var btn = document.getElementById("theme-toggle");
     if (btn) btn.textContent = theme === "light" ? "🌙" : "☀️";
   }
 
   /* ---------------- library view ---------------- */
-  GL.views.library = function (container) {
+  wjt.views.library = function (container) {
     container.innerHTML = "";
     var view = document.createElement("div");
     view.className = "view view-library";
@@ -65,11 +65,14 @@
     var fileInput = view.querySelector('[data-role="file"]');
 
     function renderLessons() {
-      var lessons = GL.store.list();
+      var lessons = wjt.store.list();
       lessonsEl.innerHTML = "";
       if (!lessons.length) {
         lessonsEl.innerHTML =
-          '<div class="card empty-state"><div class="empty-emoji">🧪</div>' +
+          '<div class="card empty-state"><svg class="empty-anvil" viewBox="0 0 24 24" aria-hidden="true">' +
+          '<polygon points="1.5,8.5 8,6.5 21.5,6.5 21.5,10.5 8,10.5"/>' +
+          '<polygon points="10,10.5 16,10.5 15,15 11,15"/>' +
+          '<polygon points="5.5,19.5 20.5,19.5 17.5,15 8.5,15"/></svg>' +
           "<h3>No lessons yet</h3><p>Create one, import a JSON file, or load the sample to see how it works.</p></div>";
         return;
       }
@@ -78,15 +81,15 @@
         var card = document.createElement("article");
         card.className = "card lesson-card";
         card.innerHTML =
-          "<h3>" + GL.escapeHtml(lesson.title) + "</h3>" +
-          (lesson.description ? '<p class="lesson-desc">' + GL.escapeHtml(lesson.description) + "</p>" : "") +
+          "<h3>" + wjt.escapeHtml(lesson.title) + "</h3>" +
+          (lesson.description ? '<p class="lesson-desc">' + wjt.escapeHtml(lesson.description) + "</p>" : "") +
           '<div class="lesson-meta">' +
           "  <span>" + lesson.sentences.length + " sentence" + (lesson.sentences.length === 1 ? "" : "s") + "</span>" +
           "  <span>·</span><span>" + nAnn + " label" + (nAnn === 1 ? "" : "s") + "</span>" +
           "</div>" +
           '<div class="lesson-layers">' +
           lesson.layers.map(function (l) {
-            return '<span class="mini-pill">' + GL.escapeHtml(GL.LAYERS[l] ? GL.LAYERS[l].short : l) + "</span>";
+            return '<span class="mini-pill">' + wjt.escapeHtml(wjt.LAYERS[l] ? wjt.LAYERS[l].short : l) + "</span>";
           }).join("") +
           "</div>" +
           '<div class="btn-row lesson-actions">' +
@@ -100,15 +103,15 @@
           "</div>";
         card.querySelector('[data-act="export"]').addEventListener("click", function () {
           var name = lesson.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "lesson";
-          GL.downloadJson(GL.exportLesson(lesson), name + ".grammar-lab.json");
+          wjt.downloadJson(wjt.exportLesson(lesson), name + ".sentence-forge.json");
         });
         card.querySelector('[data-act="dup"]').addEventListener("click", function () {
-          GL.store.duplicate(lesson.id);
+          wjt.store.duplicate(lesson.id);
           renderLessons();
         });
         card.querySelector('[data-act="del"]').addEventListener("click", function () {
           if (!confirm("Delete “" + lesson.title + "”? This can’t be undone.")) return;
-          GL.store.remove(lesson.id);
+          wjt.store.remove(lesson.id);
           renderLessons();
         });
         lessonsEl.appendChild(card);
@@ -117,18 +120,18 @@
 
     function renderExamples() {
       examplesEl.innerHTML = "";
-      (GL.EXAMPLES || []).forEach(function (ex) {
+      (wjt.EXAMPLES || []).forEach(function (ex) {
         var card = document.createElement("article");
         card.className = "card example-card";
         card.innerHTML =
-          "<h3>" + GL.escapeHtml(ex.title) + "</h3>" +
-          '<p class="lesson-desc">' + GL.escapeHtml(ex.subtitle) + "</p>" +
+          "<h3>" + wjt.escapeHtml(ex.title) + "</h3>" +
+          '<p class="lesson-desc">' + wjt.escapeHtml(ex.subtitle) + "</p>" +
           '<div class="btn-row lesson-actions">' +
           '  <button class="btn btn-primary" data-act="load">＋ Add to my lessons</button>' +
           "</div>";
         card.querySelector('[data-act="load"]').addEventListener("click", function () {
-          var lesson = GL.store.save(ex.build());
-          GL.toast("Loaded “" + lesson.title + "”.");
+          var lesson = wjt.store.save(ex.build());
+          wjt.toast("Loaded “" + lesson.title + "”.");
           location.hash = "#/present/" + lesson.id;
         });
         examplesEl.appendChild(card);
@@ -136,7 +139,7 @@
     }
 
     view.querySelector('[data-act="new"]').addEventListener("click", function () {
-      var lesson = GL.store.save(GL.store.create());
+      var lesson = wjt.store.save(wjt.store.create());
       location.hash = "#/edit/" + lesson.id;
     });
 
@@ -155,14 +158,14 @@
         reader.onload = function () {
           try {
             var data = JSON.parse(reader.result);
-            var result = GL.importLesson(data);
-            GL.store.save(result.lesson);
-            GL.toast("Imported “" + result.lesson.title + "”" +
+            var result = wjt.importLesson(data);
+            wjt.store.save(result.lesson);
+            wjt.toast("Imported “" + result.lesson.title + "”" +
               (result.warnings.length ? " with " + result.warnings.length + " warning(s) — see console." : "."));
-            result.warnings.forEach(function (w) { console.warn("[Grammar Lab import]", w); });
+            result.warnings.forEach(function (w) { console.warn("[Sentence Forge import]", w); });
             renderLessons();
           } catch (e) {
-            GL.toast("Import failed: " + e.message, 5000);
+            wjt.toast("Import failed: " + e.message, 5000);
           }
         };
         reader.readAsText(file);
@@ -176,29 +179,29 @@
   /* ---------------- routing ---------------- */
   function route() {
     runCleanups();
-    GL.closePopover();
+    wjt.closePopover();
     var container = document.getElementById("app");
     var hash = location.hash.replace(/^#\/?/, "");
     var parts = hash.split("/");
     window.scrollTo(0, 0);
 
-    if (parts[0] === "edit" && parts[1]) return GL.views.editor(container, parts[1]);
-    if (parts[0] === "present" && parts[1]) return GL.views.present(container, parts[1]);
-    if (parts[0] === "quiz" && parts[1]) return GL.views.quiz(container, parts[1]);
-    return GL.views.library(container);
+    if (parts[0] === "edit" && parts[1]) return wjt.views.editor(container, parts[1]);
+    if (parts[0] === "present" && parts[1]) return wjt.views.present(container, parts[1]);
+    if (parts[0] === "quiz" && parts[1]) return wjt.views.quiz(container, parts[1]);
+    return wjt.views.library(container);
   }
 
   /* ---------------- boot ---------------- */
   document.addEventListener("DOMContentLoaded", function () {
-    applyTheme(localStorage.getItem("grammarLab.theme") || "dark");
+    applyTheme(localStorage.getItem("sentenceForge.theme") || "dark");
     document.getElementById("theme-toggle").addEventListener("click", function () {
       applyTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light");
     });
 
     // First run: seed the sample so the app never starts empty.
-    if (!localStorage.getItem("grammarLab.seeded") && !GL.store.list().length) {
-      GL.store.save(GL.buildSampleLesson());
-      localStorage.setItem("grammarLab.seeded", "1");
+    if (!localStorage.getItem("sentenceForge.seeded") && !wjt.store.list().length) {
+      wjt.store.save(wjt.buildSampleLesson());
+      localStorage.setItem("sentenceForge.seeded", "1");
     }
 
     window.addEventListener("hashchange", route);

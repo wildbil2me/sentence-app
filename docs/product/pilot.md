@@ -1,6 +1,6 @@
 # Classroom pilot
 
-Grammar Lab is feature-complete enough to teach with and has never been used in
+Sentence Forge is feature-complete enough to teach with and has never been used in
 a live class period. The pilot exists to fix that before more gets built on top
 of assumptions.
 

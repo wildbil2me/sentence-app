@@ -1,6 +1,6 @@
-# Contributing to Grammar Lab
+# Contributing to Sentence Forge
 
-Grammar Lab is a classroom tool built by a teacher. The most valuable
+Sentence Forge is a classroom tool built by a teacher. The most valuable
 contribution is **telling us what happened when you used it with students** —
 code is welcome, but it isn't the bottleneck.
 
@@ -73,7 +73,7 @@ bug *and* renames things is two PRs.
 
 Match what's there. Concretely:
 
-- **One IIFE per file**, exporting onto the `GL` global. No modules.
+- **One IIFE per file**, exporting onto the `wjt` global. No modules.
 - **`var`, `function`, and `"use strict"`.** The code is ES5-flavored on purpose
   — it's what runs everywhere without a transpiler. Don't mix in arrow functions
   and `const` in one file and not another.
@@ -85,9 +85,9 @@ Match what's there. Concretely:
 - **No network calls, ever** — no CDN, no fonts, no analytics. See
   [SECURITY.md](SECURITY.md).
 - **Escape anything from a lesson file** before it reaches `innerHTML`
-  (`GL.escapeHtml`). Titles, notes, and sentence text all come from imported
+  (`wjt.escapeHtml`). Titles, notes, and sentence text all come from imported
   JSON.
-- **Views clean up after themselves** via `GL.onViewCleanup(fn)` for any
+- **Views clean up after themselves** via `wjt.onViewCleanup(fn)` for any
   document-level listener or timer.
 - Comments explain *why*, not *what*. The existing code is good about this;
   match it.
@@ -110,7 +110,7 @@ A good example passage is:
 - labeled at every layer it supports, with teaching notes on the two or three
   labels a student would most likely miss, and a `types` tag on every sentence.
 
-Follow the shape of an existing entry, add it to `GL.EXAMPLES`, run the smoke
+Follow the shape of an existing entry, add it to `wjt.EXAMPLES`, run the smoke
 test (which validates every annotation and generates the sample file), and commit
 both.
 

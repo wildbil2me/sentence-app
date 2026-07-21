@@ -1,11 +1,11 @@
-/* Grammar Lab — teacher editor view. */
+/* Sentence Forge — teacher editor view. */
 (function () {
   "use strict";
-  window.GL = window.GL || {};
-  GL.views = GL.views || {};
+  window.wjt = window.wjt || {};
+  wjt.views = wjt.views || {};
 
-  GL.views.editor = function (container, lessonId) {
-    var lesson = GL.store.get(lessonId);
+  wjt.views.editor = function (container, lessonId) {
+    var lesson = wjt.store.get(lessonId);
     if (!lesson) {
       location.hash = "#/";
       return;
@@ -13,7 +13,7 @@
 
     var savedFlash = null;
     function save() {
-      GL.store.save(lesson);
+      wjt.store.save(lesson);
       if (savedFlash) {
         savedFlash.classList.remove("show");
         void savedFlash.offsetWidth; // restart the animation
@@ -63,15 +63,15 @@
 
     header.querySelector('[data-act="export"]').addEventListener("click", function () {
       var name = lesson.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "lesson";
-      GL.downloadJson(GL.exportLesson(lesson), name + ".grammar-lab.json");
-      GL.toast("Exported “" + lesson.title + "” as JSON.");
+      wjt.downloadJson(wjt.exportLesson(lesson), name + ".sentence-forge.json");
+      wjt.toast("Exported “" + lesson.title + "” as JSON.");
     });
 
     var layerBox = header.querySelector('[data-role="layers"]');
     function renderLayerToggles() {
       layerBox.innerHTML = '<span class="layer-toggles-label">Teaching levels:</span>';
-      GL.LAYER_ORDER.forEach(function (layerId) {
-        var layer = GL.LAYERS[layerId];
+      wjt.LAYER_ORDER.forEach(function (layerId) {
+        var layer = wjt.LAYERS[layerId];
         var on = lesson.layers.indexOf(layerId) !== -1;
         var b = document.createElement("button");
         b.type = "button";
@@ -82,7 +82,7 @@
           var i = lesson.layers.indexOf(layerId);
           if (i === -1) lesson.layers.push(layerId);
           else if (lesson.layers.length > 1) lesson.layers.splice(i, 1);
-          else return GL.toast("Keep at least one level on.");
+          else return wjt.toast("Keep at least one level on.");
           save();
           renderLayerToggles();
           renderSentences();
@@ -125,7 +125,7 @@
     function annCount(s) { return (s.annotations || []).length; }
 
     function renderSentences() {
-      GL.closePopover();
+      wjt.closePopover();
       listEl.innerHTML = "";
 
       if (!lesson.sentences.length) {
@@ -134,7 +134,7 @@
         empty.innerHTML =
           '<div class="empty-emoji">📝</div>' +
           "<h3>Start with your text</h3>" +
-          "<p>Paste a paragraph below — Grammar Lab will split it into sentences you can label.</p>";
+          "<p>Paste a paragraph below — Sentence Forge will split it into sentences you can label.</p>";
         listEl.appendChild(empty);
       }
 
@@ -168,13 +168,13 @@
 
       function renderTypePicker() {
         typeBar.innerHTML = "";
-        GL.SENTENCE_TYPE_ORDER.forEach(function (cat) {
-          var category = GL.SENTENCE_TYPES[cat];
+        wjt.SENTENCE_TYPE_ORDER.forEach(function (cat) {
+          var category = wjt.SENTENCE_TYPES[cat];
           var row = document.createElement("div");
           row.className = "type-picker-row";
           row.innerHTML =
-            '<span class="type-picker-label" title="' + GL.escapeHtml(category.hint) + '">' +
-            GL.escapeHtml(category.name) + "</span>";
+            '<span class="type-picker-label" title="' + wjt.escapeHtml(category.hint) + '">' +
+            wjt.escapeHtml(category.name) + "</span>";
           Object.keys(category.options).forEach(function (optId) {
             var opt = category.options[optId];
             var on = s.types && s.types[cat] === optId;
@@ -205,11 +205,11 @@
 
       function renderGrid() {
         body.innerHTML = "";
-        var r = GL.renderSentence(s, {
+        var r = wjt.renderSentence(s, {
           layers: lesson.layers,
           interactive: true,
           onSelect: function (range) {
-            var span = GL.tokensToSpan(r.tokens, range.first, range.last);
+            var span = wjt.tokensToSpan(r.tokens, range.first, range.last);
             var rectEl = r.tokenEls[range.last];
             openPalette(s, span, rectEl.getBoundingClientRect(), function changed() {
               r.selection.clear();
@@ -249,7 +249,7 @@
           s.text = s.text + " " + next.text;
           (next.annotations || []).forEach(function (a) {
             s.annotations.push({
-              id: GL.uid(), start: a.start + offset, end: a.end + offset,
+              id: wjt.uid(), start: a.start + offset, end: a.end + offset,
               label: a.label, note: a.note || "",
             });
           });
@@ -284,10 +284,10 @@
         row.querySelector('[data-act="cancel"]').addEventListener("click", renderGrid);
         row.querySelector('[data-act="ok"]').addEventListener("click", function () {
           var text = ta.value.trim();
-          if (!text) return GL.toast("Sentence text can’t be empty.");
+          if (!text) return wjt.toast("Sentence text can’t be empty.");
           if (text === s.text) return renderGrid();
           if (annCount(s) && !confirm("This clears the sentence’s " + annCount(s) + " labels. Continue?")) return;
-          var parts = GL.splitSentences(text);
+          var parts = wjt.splitSentences(text);
           var replacements = parts.map(function (p) { return { text: p, annotations: [] }; });
           lesson.sentences.splice.apply(lesson.sentences, [idx, 1].concat(replacements));
           save();
@@ -308,13 +308,13 @@
         '<div class="btn-row"><button class="btn btn-primary">＋ Add sentences</button></div>';
       var ta = card.querySelector("textarea");
       card.querySelector("button").addEventListener("click", function () {
-        var parts = GL.splitSentences(ta.value);
-        if (!parts.length) return GL.toast("Nothing to add yet — paste some text first.");
+        var parts = wjt.splitSentences(ta.value);
+        if (!parts.length) return wjt.toast("Nothing to add yet — paste some text first.");
         parts.forEach(function (p) { lesson.sentences.push({ text: p, annotations: [] }); });
         ta.value = "";
         save();
         renderSentences();
-        GL.toast("Added " + parts.length + " sentence" + (parts.length === 1 ? "" : "s") + ". Check the split — you can merge or edit any of them.");
+        wjt.toast("Added " + parts.length + " sentence" + (parts.length === 1 ? "" : "s") + ". Check the split — you can merge or edit any of them.");
       });
       return card;
     }
@@ -324,23 +324,23 @@
     function openPalette(sentence, span, rect, onChanged, onCancel) {
       var box = document.createElement("div");
       box.className = "palette";
-      var quoted = GL.spanText(sentence.text, span);
+      var quoted = wjt.spanText(sentence.text, span);
       if (quoted.length > 44) quoted = quoted.slice(0, 42) + "…";
-      box.innerHTML = '<div class="palette-target">“' + GL.escapeHtml(quoted) + "”</div>";
+      box.innerHTML = '<div class="palette-target">“' + wjt.escapeHtml(quoted) + "”</div>";
 
       function labelButton(labelId, isSub) {
-        var label = GL.LABELS[labelId];
+        var label = wjt.LABELS[labelId];
         var b = document.createElement("button");
         b.type = "button";
         b.className = "palette-label" + (isSub ? " palette-label-sub" : "");
         b.style.setProperty("--c", label.color);
-        b.innerHTML = "<b>" + GL.escapeHtml(label.abbr) + "</b> " + GL.escapeHtml(label.name);
+        b.innerHTML = "<b>" + wjt.escapeHtml(label.abbr) + "</b> " + wjt.escapeHtml(label.name);
         b.title = label.desc;
         b.addEventListener("click", function () {
           sentence.annotations.push({
-            id: GL.uid(), start: span.start, end: span.end, label: labelId, note: "",
+            id: wjt.uid(), start: span.start, end: span.end, label: labelId, note: "",
           });
-          GL.closePopover();
+          wjt.closePopover();
           onChanged();
         });
         return b;
@@ -351,22 +351,22 @@
 
       lesson.layers
         .slice()
-        .sort(function (a, b) { return GL.LAYERS[a].order - GL.LAYERS[b].order; })
+        .sort(function (a, b) { return wjt.LAYERS[a].order - wjt.LAYERS[b].order; })
         .forEach(function (layerId) {
           var group = document.createElement("div");
           group.className = "palette-group";
-          group.innerHTML = '<div class="palette-group-name">' + GL.LAYERS[layerId].name + "</div>";
+          group.innerHTML = '<div class="palette-group-name">' + wjt.LAYERS[layerId].name + "</div>";
           var shown = 0;
 
-          if (GL.layerHasSubtypes(layerId)) {
+          if (wjt.layerHasSubtypes(layerId)) {
             // Drill-down layout: each base label, then its subtypes indented.
             var stack = document.createElement("div");
             stack.className = "palette-grid palette-grid-stacked";
-            GL.baseLabelsForLayer(layerId).forEach(function (baseId) {
-              var children = GL.filterTier(GL.childrenOf(baseId), essentialOnly);
+            wjt.baseLabelsForLayer(layerId).forEach(function (baseId) {
+              var children = wjt.filterTier(wjt.childrenOf(baseId), essentialOnly);
               // An Advanced base still shows if it heads Essential children —
               // otherwise they would be orphaned under no umbrella.
-              if (essentialOnly && !GL.isEssential(baseId) && !children.length) return;
+              if (essentialOnly && !wjt.isEssential(baseId) && !children.length) return;
               var sub = document.createElement("div");
               sub.className = "palette-subgroup";
               sub.appendChild(labelButton(baseId, false));
@@ -378,7 +378,7 @@
           } else {
             var grid = document.createElement("div");
             grid.className = "palette-grid";
-            GL.filterTier(GL.labelsForLayer(layerId), essentialOnly).forEach(function (labelId) {
+            wjt.filterTier(wjt.labelsForLayer(layerId), essentialOnly).forEach(function (labelId) {
               grid.appendChild(labelButton(labelId, false));
               shown++;
             });
@@ -388,7 +388,7 @@
           if (shown) box.appendChild(group);
         });
 
-      var pop = GL.showPopover(rect, box);
+      var pop = wjt.showPopover(rect, box);
       // If the popover is dismissed without choosing, clear the selection.
       var obs = new MutationObserver(function () {
         if (!document.body.contains(pop)) { obs.disconnect(); onCancel && onCancel(); }
@@ -397,16 +397,16 @@
     }
 
     function openAnnDetails(sentence, ann, rect, onChanged) {
-      var label = GL.LABELS[ann.label];
+      var label = wjt.LABELS[ann.label];
       var box = document.createElement("div");
       box.className = "ann-details";
       box.innerHTML =
         '<div class="ann-details-head">' +
         '  <span class="swatch" style="--c:' + label.color + '"></span>' +
-        "  <b>" + GL.escapeHtml(label.name) + "</b>" +
-        '  <span class="muted-note">' + GL.escapeHtml(GL.layerOf(ann.label).name) + "</span>" +
+        "  <b>" + wjt.escapeHtml(label.name) + "</b>" +
+        '  <span class="muted-note">' + wjt.escapeHtml(wjt.layerOf(ann.label).name) + "</span>" +
         "</div>" +
-        '<div class="ann-details-quote">“' + GL.escapeHtml(GL.spanText(sentence.text, ann)) + "”</div>" +
+        '<div class="ann-details-quote">“' + wjt.escapeHtml(wjt.spanText(sentence.text, ann)) + "”</div>" +
         '<p class="ann-details-desc">' + label.desc + "</p>" +
         '<textarea class="text-edit" rows="2" placeholder="Teaching note (shown in Present mode and quiz feedback)…"></textarea>' +
         '<div class="btn-row">' +
@@ -417,16 +417,16 @@
       ta.value = ann.note || "";
       box.querySelector('[data-act="note"]').addEventListener("click", function () {
         ann.note = ta.value.trim();
-        GL.closePopover();
+        wjt.closePopover();
         onChanged();
       });
       box.querySelector('[data-act="del"]').addEventListener("click", function () {
         var i = sentence.annotations.indexOf(ann);
         if (i !== -1) sentence.annotations.splice(i, 1);
-        GL.closePopover();
+        wjt.closePopover();
         onChanged();
       });
-      GL.showPopover(rect, box);
+      wjt.showPopover(rect, box);
     }
 
     renderSentences();

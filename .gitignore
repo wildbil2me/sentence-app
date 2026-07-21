@@ -1,4 +1,4 @@
-# Grammar Lab has no build step and no dependencies — this list is short on purpose.
+# Sentence Forge has no build step and no dependencies — this list is short on purpose.
 
 # OS / editor cruft
 .DS_Store

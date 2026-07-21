@@ -1,6 +1,6 @@
 name: deploy to github pages
 
-# Grammar Lab has no build step: the repository root *is* the site.
+# Sentence Forge has no build step: the repository root *is* the site.
 # This workflow uploads it as-is and publishes it to GitHub Pages.
 
 on:

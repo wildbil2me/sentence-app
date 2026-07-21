@@ -32,7 +32,7 @@ vm.createContext(sandbox);
 for (const f of ["labels.js", "tokenize.js", "store.js"]) {
   vm.runInContext(fs.readFileSync(path.join(root, "js", f), "utf8"), sandbox, { filename: f });
 }
-const GL = sandbox.GL;
+const wjt = sandbox.wjt;
 
 const files = process.argv.slice(2);
 if (!files.length) {
@@ -46,7 +46,7 @@ let problems = 0;
 function validate(where, data) {
   let result;
   try {
-    result = GL.importLesson(data);
+    result = wjt.importLesson(data);
   } catch (e) {
     console.log(" REJECTED  " + where + " — " + e.message);
     problems++;

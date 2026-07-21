@@ -1,12 +1,12 @@
-/* Grammar Lab — Quiz mode: students practice on a lesson's annotations.
+/* Sentence Forge — Quiz mode: students practice on a lesson's annotations.
  * Two question types, generated from the teacher's labels:
  *   "mc"   — a span is highlighted; pick what it is (multiple choice)
  *   "find" — a label is named; drag-select the matching words
  */
 (function () {
   "use strict";
-  window.GL = window.GL || {};
-  GL.views = GL.views || {};
+  window.wjt = window.wjt || {};
+  wjt.views = wjt.views || {};
 
   function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
@@ -16,8 +16,8 @@
     return arr;
   }
 
-  GL.views.quiz = function (container, lessonId) {
-    var lesson = GL.store.get(lessonId);
+  wjt.views.quiz = function (container, lessonId) {
+    var lesson = wjt.store.get(lessonId);
     if (!lesson) { location.hash = "#/"; return; }
 
     container.innerHTML = "";
@@ -30,7 +30,7 @@
       var out = [];
       lesson.sentences.forEach(function (s) {
         (s.annotations || []).forEach(function (a) {
-          var l = GL.layerOf(a.label);
+          var l = wjt.layerOf(a.label);
           if (l && layerIds.indexOf(l.id) !== -1) out.push({ sentence: s, ann: a });
         });
       });
@@ -45,7 +45,7 @@
     function sentencesWithType(cat) {
       return lesson.sentences.filter(function (s) { return s.types && s.types[cat]; });
     }
-    var availableTypes = GL.SENTENCE_TYPE_ORDER.filter(function (cat) {
+    var availableTypes = wjt.SENTENCE_TYPE_ORDER.filter(function (cat) {
       return sentencesWithType(cat).length > 0;
     });
 
@@ -62,25 +62,25 @@
     /* -------- question generation -------- */
     function buildQuestions(layerIds, typeCats, count) {
       var pool = annsForLayers(layerIds).map(function (item) {
-        var layer = GL.layerOf(item.ann.label);
+        var layer = wjt.layerOf(item.ann.label);
         var type = Math.random() < 0.5 ? "mc" : "find";
 
         // Same-label spans in the sentence are all acceptable "find" answers.
-        var tokens = GL.tokenize(item.sentence.text);
+        var tokens = wjt.tokenize(item.sentence.text);
         var accept = (item.sentence.annotations || [])
           .filter(function (a) { return a.label === item.ann.label; })
-          .map(function (a) { return GL.spanToTokens(tokens, a.start, a.end); })
+          .map(function (a) { return wjt.spanToTokens(tokens, a.start, a.end); })
           .filter(Boolean);
 
         // Distractors: prefer same-family labels (e.g. other noun types when the
         // answer is a proper noun), then labels used elsewhere in the lesson.
         var used = {};
         annsForLayers([layer.id]).forEach(function (x) { used[x.ann.label] = true; });
-        var fam = GL.familyOf(item.ann.label);
-        var candidates = GL.labelsForLayer(layer.id).filter(function (id) { return id !== item.ann.label; });
+        var fam = wjt.familyOf(item.ann.label);
+        var candidates = wjt.labelsForLayer(layer.id).filter(function (id) { return id !== item.ann.label; });
         candidates.sort(function (a, b) {
-          var famA = GL.familyOf(a) === fam ? 1 : 0;
-          var famB = GL.familyOf(b) === fam ? 1 : 0;
+          var famA = wjt.familyOf(a) === fam ? 1 : 0;
+          var famB = wjt.familyOf(b) === fam ? 1 : 0;
           if (famB !== famA) return famB - famA;
           return (used[b] ? 1 : 0) - (used[a] ? 1 : 0);
         });
@@ -104,7 +104,7 @@
             sentence: s,
             category: cat,
             answer: s.types[cat],
-            options: shuffle(Object.keys(GL.SENTENCE_TYPES[cat].options)),
+            options: shuffle(Object.keys(wjt.SENTENCE_TYPES[cat].options)),
           });
         });
       });
@@ -120,7 +120,7 @@
       view.innerHTML =
         '<header class="present-head">' +
         '  <a class="btn btn-ghost" href="#/">← Library</a>' +
-        '  <div class="present-title"><h2>🎯 Quiz: ' + GL.escapeHtml(lesson.title) + "</h2>" +
+        '  <div class="present-title"><h2>🎯 Quiz: ' + wjt.escapeHtml(lesson.title) + "</h2>" +
         '  <p class="muted-note">Practice on your own — answers get instant feedback.</p></div>' +
         "</header>" +
         '<section class="card quiz-setup">' +
@@ -148,9 +148,9 @@
       // One chip per practice category: each labelling layer, then each
       // sentence-type axis that this lesson actually uses.
       var practice = availableLayers.map(function (id) {
-        return { kind: "layer", id: id, name: GL.LAYERS[id].name, count: annsForLayers([id]).length };
+        return { kind: "layer", id: id, name: wjt.LAYERS[id].name, count: annsForLayers([id]).length };
       }).concat(availableTypes.map(function (cat) {
-        return { kind: "type", id: cat, name: GL.SENTENCE_TYPES[cat].name + " type", count: sentencesWithType(cat).length };
+        return { kind: "type", id: cat, name: wjt.SENTENCE_TYPES[cat].name + " type", count: sentencesWithType(cat).length };
       }));
 
       function selectedCount() { return settings.layers.length + settings.types.length; }
@@ -160,7 +160,7 @@
         var b = document.createElement("button");
         b.type = "button";
         b.className = "pill pill-lg" + (arr.indexOf(p.id) !== -1 ? " is-on" : "");
-        b.innerHTML = GL.escapeHtml(p.name) + ' <span class="pill-count">' + p.count + "</span>";
+        b.innerHTML = wjt.escapeHtml(p.name) + ' <span class="pill-count">' + p.count + "</span>";
         b.addEventListener("click", function () {
           var i = arr.indexOf(p.id);
           if (i === -1) arr.push(p.id);
@@ -220,7 +220,7 @@
         var stageEl = view.querySelector('[data-role="stage"]');
         var answersEl = view.querySelector('[data-role="answers"]');
         var feedbackEl = view.querySelector('[data-role="feedback"]');
-        var label = q.ann ? GL.LABELS[q.ann.label] : null;
+        var label = q.ann ? wjt.LABELS[q.ann.label] : null;
 
         function finishQuestion(isCorrect, detailHtml) {
           if (isCorrect) { correct++; streak++; }
@@ -229,7 +229,7 @@
           feedbackEl.className = "quiz-feedback " + (isCorrect ? "is-right" : "is-wrong");
           feedbackEl.innerHTML =
             "<b>" + (isCorrect ? pickPraise() : "Not quite.") + "</b> " + detailHtml +
-            (q.ann && q.ann.note ? '<p class="ann-note">📌 ' + GL.escapeHtml(q.ann.note) + "</p>" : "") +
+            (q.ann && q.ann.note ? '<p class="ann-note">📌 ' + wjt.escapeHtml(q.ann.note) + "</p>" : "") +
             '<div class="btn-row"><button class="btn btn-primary" data-act="next">' +
             (qi + 1 < questions.length ? "Next →" : "See results →") + "</button></div>";
           feedbackEl.querySelector('[data-act="next"]').addEventListener("click", function () {
@@ -242,15 +242,15 @@
 
         if (q.type === "mc") {
           promptEl.innerHTML = "What is the <mark>highlighted</mark> " +
-            GL.escapeHtml(q.layer.unit) + "?";
-          var r = GL.renderSentence(q.sentence, {
+            wjt.escapeHtml(q.layer.unit) + "?";
+          var r = wjt.renderSentence(q.sentence, {
             showAnnotations: false,
             highlight: { start: q.ann.start, end: q.ann.end },
           });
           stageEl.appendChild(r.root);
 
           q.options.forEach(function (optId) {
-            var opt = GL.LABELS[optId];
+            var opt = wjt.LABELS[optId];
             var b = document.createElement("button");
             b.type = "button";
             b.className = "quiz-option";
@@ -266,15 +266,15 @@
                 });
               }
               finishQuestion(right,
-                "“" + GL.escapeHtml(GL.spanText(q.sentence.text, q.ann)) + "” is " +
-                article(label.name) + " <b>" + GL.escapeHtml(label.name.toLowerCase()) + "</b>. " + label.desc);
+                "“" + wjt.escapeHtml(wjt.spanText(q.sentence.text, q.ann)) + "” is " +
+                article(label.name) + " <b>" + wjt.escapeHtml(label.name.toLowerCase()) + "</b>. " + label.desc);
             });
             answersEl.appendChild(b);
           });
         } else if (q.type === "sentence-type") {
-          var category = GL.SENTENCE_TYPES[q.category];
-          promptEl.innerHTML = GL.escapeHtml(category.question);
-          var rt = GL.renderSentence(q.sentence, { showAnnotations: false });
+          var category = wjt.SENTENCE_TYPES[q.category];
+          promptEl.innerHTML = wjt.escapeHtml(category.question);
+          var rt = wjt.renderSentence(q.sentence, { showAnnotations: false });
           stageEl.appendChild(rt.root);
 
           var answerOpt = category.options[q.answer];
@@ -295,16 +295,16 @@
                 });
               }
               finishQuestion(right,
-                "This sentence is <b>" + GL.escapeHtml(answerOpt.name.toLowerCase()) + "</b> (" +
-                GL.escapeHtml(category.name.toLowerCase()) + "). " + GL.escapeHtml(answerOpt.desc));
+                "This sentence is <b>" + wjt.escapeHtml(answerOpt.name.toLowerCase()) + "</b> (" +
+                wjt.escapeHtml(category.name.toLowerCase()) + "). " + wjt.escapeHtml(answerOpt.desc));
             });
             answersEl.appendChild(b);
           });
         } else {
           promptEl.innerHTML = "Select the " +
             '<span class="prompt-label" style="--c:' + label.color + '">' +
-            GL.escapeHtml(label.name.toLowerCase()) + "</span> in this sentence.";
-          var rf = GL.renderSentence(q.sentence, {
+            wjt.escapeHtml(label.name.toLowerCase()) + "</span> in this sentence.";
+          var rf = wjt.renderSentence(q.sentence, {
             showAnnotations: false,
             interactive: true,
           });
@@ -322,21 +322,21 @@
           });
           answersEl.querySelector('[data-act="check"]').addEventListener("click", function () {
             var sel = rf.selection.get();
-            if (!sel) return GL.toast("Select some words first.");
+            if (!sel) return wjt.toast("Select some words first.");
             answersEl.querySelectorAll("button").forEach(function (b) { b.disabled = true; });
             var right = q.accept.some(function (rge) {
               return rge.first === sel.first && rge.last === sel.last;
             });
             // Reveal the correct answer with a highlight.
             stageEl.innerHTML = "";
-            var reveal = GL.renderSentence(q.sentence, {
+            var reveal = wjt.renderSentence(q.sentence, {
               showAnnotations: false,
               highlight: { start: q.ann.start, end: q.ann.end },
             });
             stageEl.appendChild(reveal.root);
             finishQuestion(right,
-              "The " + GL.escapeHtml(label.name.toLowerCase()) + " is “<b>" +
-              GL.escapeHtml(GL.spanText(q.sentence.text, q.ann)) + "</b>”. " + label.desc);
+              "The " + wjt.escapeHtml(label.name.toLowerCase()) + " is “<b>" +
+              wjt.escapeHtml(wjt.spanText(q.sentence.text, q.ann)) + "</b>”. " + label.desc);
           });
         }
       }
@@ -373,19 +373,19 @@
             var row = document.createElement("div");
             row.className = "missed-row";
             if (q.type === "sentence-type") {
-              var opt = GL.SENTENCE_TYPES[q.category].options[q.answer];
+              var opt = wjt.SENTENCE_TYPES[q.category].options[q.answer];
               row.innerHTML =
                 '<span class="swatch" style="--c:' + opt.color + '"></span>' +
-                "<div><b>" + GL.escapeHtml(opt.name) + "</b> (" +
-                GL.escapeHtml(GL.SENTENCE_TYPES[q.category].name.toLowerCase()) + ")" +
-                '<div class="muted-note">' + GL.escapeHtml(q.sentence.text) + "</div></div>";
+                "<div><b>" + wjt.escapeHtml(opt.name) + "</b> (" +
+                wjt.escapeHtml(wjt.SENTENCE_TYPES[q.category].name.toLowerCase()) + ")" +
+                '<div class="muted-note">' + wjt.escapeHtml(q.sentence.text) + "</div></div>";
             } else {
-              var label = GL.LABELS[q.ann.label];
+              var label = wjt.LABELS[q.ann.label];
               row.innerHTML =
                 '<span class="swatch" style="--c:' + label.color + '"></span>' +
-                "<div><b>" + GL.escapeHtml(label.name) + "</b>: “" +
-                GL.escapeHtml(GL.spanText(q.sentence.text, q.ann)) + "”" +
-                '<div class="muted-note">' + GL.escapeHtml(q.sentence.text) + "</div></div>";
+                "<div><b>" + wjt.escapeHtml(label.name) + "</b>: “" +
+                wjt.escapeHtml(wjt.spanText(q.sentence.text, q.ann)) + "”" +
+                '<div class="muted-note">' + wjt.escapeHtml(q.sentence.text) + "</div></div>";
             }
             box.appendChild(row);
           });

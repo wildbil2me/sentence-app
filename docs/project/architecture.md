@@ -1,12 +1,12 @@
 # Architecture
 
-Grammar Lab is ~3,300 lines of plain ES5-flavored JavaScript in nine files, no
+Sentence Forge is ~3,300 lines of plain ES5-flavored JavaScript in nine files, no
 dependencies, no build step. This document explains the shape of it and the
 handful of decisions that everything else follows from.
 
 - [The five constraints](#the-five-constraints)
 - [File map](#file-map)
-- [The `GL` namespace](#the-gl-namespace)
+- [The `wjt` namespace](#the-wjt-namespace)
 - [The data model](#the-data-model)
 - [The annotation model](#the-annotation-model-char-offsets-snapped-to-tokens)
 - [The taxonomy](#the-taxonomy)
@@ -49,7 +49,7 @@ Load order matters — each file only depends on the ones above it.
 |---|---:|---|
 | `index.html` | 29 | The whole app shell: nav, `#app` mount, `#toasts`, nine script tags. |
 | `css/styles.css` | — | Design system, both themes, driven by CSS custom properties on `:root[data-theme]`. |
-| `js/labels.js` | 640 | **The taxonomy.** `GL.LAYERS`, `GL.LABELS`, `GL.SENTENCE_TYPES`, and the helpers over them. Zero DOM. |
+| `js/labels.js` | 640 | **The taxonomy.** `wjt.LAYERS`, `wjt.LABELS`, `wjt.SENTENCE_TYPES`, and the helpers over them. Zero DOM. |
 | `js/tokenize.js` | 78 | Sentence splitting, tokenizing, and span↔token conversion. Zero DOM. |
 | `js/store.js` | 324 | Lesson model, `localStorage` persistence, JSON import/export, the built-in sample lesson. Nearly zero DOM. |
 | `js/examples.js` | 636 | The seven example lessons, each as a `build()` that returns a lesson object. |
@@ -64,19 +64,19 @@ and a lesson validator. `samples/` is documentation and hand-off material, not a
 the app never reads it (see constraint 1), and `tools/smoke-test.js` regenerates
 it from `js/examples.js`.
 
-## The `GL` namespace
+## The `wjt` namespace
 
 Every file is an IIFE that hangs its exports on one global:
 
 ```js
 (function () {
   "use strict";
-  window.GL = window.GL || {};
-  GL.somethingNew = function () { /* … */ };
+  window.wjt = window.wjt || {};
+  wjt.somethingNew = function () { /* … */ };
 })();
 ```
 
-Views register themselves as `GL.views.<name>` and take `(container, lessonId)`.
+Views register themselves as `wjt.views.<name>` and take `(container, lessonId)`.
 There is no module system and no dependency injection — the load order in
 `index.html` *is* the dependency graph.
 
@@ -87,11 +87,11 @@ a sandbox with a fake `localStorage` and gets the whole logic layer with no DOM.
 
 ## The data model
 
-A lesson, as stored in `localStorage` under `grammarLab.lessons.v1`:
+A lesson, as stored in `localStorage` under `sentenceForge.lessons.v1`:
 
 ```js
 {
-  format: "grammar-lab-lesson", version: 1,
+  format: "sentence-forge-lesson", version: 1,
   id: "…", title: "…", description: "…",
   layers: ["pos", "part", "phrase", "clause"],  // which levels this lesson teaches
   essentialOnly: false,                         // narrows the editor palette only
@@ -126,8 +126,8 @@ app ever stores a span that cuts a word in half. Two functions in `tokenize.js`
 enforce it, and every entry point runs the pair:
 
 ```js
-var range = GL.spanToTokens(tokens, start, end);   // snaps OUTWARD to whole tokens
-var span  = GL.tokensToSpan(tokens, range.first, range.last);
+var range = wjt.spanToTokens(tokens, start, end);   // snaps OUTWARD to whole tokens
+var span  = wjt.tokensToSpan(tokens, range.first, range.last);
 ```
 
 Editor selection, JSON import, and `match` resolution all funnel through those
@@ -138,7 +138,7 @@ A "token" is whitespace-delimited and **includes its trailing punctuation** —
 `"river."` is one token. That's why annotations in the samples often end with a
 period.
 
-**Sentence splitting is deliberately naive** (`GL.splitSentences`). It splits on
+**Sentence splitting is deliberately naive** (`wjt.splitSentences`). It splits on
 `.?!…` plus optional closing quote, and on newlines. "Mr. Darcy" splits early;
 the editor's **⤵ Merge next** button is the intended fix rather than a smarter
 regex, because a regex that handles abbreviations still fails on the next case
@@ -148,17 +148,17 @@ and costs a class period when it does.
 
 `js/labels.js` holds three data structures plus a normalization pass:
 
-- **`GL.LAYERS`** — four teaching levels, each with `name`, `short`, `unit`,
+- **`wjt.LAYERS`** — four teaching levels, each with `name`, `short`, `unit`,
   `order`, `hint`.
-- **`GL.LABELS`** — 87 span labels keyed by id: `{ layer, parent, name, abbr,
+- **`wjt.LABELS`** — 87 span labels keyed by id: `{ layer, parent, name, abbr,
   color, desc, example, tier }`.
-- **`GL.SENTENCE_TYPES`** — two axes (structure, purpose) of whole-sentence
+- **`wjt.SENTENCE_TYPES`** — two axes (structure, purpose) of whole-sentence
   badges. These are *not* span labels and never appear in `annotations`.
 
 The **normalization pass at the bottom of the file** is where inheritance
 happens. A child inherits its parent's `layer` and `tier`, and its `color` unless
 it sets its own. Anything untagged defaults to `tier: "essential"`. So
-`GL.LABELS[id].layer`, `.color`, and `.tier` are *always* populated at read time
+`wjt.LABELS[id].layer`, `.color`, and `.tier` are *always* populated at read time
 and no consumer needs to walk the parent chain.
 
 Two rules the smoke test enforces:
@@ -171,11 +171,11 @@ Two rules the smoke test enforces:
   can never orphan a subtype.
 
 The drill-down palette is **layer-agnostic**: `editor.js` renders the stacked
-parent→child layout for any layer where `GL.layerHasSubtypes()` is true. Adding a
+parent→child layout for any layer where `wjt.layerHasSubtypes()` is true. Adding a
 `parent:` key is all it takes to restructure a palette — no engine change. (All
 four layers use it today.)
 
-Colors do double duty: `GL.familyOf()` groups by base label, and `quiz.js` prefers
+Colors do double duty: `wjt.familyOf()` groups by base label, and `quiz.js` prefers
 same-family distractors, so wrong answers come from the same color family a
 student is looking at.
 
@@ -203,13 +203,13 @@ identical in all three.
 
 | Hash | View |
 |---|---|
-| `#/` (anything else) | `GL.views.library` |
-| `#/edit/<id>` | `GL.views.editor` |
-| `#/present/<id>` | `GL.views.present` |
-| `#/quiz/<id>` | `GL.views.quiz` |
+| `#/` (anything else) | `wjt.views.library` |
+| `#/edit/<id>` | `wjt.views.editor` |
+| `#/present/<id>` | `wjt.views.present` |
+| `#/quiz/<id>` | `wjt.views.quiz` |
 
 Each view **replaces `#app` wholesale**. Any view that attaches a document-level
-listener or a timer must register teardown with `GL.onViewCleanup(fn)`; the
+listener or a timer must register teardown with `wjt.onViewCleanup(fn)`; the
 router runs those before rendering the next view, and swallows exceptions from
 them so a broken teardown can never wedge navigation.
 
@@ -228,7 +228,7 @@ why authoring a lesson is the only authoring step. Three generators:
 | Classify | "What is the structure/purpose of this sentence?" | multiple choice |
 
 Distractors always come from the **answer's own layer**, ranked by
-`GL.familyOf()` match first and "already used elsewhere in this lesson" second —
+`wjt.familyOf()` match first and "already used elsewhere in this lesson" second —
 so a gerund's alternatives are other verbals rather than "Interjection", and a
 student can't rule an option out just because it's exotic. For a *select*
 question, **every same-label span in the sentence is an acceptable answer**, so a

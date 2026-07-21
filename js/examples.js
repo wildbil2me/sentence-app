@@ -1,4 +1,4 @@
-/* Grammar Lab — built-in example lessons.
+/* Sentence Forge — built-in example lessons.
  *
  * Each example is authored with a small `sentence(text, specs)` helper:
  * every annotation targets a substring of the sentence (the nth occurrence),
@@ -10,7 +10,7 @@
  */
 (function () {
   "use strict";
-  var GL = (window.GL = window.GL || {});
+  var wjt = (window.wjt = window.wjt || {});
 
   function sentence(text, specs, types) {
     var anns = [];
@@ -22,7 +22,7 @@
         if (window.console) console.warn("example: no match for", JSON.stringify(match), "in", JSON.stringify(text));
         return;
       }
-      anns.push({ id: GL.uid(), start: at, end: at + match.length, label: label, note: note || "" });
+      anns.push({ id: wjt.uid(), start: at, end: at + match.length, label: label, note: note || "" });
     });
     var s = { text: text, annotations: anns };
     if (types) s.types = types;
@@ -31,17 +31,17 @@
 
   /** Assemble a lesson and infer which teaching levels it uses. */
   function make(title, description, sentences) {
-    var lesson = GL.store.create(title);
+    var lesson = wjt.store.create(title);
     lesson.description = description;
     lesson.sentences = sentences;
     var used = {};
     sentences.forEach(function (s) {
       s.annotations.forEach(function (a) {
-        var l = GL.layerOf(a.label);
+        var l = wjt.layerOf(a.label);
         if (l) used[l.id] = true;
       });
     });
-    lesson.layers = GL.LAYER_ORDER.filter(function (id) { return used[id]; });
+    lesson.layers = wjt.LAYER_ORDER.filter(function (id) { return used[id]; });
     if (!lesson.layers.length) lesson.layers = ["pos"];
     return lesson;
   }
@@ -589,12 +589,12 @@
   /* ---------------------------------------------------------------- *
    * Registry. The fox demo (defined in store.js) leads the list.
    * ---------------------------------------------------------------- */
-  GL.EXAMPLES = [
+  wjt.EXAMPLES = [
     {
       id: "fox",
       title: "The Fox and the River",
       subtitle: "Starter demo · every level labeled",
-      build: GL.buildSampleLesson,
+      build: wjt.buildSampleLesson,
     },
     {
       id: "parts-of-speech-close-up",

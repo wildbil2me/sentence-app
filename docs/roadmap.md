@@ -1,4 +1,4 @@
-# Grammar Lab — Coverage Expansion Roadmap
+# Sentence Forge — Coverage Expansion Roadmap
 
 **Status:** Tiers 1, 1.5, and 2 shipped; Tier 3 parked as out of scope ·
 **Date:** 2026-07-20 (last updated 2026-07-21)
@@ -35,7 +35,7 @@ into subtypes* — describe work that **is already done at the label level**:
 
 The drill-down mechanism is **already layer-agnostic**. The editor palette
 ([`editor.js:337`](../js/editor.js#L337)) renders the stacked parent→child layout
-for *any* layer where `GL.layerHasSubtypes()` is true. Adding `parent:` keys to
+for *any* layer where `wjt.layerHasSubtypes()` is true. Adding `parent:` keys to
 part/phrase/clause labels lights up that layout with **no engine changes**.
 
 Two consequences to keep in mind:
@@ -47,7 +47,7 @@ Two consequences to keep in mind:
 - The two-row "broad class + specific" **chip** display in
   [`render.js:78`](../js/render.js#L78) is **POS-only**. Parts/phrases/clauses
   render as span **bars**, which show the chosen label. Subtyping those layers
-  improves the palette grouping and quiz distractor quality (`GL.familyOf`,
+  improves the palette grouping and quiz distractor quality (`wjt.familyOf`,
   [`quiz.js:79`](../js/quiz.js#L79)) but does **not** add a second visual row to
   the bars. That is acceptable and intended.
 
@@ -55,7 +55,7 @@ Two consequences to keep in mind:
 
 ## Tier 1 — New labels (no architecture change)
 
-Pure additions to `GL.LABELS`. The app is fully data-driven off that object, so
+Pure additions to `wjt.LABELS`. The app is fully data-driven off that object, so
 each row below is a data entry plus a one-line `desc`/`example`, following the
 existing style. Priorities (**Essential** / **Advanced**) are the findings' own.
 
@@ -150,7 +150,7 @@ Children of their base part of speech; **Advanced** unless noted:
 ### 1e. Tag every label with a tier (Q5) ✅ **Completed 2026-07-21**
 
 **Decision (Q5): tag tiers now, build the filter later.** Add a `tier` field
-(`"essential"` | `"advanced"`) to **every** entry in `GL.LABELS` — not just the
+(`"essential"` | `"advanced"`) to **every** entry in `wjt.LABELS` — not just the
 new ones — as pure data. This is cheap, unblocks nothing, and lets a later
 follow-up ([Tier 1.5](#tier-15--essential-only-palette-filter--shipped)) hide Advanced
 labels without re-touching the taxonomy. Default any untagged label to
@@ -163,8 +163,8 @@ that Tier 3 excludes entirely. Everything else is Essential.
 > **As built (2026-07-21):** only those four labels carry a literal
 > `tier: "advanced"`. The normalization pass then gives every label a `tier` —
 > a child inherits its parent's, and anything untagged defaults to
-> `"essential"` — so `GL.LABELS[id].tier` is always populated for the Tier 1.5
-> filter, and `GL.isEssential(id)` is available as a helper. This matches how
+> `"essential"` — so `wjt.LABELS[id].tier` is always populated for the Tier 1.5
+> filter, and `wjt.isEssential(id)` is available as a helper. This matches how
 > the file already defaults `layer` and `color`, instead of repeating
 > `tier: "essential"` on 81 entries. The **exports** do materialize the tier
 > per-label (`coverage-labels.json` / `.csv` gained a `tier` column), so the
@@ -276,7 +276,7 @@ the brief), plus:
 All three items (2a–2c) landed, and — as §0 predicted — **no engine code
 changed**: the edits are `parent:` keys plus two new base labels in
 [`labels.js`](../js/labels.js). Every layer now returns true from
-`GL.layerHasSubtypes()`, so all four palettes render the stacked
+`wjt.layerHasSubtypes()`, so all four palettes render the stacked
 parent→child layout.
 
 **Delta:** +2 labels (`understood-subject` under `subject`, `verbal-phrase`
@@ -321,8 +321,8 @@ As built:
   implicit and existing lessons/samples are byte-identical).
 - **Toggle:** an "Essential only" pill in the editor header, directly below the
   teaching-level toggles ([`editor.js`](../js/editor.js)).
-- **Filtering:** `GL.filterTier(ids, essentialOnly)` in [`labels.js`](../js/labels.js)
-  narrows `GL.labelsForLayer` / `GL.childrenOf` output where the palette is built.
+- **Filtering:** `wjt.filterTier(ids, essentialOnly)` in [`labels.js`](../js/labels.js)
+  narrows `wjt.labelsForLayer` / `wjt.childrenOf` output where the palette is built.
   An Advanced *base* label still renders if it heads Essential children (none do
   today — the smoke test asserts every Advanced label has an Essential parent),
   and a layer group that filters down to nothing is dropped entirely.
@@ -333,7 +333,7 @@ As built:
 
 ## Tier 3 — Out of scope for this app (documented for a sibling tool)
 
-Each Tier 3 area breaks a core assumption of Grammar Lab — that every annotation
+Each Tier 3 area breaks a core assumption of Sentence Forge — that every annotation
 is a **span over whole tokens**. They are worth building, but as a **separate
 app**, not by bending this one's model. Captured here so the need isn't lost.
 
@@ -358,7 +358,7 @@ app**, not by bending this one's model. Captured here so the need isn't lost.
 ### 3c. Verb grammatical dimensions (tense, aspect, voice, mood)
 - **Why it doesn't fit:** these are **orthogonal dimensions** of one verb, not a
   span type. Encoding them as POS subtypes explodes combinatorially
-  (tense × aspect × voice × mood). Grammar Lab assigns one label per span.
+  (tense × aspect × voice × mood). Sentence Forge assigns one label per span.
 - **Sibling-app need:** a per-verb property panel (multiple independent
   dimensions on a single annotation), which is a different data model than
   "one label id per span."

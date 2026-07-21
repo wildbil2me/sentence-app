@@ -1,4 +1,4 @@
-# Grammar Lab — teacher guide
+# Sentence Forge — teacher guide
 
 Everything you need to run a lesson. No account, nothing to install; if the page
 opens, you're ready.
@@ -46,7 +46,7 @@ projector; light prints and screenshots better.
 ### 1. Paste the passage
 
 Paste anything — a paragraph from the novel you're on, a student sentence
-(anonymized), a quotation. Grammar Lab splits it into sentences, one card each.
+(anonymized), a quotation. Sentence Forge splits it into sentences, one card each.
 
 The splitter is deliberately simple, so "Mr. Darcy" splits after "Mr." Fix any
 bad split with the **⤵ Merge next** button on the card ("Join with the next
@@ -66,7 +66,7 @@ Four toggles at the top set which levels this lesson uses:
 Turn off the levels you aren't teaching and the palette shrinks to match. You
 can turn one back on mid-unit without touching what's already labeled.
 
-Below the toggles is **Essential only**. Grammar Lab has 87 labels; four of them
+Below the toggles is **Essential only**. Sentence Forge has 87 labels; four of them
 (Object Complement, Particle, Relative Adverb, Emphatic Pronoun) are marked
 Advanced. The toggle hides those from the picker. It only narrows *the picker* —
 anything already labeled keeps showing everywhere.
@@ -167,7 +167,7 @@ the only way they'll guess honestly.
 ## Sharing lessons
 
 A lesson is a plain JSON file. **⬇** on any lesson card downloads it as
-`your-lesson-title.grammar-lab.json`.
+`your-lesson-title.sentence-forge.json`.
 
 That file is how you:
 
@@ -199,8 +199,8 @@ Clauses Thursday. Same passage all week — the sentence gets familiar and the
 structure gets visible.
 
 **Their own writing.** Paste three anonymized sentences from student drafts.
-Label the clause structure. Present it and ask which one is a run-on. (Grammar
-Lab won't diagnose that for you — the point is that students diagnose it from the
+Label the clause structure. Present it and ask which one is a run-on. (Sentence
+Forge won't diagnose that for you — the point is that students diagnose it from the
 clause bars.)
 
 **Sub plans.** Export a lesson, leave the file and the app link. Practice mode
