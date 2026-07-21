@@ -105,6 +105,16 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 14,
+          "end": 17,
+          "label": "preposition"
+        },
+        {
+          "start": 18,
+          "end": 21,
+          "label": "determiner"
+        },
+        {
           "start": 22,
           "end": 25,
           "label": "adjective"
@@ -154,6 +164,11 @@
           "start": 5,
           "end": 13,
           "label": "direct-object"
+        },
+        {
+          "start": 14,
+          "end": 16,
+          "label": "preposition"
         },
         {
           "start": 14,

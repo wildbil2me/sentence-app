@@ -25,6 +25,12 @@
           "label": "noun"
         },
         {
+          "start": 16,
+          "end": 20,
+          "label": "pronoun",
+          "note": "Stands for the two households."
+        },
+        {
           "start": 21,
           "end": 26,
           "label": "adjective"
@@ -33,6 +39,11 @@
           "start": 27,
           "end": 38,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 27,
+          "end": 29,
+          "label": "preposition"
         },
         {
           "start": 30,
@@ -50,6 +61,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 0,
+          "end": 2,
+          "label": "preposition"
+        },
+        {
           "start": 3,
           "end": 7,
           "label": "adjective"
@@ -64,6 +80,12 @@
           "end": 39,
           "label": "relative-clause",
           "note": "Describes Verona — it tells which place."
+        },
+        {
+          "start": 16,
+          "end": 21,
+          "label": "adverb",
+          "note": "A relative adverb — it introduces the clause."
         },
         {
           "start": 22,
@@ -96,6 +118,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 0,
+          "end": 4,
+          "label": "preposition"
+        },
+        {
           "start": 5,
           "end": 12,
           "label": "adjective"
@@ -114,6 +141,11 @@
           "start": 26,
           "end": 40,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 26,
+          "end": 28,
+          "label": "preposition"
         },
         {
           "start": 29,
@@ -135,6 +167,12 @@
           "end": 44,
           "label": "adverbial-clause",
           "note": "Tells the result of the grudge breaking out."
+        },
+        {
+          "start": 0,
+          "end": 5,
+          "label": "adverb",
+          "note": "A relative adverb — it opens the clause."
         },
         {
           "start": 6,
@@ -173,6 +211,21 @@
       "text": "From forth the fatal loins of these two foes",
       "annotations": [
         {
+          "start": 0,
+          "end": 4,
+          "label": "preposition"
+        },
+        {
+          "start": 5,
+          "end": 10,
+          "label": "adverb"
+        },
+        {
+          "start": 11,
+          "end": 14,
+          "label": "determiner"
+        },
+        {
           "start": 15,
           "end": 20,
           "label": "adjective"
@@ -186,6 +239,11 @@
           "start": 27,
           "end": 44,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 27,
+          "end": 29,
+          "label": "preposition"
         },
         {
           "start": 30,
@@ -227,6 +285,11 @@
           "start": 7,
           "end": 29,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 7,
+          "end": 9,
+          "label": "preposition"
         },
         {
           "start": 10,
@@ -305,6 +368,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 3,
+          "end": 7,
+          "label": "preposition"
+        },
+        {
           "start": 8,
           "end": 13,
           "label": "determiner"
@@ -366,6 +434,16 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 20,
+          "end": 22,
+          "label": "preposition"
+        },
+        {
+          "start": 23,
+          "end": 28,
+          "label": "determiner"
+        },
+        {
           "start": 29,
           "end": 41,
           "label": "adjective"
@@ -401,6 +479,16 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 20,
+          "end": 22,
+          "label": "preposition"
+        },
+        {
+          "start": 23,
+          "end": 28,
+          "label": "determiner"
+        },
+        {
           "start": 29,
           "end": 37,
           "label": "noun"
@@ -426,6 +514,17 @@
           "end": 32,
           "label": "prepositional-phrase",
           "note": "Here 'but' means 'except for'."
+        },
+        {
+          "start": 7,
+          "end": 10,
+          "label": "preposition",
+          "note": "Here 'but' means 'except for'."
+        },
+        {
+          "start": 11,
+          "end": 16,
+          "label": "determiner"
         },
         {
           "start": 17,
@@ -494,6 +593,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 30,
+          "end": 32,
+          "label": "preposition"
+        },
+        {
           "start": 33,
           "end": 36,
           "label": "determiner"
@@ -508,6 +612,17 @@
     {
       "text": "The which if you with patient ears attend,",
       "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner"
+        },
+        {
+          "start": 4,
+          "end": 9,
+          "label": "pronoun",
+          "note": "A relative pronoun."
+        },
         {
           "start": 10,
           "end": 42,
@@ -528,6 +643,11 @@
           "start": 17,
           "end": 34,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 17,
+          "end": 21,
+          "label": "preposition"
         },
         {
           "start": 22,
@@ -554,6 +674,11 @@
           "end": 21,
           "label": "noun-clause",
           "note": "Acts as the object of 'mend' — whatever the play leaves out."
+        },
+        {
+          "start": 0,
+          "end": 4,
+          "label": "pronoun"
         },
         {
           "start": 5,
@@ -594,6 +719,12 @@
           "start": 44,
           "end": 52,
           "label": "infinitive-phrase"
+        },
+        {
+          "start": 44,
+          "end": 52,
+          "label": "infinitive",
+          "note": "The infinitive — “to” plus the base verb."
         }
       ],
       "types": {

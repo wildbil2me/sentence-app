@@ -308,6 +308,7 @@
         ["and", "conjunction", "", 2],
         ["leaped", "verb"],
         ["over", "preposition"],
+        ["the", "determiner", "", 2],
         ["log.", "noun"],
         ["The fox and the hare", "compound-subject", "Two subjects, one verb — joined by “and.”"],
         ["fox", "simple-subject"],

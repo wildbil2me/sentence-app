@@ -35,6 +35,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 16,
+          "end": 18,
+          "label": "preposition"
+        },
+        {
           "start": 19,
           "end": 22,
           "label": "determiner"
@@ -54,6 +59,11 @@
           "end": 55,
           "label": "appositive-phrase",
           "note": "Renames 'the green light'."
+        },
+        {
+          "start": 36,
+          "end": 39,
+          "label": "determiner"
         },
         {
           "start": 40,
@@ -77,6 +87,21 @@
           "label": "pronoun"
         },
         {
+          "start": 61,
+          "end": 65,
+          "label": "noun"
+        },
+        {
+          "start": 66,
+          "end": 68,
+          "label": "preposition"
+        },
+        {
+          "start": 69,
+          "end": 73,
+          "label": "noun"
+        },
+        {
           "start": 74,
           "end": 81,
           "label": "verb"
@@ -85,6 +110,11 @@
           "start": 82,
           "end": 92,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 82,
+          "end": 88,
+          "label": "preposition"
         },
         {
           "start": 89,
@@ -258,9 +288,24 @@
           "note": "A metaphor renaming 'we'."
         },
         {
+          "start": 15,
+          "end": 20,
+          "label": "noun"
+        },
+        {
           "start": 21,
           "end": 41,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 21,
+          "end": 28,
+          "label": "preposition"
+        },
+        {
+          "start": 29,
+          "end": 32,
+          "label": "determiner"
         },
         {
           "start": 33,
@@ -279,6 +324,11 @@
           "label": "verb"
         },
         {
+          "start": 48,
+          "end": 52,
+          "label": "adverb"
+        },
+        {
           "start": 53,
           "end": 64,
           "label": "adverb"
@@ -287,6 +337,16 @@
           "start": 65,
           "end": 79,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 65,
+          "end": 69,
+          "label": "preposition"
+        },
+        {
+          "start": 70,
+          "end": 73,
+          "label": "determiner"
         },
         {
           "start": 74,

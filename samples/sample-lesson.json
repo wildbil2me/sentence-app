@@ -343,6 +343,11 @@
           "label": "preposition"
         },
         {
+          "start": 52,
+          "end": 55,
+          "label": "determiner"
+        },
+        {
           "start": 56,
           "end": 60,
           "label": "noun"

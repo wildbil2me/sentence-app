@@ -28,6 +28,16 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 7,
+          "end": 9,
+          "label": "preposition"
+        },
+        {
+          "start": 10,
+          "end": 11,
+          "label": "determiner"
+        },
+        {
           "start": 12,
           "end": 18,
           "label": "adjective"
@@ -43,6 +53,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 25,
+          "end": 27,
+          "label": "preposition"
+        },
+        {
           "start": 28,
           "end": 36,
           "label": "noun"
@@ -52,6 +67,12 @@
           "end": 82,
           "label": "dependent-clause",
           "note": "A cleft sentence: 'It was... that I beheld...' emphasizes the night."
+        },
+        {
+          "start": 37,
+          "end": 41,
+          "label": "conjunction",
+          "note": "Introduces the cleft clause."
         },
         {
           "start": 42,
@@ -70,6 +91,11 @@
           "note": "The direct object — what Victor beheld."
         },
         {
+          "start": 51,
+          "end": 54,
+          "label": "determiner"
+        },
+        {
           "start": 55,
           "end": 69,
           "label": "noun"
@@ -78,6 +104,11 @@
           "start": 70,
           "end": 82,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 70,
+          "end": 72,
+          "label": "preposition"
         },
         {
           "start": 73,
@@ -102,6 +133,16 @@
           "start": 0,
           "end": 15,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 0,
+          "end": 4,
+          "label": "preposition"
+        },
+        {
+          "start": 5,
+          "end": 7,
+          "label": "determiner"
         },
         {
           "start": 8,
@@ -135,6 +176,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 37,
+          "end": 39,
+          "label": "preposition"
+        },
+        {
           "start": 40,
           "end": 46,
           "label": "noun"
@@ -160,6 +206,11 @@
           "label": "noun-phrase"
         },
         {
+          "start": 59,
+          "end": 62,
+          "label": "determiner"
+        },
+        {
           "start": 63,
           "end": 74,
           "label": "noun"
@@ -170,6 +221,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 75,
+          "end": 77,
+          "label": "preposition"
+        },
+        {
           "start": 78,
           "end": 82,
           "label": "noun"
@@ -178,6 +234,11 @@
           "start": 83,
           "end": 93,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 83,
+          "end": 89,
+          "label": "preposition"
         },
         {
           "start": 90,
@@ -210,6 +271,11 @@
           "note": "The direct object of 'saw'."
         },
         {
+          "start": 6,
+          "end": 9,
+          "label": "determiner"
+        },
+        {
           "start": 10,
           "end": 14,
           "label": "adjective"
@@ -228,6 +294,16 @@
           "start": 26,
           "end": 41,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 26,
+          "end": 28,
+          "label": "preposition"
+        },
+        {
+          "start": 29,
+          "end": 32,
+          "label": "determiner"
         },
         {
           "start": 33,
@@ -274,6 +350,11 @@
           "start": 70,
           "end": 89,
           "label": "noun-phrase"
+        },
+        {
+          "start": 70,
+          "end": 71,
+          "label": "determiner"
         },
         {
           "start": 72,
