@@ -12,6 +12,7 @@ disagree, the code wins and this document is a bug.
 - [Top level](#top-level)
 - [Sentence objects](#sentence-objects)
 - [Annotation objects](#annotation-objects)
+- [Completeness](#completeness)
 - [What the importer skips vs. rejects](#what-the-importer-skips-vs-rejects)
 - [Export differs from import](#export-differs-from-import)
 - [Compatibility](#compatibility)
@@ -108,6 +109,47 @@ label part of a word**, and it's why the example above can write `"end": 46`
 Annotations may freely **overlap**, both within a layer and across layers. The
 same words being a `noun`, a `noun-phrase`, and part of a `complete-subject` is
 the normal case, not a conflict.
+
+## Completeness
+
+The importer's bias is **partial success** (see the next section): it accepts a
+lesson with unlabelled words or a subject-less sentence. That is right for a
+teacher's in-progress file, but the lessons this project *ships* — everything
+built from [`js/examples.js`](../../js/examples.js) (and the Fox demo in
+[`js/store.js`](../../js/store.js)) into [`samples/`](../../samples/) — are held
+to a stricter **completeness** standard, enforced by
+[`tools/completeness.js`](../../tools/completeness.js): blocking inside
+`node tools/smoke-test.js`, and opt-in as `node tools/validate-lesson.js --complete`
+(see [testing.md](testing.md)).
+
+The standard was added after an audit found the Sentence-Parts and Clause layers
+were thin across the samples — many sentences had a part of speech on every word
+but no subject, predicate, or clause span, and some complete sentences carried no
+type badge. For **every sentence that carries a `types` badge**:
+
+1. **Part of speech on every word** — every word-bearing token is covered by a
+   `pos` annotation. Pure-punctuation tokens are exempt; a contraction is one
+   token, labelled once by its head word.
+2. **Clause coverage** — the sentence has at least one clause span, and the
+   clause spans together cover every token except interjections and stray
+   punctuation. By convention a coordinating conjunction joining two clauses is
+   absorbed into the clause it introduces, so it counts as covered.
+3. **A subject and predicate per clause** — every clause span contains a
+   `subject`-family span and a `predicate`-family span. A command satisfies the
+   subject rule with `understood-subject` on the commanded verb.
+
+**Fragments opt out by having no `types` badge.** A sentence with neither
+`structure` nor `purpose` is treated as an intentional fragment — a line of
+verse, a caption — and is exempt from rules 2–3, though rule 1 still applies.
+This is why the
+[Romeo & Juliet sample](../../samples/romeo-juliet-prologue.sentence-forge.json)
+leaves most of its lines unbadged, while its two stand-alone sentences are fully
+resolved. A genuine sentence always carries both axes.
+
+This is a **curation standard, not a format rule.** Nothing here changes what the
+importer accepts; a teacher's partial lesson is still valid. It is the bar for
+lessons we author and for what a custom GPT should produce (see
+[custom-gpt-instructions.md](../custom-gpt-instructions.md)).
 
 ## What the importer skips vs. rejects
 

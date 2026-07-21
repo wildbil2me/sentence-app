@@ -34,6 +34,12 @@ What it asserts:
 - **Every built-in example** — that all its annotation text is findable, that
   every span lands on a token boundary, that its sentence types are valid, and
   that it round-trips through export → import **with zero warnings**.
+- **Every built-in example is complete** — every word has a part of speech,
+  every clause carries a subject and a predicate, and clause spans cover the
+  sentence. This runs through [`tools/completeness.js`](../../tools/completeness.js)
+  and **fails the suite** on a gap. Sentences with no `types` badge are treated
+  as intentional fragments and exempted from the clause/subject/predicate rules.
+  The standard is specified in [lesson-json.md](lesson-json.md#completeness).
 
 > ⚠️ **It also writes files.** The suite regenerates every file in `samples/`
 > from `js/examples.js`. That's the point — the samples are a rendering of the
@@ -76,6 +82,23 @@ It's also the fastest way to check AI-generated output before importing it — a
 unresolved `match` string shows up here as a named warning instead of as a
 silently missing label in class. CI runs it over `samples/` plus both documents
 that contain worked examples.
+
+### `--complete` — strict coverage
+
+Add `--complete` to also hold each lesson to the [completeness
+standard](lesson-json.md#completeness): a part of speech on every word, and a
+subject and predicate in every clause of every badged sentence, with clause spans
+covering the sentence. This is the same check `smoke-test.js` runs on the
+built-ins, exposed for hand-authored or AI-generated files:
+
+```bash
+node tools/validate-lesson.js --complete ~/Downloads/gpt-output.json
+```
+
+Fragments (sentences with no `types` badge) are reported as notes and exempted
+from the clause and subject/predicate rules. Without the flag, `validate-lesson.js`
+only checks that the file imports cleanly — completeness is opt-in here, so a
+teacher's partial lesson isn't force-failed.
 
 ## `tools/dom-check.html`
 

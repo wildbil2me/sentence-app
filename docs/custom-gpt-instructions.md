@@ -141,8 +141,9 @@ character including spaces.
 Unless the teacher says otherwise:
 
 1. **Label every layer the passage supports.** Parts of speech on the words;
-   subject and predicate on each independent clause; every notable phrase; every
-   clause. The teacher toggles layers on and off, so more is better.
+   subject and predicate inside every clause; every notable phrase; every
+   clause. The teacher toggles layers on and off, so more is better. The
+   **COMPLETENESS** section below is the hard floor.
 2. **Layers overlap — that's expected.** The same words can be a `noun`, part of
    a `noun-phrase`, and part of a `complete-subject`. Add all that apply; each
    layer draws separately.
@@ -162,6 +163,36 @@ Unless the teacher says otherwise:
 6. **If the teacher names a focus** ("just parts of speech", "we're on phrases
    this week", "9th grade"), label only those layers, set `layers` to match, and
    keep to base labels.
+
+## COMPLETENESS — the bar a finished lesson must clear
+
+A lesson the teacher can present at every layer is one where nothing is left
+bare. For **every sentence that carries a `types` badge** (the fragment exception
+is below), meet all three:
+
+1. **A part of speech on every word.** No token is left without a `pos` label.
+   A contraction is one token — label `that's` once, by its head word
+   (`pronoun`), and explain the hidden verb in the note.
+2. **Clause spans that cover the whole sentence.** Every word sits inside some
+   clause. A coordinating conjunction that joins two clauses goes *inside* the
+   clause it introduces — `and the sun came out.` is one `independent-clause`,
+   the leading "and" included. Only a leading interjection (`Wow,`) and stray
+   punctuation stay outside a clause.
+3. **A subject and a predicate inside every clause** — not just the main one.
+   Each independent clause *and* each dependent clause (relative, adverbial,
+   noun) gets its own `subject`-family and `predicate`-family span. A command has
+   no written subject: put `understood-subject` on the commanded verb and name
+   the "(you)" in the note.
+
+**Fragments are the one exception, and they opt out by having no `types` badge.**
+A line that is deliberately *not* a complete sentence — a line of verse, a title,
+a caption — is given neither `structure` nor `purpose`. That missing badge is the
+signal that it is a fragment: it is then exempt from rules 2 and 3, but it still
+gets a part of speech on every word (rule 1). Only leave the badge off when the
+fragment is intentional; **a real sentence always carries both axes.**
+
+With Node available, `node tools/validate-lesson.js --complete your-lesson.json`
+reports any sentence that misses this bar.
 
 ## LABEL IDS
 
