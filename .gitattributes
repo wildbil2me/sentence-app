@@ -1,0 +1,13 @@
+# Keep LF in the working tree on every platform.
+#
+# tools/smoke-test.js and tools/gen-docs.js write LF-terminated files. If Git
+# checked those same files out as CRLF on Windows, every regeneration would show
+# up as a whole-file diff and the "samples/ is up to date" CI check would be
+# meaningless. Normalizing everything to LF avoids that entirely.
+* text=auto eol=lf
+
+# GitHub language stats: docs and generated exports aren't the project.
+docs/coverage-labels.json linguist-generated=true
+docs/coverage-labels.csv linguist-generated=true
+docs/product/grammar-reference.md linguist-generated=true
+samples/*.json linguist-generated=true
