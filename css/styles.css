@@ -412,6 +412,10 @@ body {
   align-items: center;
   gap: 6px;
   min-width: 0;
+  /* One labeled bar's natural height (12px x 1.55 + 5px padding + 4px border),
+     so an empty continuation segment of a wrapped span can't collapse into a
+     thin bar. Same collapse the layer pills solve with .pill-lg min-height. */
+  min-height: 28px;
   border: 1px solid color-mix(in srgb, var(--c) 55%, transparent);
   border-top: 3px solid var(--c);
   background: color-mix(in srgb, var(--c) 13%, var(--card));
@@ -440,7 +444,7 @@ body {
 .gl-bar-abbr { font-weight: 800; color: var(--c); flex: none; }
 .gl-bar-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
 .gl-bar-note { flex: none; font-size: 11px; opacity: 0.8; }
-.gl-size-lg .gl-bar { font-size: 15px; padding: 4px 10px 5px; border-radius: 9px; }
+.gl-size-lg .gl-bar { font-size: 15px; padding: 4px 10px 5px; border-radius: 9px; min-height: 37px; }
 
 /* Reserved-but-hidden layer (Present mode): keeps its grid track's height so a
    toggled layer appears in place instead of resizing the whole block.

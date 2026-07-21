@@ -59,6 +59,11 @@
     var explainEl = view.querySelector('[data-role="explain"]');
     var dotsEl = view.querySelector('[data-role="dots"]');
 
+    // The current rendered sentence and its "turn on a level" tip. A layer
+    // toggle patches these in place (see applyVisible) instead of rebuilding.
+    var stageRender = null;
+    var tipEl = null;
+
     function annsInLayer(annotations, layerId) {
       var n = 0;
       (annotations || []).forEach(function (a) {
@@ -90,13 +95,14 @@
           b.type = "button";
           var on = visible.indexOf(layerId) !== -1;
           b.className = "pill pill-lg" + (on ? " is-on" : "");
+          b.dataset.layer = layerId;
           b.innerHTML = wjt.escapeHtml(wjt.LAYERS[layerId].name) +
             ' <span class="pill-count">' + here + " / " + total + "</span>";
           b.title = here + " on screen · " + total + " in this passage";
           b.addEventListener("click", function () {
             var i = visible.indexOf(layerId);
             if (i === -1) visible.push(layerId); else visible.splice(i, 1);
-            renderStage();
+            applyVisible();
           });
           chipsEl.appendChild(b);
         });
@@ -157,6 +163,18 @@
       explainEl.querySelector('[data-act="close"]').addEventListener("click", hideExplain);
     }
 
+    // A layer toggle only flips visibility on the already-laid-out sentence:
+    // patch the render, the pills' on-state, and the tip. No rebuild — so no
+    // flash and no vertical shift, because every reserved row stays in place.
+    function applyVisible() {
+      if (stageRender) stageRender.setLayers(visible);
+      var pills = chipsEl.querySelectorAll(".pill[data-layer]");
+      for (var i = 0; i < pills.length; i++) {
+        pills[i].classList.toggle("is-on", visible.indexOf(pills[i].dataset.layer) !== -1);
+      }
+      if (tipEl) tipEl.hidden = visible.length > 0;
+    }
+
     function renderStage() {
       hideExplain();
       renderChips();
@@ -171,15 +189,17 @@
         size: "lg",
         onAnnClick: function (ann, el, labelId) { showExplain(sentence, ann, labelId); },
       });
+      stageRender = r;
       stageEl.appendChild(r.root);
       var badges = wjt.renderTypeBadges(sentence, showTypeExplain);
       if (badges) stageEl.appendChild(badges);
-      if (!visible.length) {
-        var tip = document.createElement("div");
-        tip.className = "stage-tip";
-        tip.textContent = "Turn on a level above to reveal the breakdown.";
-        stageEl.appendChild(tip);
-      }
+      // The tip lives in the stage full-time so a toggle can show/hide it
+      // without touching the rest of the breakdown.
+      tipEl = document.createElement("div");
+      tipEl.className = "stage-tip";
+      tipEl.textContent = "Turn on a level above to reveal the breakdown.";
+      tipEl.hidden = visible.length > 0;
+      stageEl.appendChild(tipEl);
       renderDots();
     }
 
@@ -193,10 +213,10 @@
     view.querySelector('[data-act="prev"]').addEventListener("click", function () { go(-1); });
     view.querySelector('[data-act="next"]').addEventListener("click", function () { go(1); });
     view.querySelector('[data-act="all"]').addEventListener("click", function () {
-      visible = lesson.layers.slice(); renderStage();
+      visible = lesson.layers.slice(); applyVisible();
     });
     view.querySelector('[data-act="none"]').addEventListener("click", function () {
-      visible = []; renderStage();
+      visible = []; applyVisible();
     });
 
     // Full screen — the Fullscreen API works from file:// and needs no network.

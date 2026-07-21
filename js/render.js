@@ -38,7 +38,11 @@
     // keeps a constant height as `layers` is toggled. Defaults to `layers`,
     // which reserves nothing and reproduces the legacy layout exactly.
     var reserve = opts.reserve || layers;
-    function shown(layerId) { return layers.indexOf(layerId) !== -1; }
+    // Visible layers are mutable: setLayers() updates this and patches the
+    // existing DOM, so a caller (Present) can toggle a layer without a rebuild.
+    // layout() reads it too, so a resize reflow reproduces the current state.
+    var curLayers = layers.slice();
+    function shown(layerId) { return curLayers.indexOf(layerId) !== -1; }
     var show = opts.showAnnotations !== false;
     var tokens = wjt.tokenize(sentence.text);
     var anns = (sentence.annotations || []).slice();
@@ -48,7 +52,7 @@
 
     // Empty sentence: nothing to lay out.
     if (!tokens.length) {
-      return { root: root, grid: root, tokens: tokens, tokenEls: [], selection: null };
+      return { root: root, grid: root, tokens: tokens, tokenEls: [], selection: null, setLayers: function () {} };
     }
 
     function annKey(a) { return a.id || (a.start + ":" + a.end + ":" + a.label); }
@@ -69,13 +73,14 @@
       })
       .filter(Boolean);
 
-    // One sorted item list per reserved bar layer, tagged with whether it shows.
+    // One sorted item list per reserved bar layer, tagged with its layer id
+    // (layout reads the live `shown` state to decide whether it's visible).
     var barLayers = show
       ? BAR_LAYERS
           .filter(function (layerId) { return reserve.indexOf(layerId) !== -1; })
           .map(function (layerId) {
             return {
-              shown: shown(layerId),
+              layerId: layerId,
               items: anns
                 .map(function (a) {
                   var l = wjt.layerOf(a.label);
@@ -164,7 +169,7 @@
           grid.appendChild(el);
         }
 
-        var posHide = posShown ? "" : " gl-hidden";
+        var posHide = shown("pos") ? "" : " gl-hidden";
         linePos.forEach(function (p) {
           var item = p.item, seg = p.seg, label = item.label, col = cols(seg);
           var cc = contClass(seg, item.range) + posHide;
@@ -180,6 +185,7 @@
             pchip.style.gridColumn = col;
             pchip.style.setProperty("--c", label.color);
             pchip.dataset.ann = annKey(item.ann);
+            pchip.dataset.layer = "pos";
             if (opts.onAnnClick) {
               // Third arg: explain the broad class, not the specific subtype.
               pchip.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(item.ann, pchip, label.parent); });
@@ -196,6 +202,7 @@
           chip.style.gridColumn = col;
           chip.style.setProperty("--c", label.color);
           chip.dataset.ann = annKey(item.ann);
+          chip.dataset.layer = "pos";
           if (opts.onAnnClick) {
             chip.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(item.ann, chip); });
           }
@@ -205,7 +212,7 @@
         // Span bars: clip to the line, then pack lanes on the clipped ranges.
         var nextRow = tokenRow + 1;
         barLayers.forEach(function (bl) {
-          var barHide = bl.shown ? "" : " gl-hidden";
+          var barHide = shown(bl.layerId) ? "" : " gl-hidden";
           var lineItems = bl.items
             .map(function (item) {
               var seg = clip(item.range, lineFirst, lineLast);
@@ -235,6 +242,7 @@
             bar.style.gridColumn = cols(seg);
             bar.style.setProperty("--c", label.color);
             bar.dataset.ann = annKey(item.ann);
+            bar.dataset.layer = bl.layerId;
             // Label text on the true start segment only; continuations stay bare.
             bar.innerHTML = seg.first > item.range.first ? "" :
               '<span class="gl-bar-abbr">' + wjt.escapeHtml(label.abbr) + "</span>" +
@@ -322,7 +330,31 @@
       ? wjt.attachSelection(root, tokenEls, opts.onSelect || function () {})
       : null;
 
-    return { root: root, grid: root, tokens: tokens, tokenEls: tokenEls, selection: selection };
+    // Show/hide layers on the already-laid-out sentence. Toggling visibility
+    // never changes token widths, so line breaks and every reserved row stay
+    // put — no rebuild, no reflow, and no pop-in replay (the DOM is patched, not
+    // recreated). layout() reads curLayers, so a later reflow keeps this state.
+    function setLayers(next) {
+      curLayers = (next || []).slice();
+      tokenEls.forEach(function (el) {
+        el.classList.remove("has-pos");
+        el.style.removeProperty("--c");
+      });
+      if (show && shown("pos")) {
+        posItems.forEach(function (item) {
+          for (var i = item.range.first; i <= item.range.last; i++) {
+            tokenEls[i].classList.add("has-pos");
+            tokenEls[i].style.setProperty("--c", item.label.color);
+          }
+        });
+      }
+      var els = root.querySelectorAll("[data-layer]");
+      for (var k = 0; k < els.length; k++) {
+        els[k].classList.toggle("gl-hidden", !shown(els[k].dataset.layer));
+      }
+    }
+
+    return { root: root, grid: root, tokens: tokens, tokenEls: tokenEls, selection: selection, setLayers: setLayers };
   };
 
   /**
