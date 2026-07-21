@@ -37,147 +37,270 @@
     var root = document.createElement("div");
     root.className = "gl-sentence" + (opts.size === "lg" ? " gl-size-lg" : "");
 
-    var grid = document.createElement("div");
-    grid.className = "gl-grid" + (opts.interactive ? " is-interactive" : "");
-    grid.style.gridTemplateColumns = "repeat(" + tokens.length + ", max-content)";
-    root.appendChild(grid);
+    // Empty sentence: nothing to lay out.
+    if (!tokens.length) {
+      return { root: root, grid: root, tokens: tokens, tokenEls: [], selection: null };
+    }
 
-    /* --- work out rows ---
-     * When any word is labeled with a drill-down subtype (e.g. Proper Noun),
-     * the chips stack in two rows: the broad class on top, the specific type
-     * just above the word. Otherwise a single chip row sits above the words. */
-    var posAnns = show && layers.indexOf("pos") !== -1
+    function annKey(a) { return a.id || (a.start + ":" + a.end + ":" + a.label); }
+
+    /* --- precompute annotation ranges (global; independent of line breaks) --- */
+    var posItems = (show && layers.indexOf("pos") !== -1
       ? anns.filter(function (a) { return wjt.layerOf(a.label) && wjt.layerOf(a.label).id === "pos"; })
-      : [];
-    var anySubtype = posAnns.some(function (a) {
-      return wjt.LABELS[a.label] && wjt.LABELS[a.label].parent;
-    });
-    var baseRow = anySubtype ? 1 : 0;                                  // broad-class chips
-    var specRow = posAnns.length ? (anySubtype ? 2 : 1) : 0;           // specific chips (nearest word)
-    var tokenRow = posAnns.length ? (anySubtype ? 3 : 2) : 1;
+      : [])
+      .map(function (a) {
+        var label = wjt.LABELS[a.label];
+        if (!label) return null;
+        var range = wjt.spanToTokens(tokens, a.start, a.end);
+        return range ? { ann: a, range: range, label: label } : null;
+      })
+      .filter(Boolean);
 
-    /* --- token cells --- */
+    // One sorted item list per visible bar layer; lanes are packed per line below.
+    var barLayers = show
+      ? BAR_LAYERS
+          .filter(function (layerId) { return layers.indexOf(layerId) !== -1; })
+          .map(function (layerId) {
+            return anns
+              .map(function (a) {
+                var l = wjt.layerOf(a.label);
+                if (!l || l.id !== layerId) return null;
+                var range = wjt.spanToTokens(tokens, a.start, a.end);
+                return range ? { ann: a, range: range, label: wjt.LABELS[a.label] } : null;
+              })
+              .filter(Boolean)
+              .sort(function (x, y) {
+                return x.range.first - y.range.first ||
+                  (y.range.last - y.range.first) - (x.range.last - x.range.first);
+              });
+          })
+      : [];
+
+    /* --- token cells: built once, re-parented into their line-grid on reflow --- */
     var hlRange = opts.highlight ? wjt.spanToTokens(tokens, opts.highlight.start, opts.highlight.end) : null;
     var tokenEls = tokens.map(function (t) {
       var el = document.createElement("span");
       el.className = "gl-token";
       el.textContent = t.text;
       el.dataset.i = t.i;
-      el.style.gridRow = tokenRow;
-      el.style.gridColumn = (t.i + 1) + "";
       if (hlRange && t.i >= hlRange.first && t.i <= hlRange.last) {
         el.classList.add("is-hl");
         if (t.i === hlRange.first) el.classList.add("is-hl-first");
         if (t.i === hlRange.last) el.classList.add("is-hl-last");
       }
-      grid.appendChild(el);
       return el;
     });
 
-    /* --- part-of-speech chips + colored underlines --- */
-    posAnns.forEach(function (a) {
-      var label = wjt.LABELS[a.label];
-      if (!label) return;
-      var range = wjt.spanToTokens(tokens, a.start, a.end);
-      if (!range) return;
-      var col = (range.first + 1) + " / " + (range.last + 2);
-
-      // Family chip (the parent's broad class), shown above a drilled-down type.
-      var parent = label.parent ? wjt.LABELS[label.parent] : null;
-      if (parent) {
-        var pchip = document.createElement("button");
-        pchip.type = "button";
-        pchip.className = "gl-chip gl-chip-parent";
-        pchip.textContent = parent.abbr;
-        pchip.title = parent.name + " (broad class of " + label.name + ")";
-        pchip.style.gridRow = baseRow;
-        pchip.style.gridColumn = col;
-        pchip.style.setProperty("--c", label.color);
-        if (opts.onAnnClick) {
-          // Third arg: explain the broad class, not the specific subtype.
-          pchip.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(a, pchip, label.parent); });
-        }
-        grid.appendChild(pchip);
-      }
-
-      // Specific chip (the label the teacher assigned), nearest the word.
-      var chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "gl-chip";
-      chip.textContent = label.abbr;
-      chip.title = label.name + (a.note ? " — " + a.note : "");
-      chip.style.gridRow = specRow;
-      chip.style.gridColumn = col;
-      chip.style.setProperty("--c", label.color);
-      if (opts.onAnnClick) {
-        chip.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(a, chip); });
-      }
-      grid.appendChild(chip);
-
-      for (var i = range.first; i <= range.last; i++) {
+    // The part-of-speech underline is per token (global) — colour it once.
+    posItems.forEach(function (item) {
+      for (var i = item.range.first; i <= item.range.last; i++) {
         tokenEls[i].classList.add("has-pos");
-        tokenEls[i].style.setProperty("--c", label.color);
+        tokenEls[i].style.setProperty("--c", item.label.color);
       }
     });
 
-    /* --- span bars, one block of lanes per layer --- */
-    var nextRow = tokenRow + 1;
-    if (show) {
-      BAR_LAYERS.forEach(function (layerId) {
-        if (layers.indexOf(layerId) === -1) return;
-        var layerAnns = anns
-          .map(function (a) {
-            var l = wjt.layerOf(a.label);
-            if (!l || l.id !== layerId) return null;
-            var range = wjt.spanToTokens(tokens, a.start, a.end);
-            return range ? { ann: a, range: range } : null;
+    /* --- lay the sentence out across `lines` (each a global {first,last}) --- *
+     * One .gl-grid per visual line, stacked vertically. Chips and bars are
+     * clipped to each line; a span that crosses a break renders as one squared
+     * segment per line. Rows and lanes are recomputed per line — the grids are
+     * independent, so a lane number can't (and needn't) align across lines. */
+    function clip(range, lineFirst, lineLast) {
+      if (range.last < lineFirst || range.first > lineLast) return null;
+      return { first: Math.max(range.first, lineFirst), last: Math.min(range.last, lineLast) };
+    }
+    function contClass(seg, range) {
+      return (seg.first > range.first ? " is-cont-left" : "") +
+        (seg.last < range.last ? " is-cont-right" : "");
+    }
+
+    function layout(lines) {
+      root.innerHTML = "";
+      lines.forEach(function (line) {
+        var lineFirst = line.first, lineLast = line.last;
+        function cols(seg) {
+          return (seg.first - lineFirst + 1) + " / " + (seg.last - lineFirst + 2);
+        }
+
+        // Chips that touch this line, and the resulting row layout for it.
+        var linePos = posItems
+          .map(function (item) {
+            var seg = clip(item.range, lineFirst, lineLast);
+            return seg ? { item: item, seg: seg } : null;
           })
-          .filter(Boolean)
-          .sort(function (x, y) {
-            return x.range.first - y.range.first ||
-              (y.range.last - y.range.first) - (x.range.last - x.range.first);
-          });
-        if (!layerAnns.length) return;
+          .filter(Boolean);
+        var anySubtype = linePos.some(function (p) { return p.item.label.parent; });
+        var baseRow = anySubtype ? 1 : 0;                          // broad-class chips
+        var specRow = linePos.length ? (anySubtype ? 2 : 1) : 0;   // specific chips
+        var tokenRow = linePos.length ? (anySubtype ? 3 : 2) : 1;
 
-        // Greedy lane packing: reuse a lane when the previous bar ended.
-        var laneEnds = [];
-        layerAnns.forEach(function (item) {
-          var lane = -1;
-          for (var li = 0; li < laneEnds.length; li++) {
-            if (laneEnds[li] < item.range.first) { lane = li; break; }
+        var grid = document.createElement("div");
+        grid.className = "gl-grid" + (opts.interactive ? " is-interactive" : "");
+        grid.style.gridTemplateColumns = "repeat(" + (lineLast - lineFirst + 1) + ", max-content)";
+
+        for (var i = lineFirst; i <= lineLast; i++) {
+          var el = tokenEls[i];
+          el.style.gridRow = tokenRow;
+          el.style.gridColumn = (i - lineFirst + 1) + "";
+          grid.appendChild(el);
+        }
+
+        linePos.forEach(function (p) {
+          var item = p.item, seg = p.seg, label = item.label, col = cols(seg);
+          var cc = contClass(seg, item.range);
+
+          var parent = label.parent ? wjt.LABELS[label.parent] : null;
+          if (parent) {
+            var pchip = document.createElement("button");
+            pchip.type = "button";
+            pchip.className = "gl-chip gl-chip-parent" + cc;
+            pchip.textContent = parent.abbr;
+            pchip.title = parent.name + " (broad class of " + label.name + ")";
+            pchip.style.gridRow = baseRow;
+            pchip.style.gridColumn = col;
+            pchip.style.setProperty("--c", label.color);
+            pchip.dataset.ann = annKey(item.ann);
+            if (opts.onAnnClick) {
+              // Third arg: explain the broad class, not the specific subtype.
+              pchip.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(item.ann, pchip, label.parent); });
+            }
+            grid.appendChild(pchip);
           }
-          if (lane === -1) { lane = laneEnds.length; laneEnds.push(-1); }
-          laneEnds[lane] = item.range.last;
-          item.lane = lane;
-        });
 
-        layerAnns.forEach(function (item) {
-          var label = wjt.LABELS[item.ann.label];
-          var bar = document.createElement("button");
-          bar.type = "button";
-          bar.className = "gl-bar";
-          bar.style.gridRow = (nextRow + item.lane) + "";
-          bar.style.gridColumn = (item.range.first + 1) + " / " + (item.range.last + 2);
-          bar.style.setProperty("--c", label.color);
-          bar.innerHTML =
-            '<span class="gl-bar-abbr">' + wjt.escapeHtml(label.abbr) + "</span>" +
-            '<span class="gl-bar-name">' + wjt.escapeHtml(label.name) + "</span>" +
-            (item.ann.note ? '<span class="gl-bar-note" title="Has a note">✎</span>' : "");
-          bar.title = label.name + (item.ann.note ? " — " + item.ann.note : "");
+          var chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "gl-chip" + cc;
+          chip.textContent = label.abbr;
+          chip.title = label.name + (item.ann.note ? " — " + item.ann.note : "");
+          chip.style.gridRow = specRow;
+          chip.style.gridColumn = col;
+          chip.style.setProperty("--c", label.color);
+          chip.dataset.ann = annKey(item.ann);
           if (opts.onAnnClick) {
-            bar.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(item.ann, bar); });
+            chip.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(item.ann, chip); });
           }
-          grid.appendChild(bar);
+          grid.appendChild(chip);
         });
-        nextRow += laneEnds.length;
+
+        // Span bars: clip to the line, then pack lanes on the clipped ranges.
+        var nextRow = tokenRow + 1;
+        barLayers.forEach(function (items) {
+          var lineItems = items
+            .map(function (item) {
+              var seg = clip(item.range, lineFirst, lineLast);
+              return seg ? { item: item, seg: seg } : null;
+            })
+            .filter(Boolean);
+          if (!lineItems.length) return;
+
+          var laneEnds = [];
+          lineItems.forEach(function (li) {
+            var lane = -1;
+            for (var k = 0; k < laneEnds.length; k++) {
+              if (laneEnds[k] < li.seg.first) { lane = k; break; }
+            }
+            if (lane === -1) { lane = laneEnds.length; laneEnds.push(-1); }
+            laneEnds[lane] = li.seg.last;
+            li.lane = lane;
+          });
+
+          lineItems.forEach(function (li) {
+            var item = li.item, seg = li.seg, label = item.label;
+            var cont = contClass(seg, item.range);
+            var bar = document.createElement("button");
+            bar.type = "button";
+            bar.className = "gl-bar" + cont;
+            bar.style.gridRow = (nextRow + li.lane) + "";
+            bar.style.gridColumn = cols(seg);
+            bar.style.setProperty("--c", label.color);
+            bar.dataset.ann = annKey(item.ann);
+            // Label text on the true start segment only; continuations stay bare.
+            bar.innerHTML = seg.first > item.range.first ? "" :
+              '<span class="gl-bar-abbr">' + wjt.escapeHtml(label.abbr) + "</span>" +
+              '<span class="gl-bar-name">' + wjt.escapeHtml(label.name) + "</span>" +
+              (item.ann.note ? '<span class="gl-bar-note" title="Has a note">✎</span>' : "");
+            bar.title = label.name + (item.ann.note ? " — " + item.ann.note : "");
+            if (opts.onAnnClick) {
+              bar.addEventListener("click", function (e) { e.stopPropagation(); opts.onAnnClick(item.ann, bar); });
+            }
+            grid.appendChild(bar);
+          });
+          nextRow += laneEnds.length;
+        });
+
+        root.appendChild(grid);
       });
     }
 
+    /* --- decide line breaks by measuring the real, laid-out tokens --- *
+     * Available width comes from the host (the container the caller inserts
+     * `root` into), which is stable full-width; `root` itself shrinks to its
+     * content in centered layouts like Present, so it can't be measured. */
+    function computeLines() {
+      var host = root.parentNode;
+      var probe = host && host.nodeType === 1 ? host : root;
+      var avail = probe.clientWidth;
+      if (!avail) return null;
+      var pcs = window.getComputedStyle(probe);
+      avail -= (parseFloat(pcs.paddingLeft) || 0) + (parseFloat(pcs.paddingRight) || 0);
+      var gap = 0;
+      var g = root.querySelector(".gl-grid");
+      if (g) {
+        var gcs = window.getComputedStyle(g);
+        gap = parseFloat(gcs.columnGap) || 0;
+        avail -= (parseFloat(gcs.paddingLeft) || 0) + (parseFloat(gcs.paddingRight) || 0);
+      }
+      if (avail <= 0) return null;
+
+      var lines = [];
+      var start = 0, used = 0;
+      for (var i = 0; i < tokenEls.length; i++) {
+        var w = tokenEls[i].getBoundingClientRect().width;
+        if (i > start && used + gap + w > avail) {
+          lines.push({ first: start, last: i - 1 });
+          start = i;
+          used = w;
+        } else {
+          used += (i === start ? w : gap + w);
+        }
+      }
+      lines.push({ first: start, last: tokenEls.length - 1 });
+      return lines;
+    }
+
+    // Start as a single line — byte-for-byte the legacy layout, and the state
+    // we measure from once the caller has inserted `root`.
+    layout([{ first: 0, last: tokens.length - 1 }]);
+    var lastKey = "0:" + (tokens.length - 1);
+
+    var ro = null, pending = false;
+    function reflow() {
+      if (!root.isConnected) { if (ro) ro.disconnect(); return; }
+      var lines = computeLines();
+      if (!lines) return;
+      var key = lines.map(function (l) { return l.first + ":" + l.last; }).join(",");
+      if (key === lastKey) return;
+      lastKey = key;
+      layout(lines);
+    }
+    // Relayout on the next frame, not inside the observer callback: rebuilding
+    // the grids changes `root`'s own size, and doing that synchronously trips
+    // the "ResizeObserver loop" warning.
+    function scheduleReflow() {
+      if (pending) return;
+      pending = true;
+      var raf = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 16); };
+      raf(function () { pending = false; reflow(); });
+    }
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(scheduleReflow);
+      ro.observe(root);
+    }
+
     var selection = opts.interactive
-      ? wjt.attachSelection(grid, tokenEls, opts.onSelect || function () {})
+      ? wjt.attachSelection(root, tokenEls, opts.onSelect || function () {})
       : null;
 
-    return { root: root, grid: grid, tokens: tokens, tokenEls: tokenEls, selection: selection };
+    return { root: root, grid: root, tokens: tokens, tokenEls: tokenEls, selection: selection };
   };
 
   /**
@@ -217,7 +340,7 @@
    * (tokens set touch-action: none in CSS). Single click selects one token.
    * Returns { clear(), set(range), get() }.
    */
-  wjt.attachSelection = function (grid, tokenEls, onDone) {
+  wjt.attachSelection = function (container, tokenEls, onDone) {
     var anchor = -1, head = -1;
 
     function paint() {
@@ -230,7 +353,7 @@
       });
     }
 
-    grid.addEventListener("pointerdown", function (e) {
+    container.addEventListener("pointerdown", function (e) {
       var t = e.target.closest && e.target.closest(".gl-token");
       if (!t || e.button > 0) return;
       e.preventDefault();
@@ -240,7 +363,9 @@
       function move(ev) {
         var el = document.elementFromPoint(ev.clientX, ev.clientY);
         var tk = el && el.closest && el.closest(".gl-token");
-        if (tk && tk.parentNode === grid) { head = +tk.dataset.i; paint(); }
+        // Scope to this sentence: its tokens now live in several line-grids,
+        // so check ownership by containment rather than a single parent grid.
+        if (tk && container.contains(tk)) { head = +tk.dataset.i; paint(); }
       }
       function up(ev) {
         document.removeEventListener("pointermove", move);

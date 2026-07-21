@@ -85,8 +85,13 @@
         app.appendChild(r.root);
         // Count one mark per annotation: bars, plus the *specific* chips only
         // (a POS subtype adds a second, parent chip that isn't its own mark).
-        marks += r.root.querySelectorAll(".gl-bar").length +
-          r.root.querySelectorAll(".gl-chip:not(.gl-chip-parent)").length;
+        // Count distinct data-ann so a span wrapped across lines — which renders
+        // one squared segment per line — still counts as a single mark.
+        var ids = {};
+        Array.prototype.forEach.call(
+          r.root.querySelectorAll(".gl-bar, .gl-chip:not(.gl-chip-parent)"),
+          function (el) { ids[el.dataset.ann] = 1; });
+        marks += Object.keys(ids).length;
       });
       check("example " + ex.id + ": rendered " + marks + "/" + expected + " annotation marks",
         marks === expected && expected > 0);
