@@ -1,0 +1,59 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    name: logic layer (node)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run smoke test
+        run: node tools/smoke-test.js
+
+      # Generated docs (coverage-labels.*, grammar-reference.md) must match labels.js.
+      - name: Generated docs are up to date
+        run: node tools/gen-docs.js --check
+
+      # Every shipped sample and every documented example must import cleanly.
+      - name: Validate lessons and documented examples
+        run: |
+          node tools/validate-lesson.js samples/*.json \
+            docs/custom-gpt-instructions.md docs/project/lesson-json.md
+
+      # smoke-test.js regenerates samples/*.json from the built-in examples.
+      # If that changes anything, the committed samples are stale.
+      - name: Samples are up to date
+        run: |
+          if ! git diff --quiet -- samples/; then
+            echo "::error::samples/ is out of date. Run 'node tools/smoke-test.js' and commit the result."
+            git diff --stat -- samples/
+            exit 1
+          fi
+
+  dom-check:
+    name: rendering layer (headless chrome)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # dom-check-report.js parses the <pre id="result"> block. Don't grep the
+      # raw dump — it contains dom-check.html's own source, which has the
+      # literal strings "PASS" and "FAIL" in it.
+      - name: Dump tools/dom-check.html and report
+        run: |
+          google-chrome --headless=new --disable-gpu --no-sandbox \
+            --user-data-dir="$(mktemp -d)" --virtual-time-budget=5000 --dump-dom \
+            "file://$PWD/tools/dom-check.html" > "$RUNNER_TEMP/dom.html"
+          node tools/dom-check-report.js "$RUNNER_TEMP/dom.html"

@@ -1,0 +1,853 @@
+{
+  "spanLabels": [
+    {
+      "id": "noun",
+      "layer": "pos",
+      "parent": "",
+      "name": "Noun",
+      "abbr": "N",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "common-noun",
+      "layer": "pos",
+      "parent": "noun",
+      "name": "Common Noun",
+      "abbr": "com",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "proper-noun",
+      "layer": "pos",
+      "parent": "noun",
+      "name": "Proper Noun",
+      "abbr": "prop",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "collective-noun",
+      "layer": "pos",
+      "parent": "noun",
+      "name": "Collective Noun",
+      "abbr": "coll",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "abstract-noun",
+      "layer": "pos",
+      "parent": "noun",
+      "name": "Abstract Noun",
+      "abbr": "abs",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "concrete-noun",
+      "layer": "pos",
+      "parent": "noun",
+      "name": "Concrete Noun",
+      "abbr": "conc",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "possessive-noun",
+      "layer": "pos",
+      "parent": "noun",
+      "name": "Possessive Noun",
+      "abbr": "pos",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "verb",
+      "layer": "pos",
+      "parent": "",
+      "name": "Verb",
+      "abbr": "V",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "action-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Action Verb",
+      "abbr": "act",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "linking-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Linking Verb",
+      "abbr": "link",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "helping-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Helping (Auxiliary) Verb",
+      "abbr": "help",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "transitive-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Transitive Verb",
+      "abbr": "trans",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "intransitive-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Intransitive Verb",
+      "abbr": "intr",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "modal-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Modal Verb",
+      "abbr": "modal",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "regular-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Regular Verb",
+      "abbr": "reg",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "irregular-verb",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Irregular Verb",
+      "abbr": "irr",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "gerund",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Gerund",
+      "abbr": "ger",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "participle",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Participle",
+      "abbr": "part.",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "infinitive",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Infinitive",
+      "abbr": "inf",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "particle",
+      "layer": "pos",
+      "parent": "verb",
+      "name": "Particle (phrasal verb)",
+      "abbr": "prt",
+      "color": "#f4574d",
+      "tier": "advanced"
+    },
+    {
+      "id": "adjective",
+      "layer": "pos",
+      "parent": "",
+      "name": "Adjective",
+      "abbr": "Adj",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "descriptive-adjective",
+      "layer": "pos",
+      "parent": "adjective",
+      "name": "Descriptive Adjective",
+      "abbr": "desc",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "proper-adjective",
+      "layer": "pos",
+      "parent": "adjective",
+      "name": "Proper Adjective",
+      "abbr": "prop",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "demonstrative-adjective",
+      "layer": "pos",
+      "parent": "adjective",
+      "name": "Demonstrative Adjective",
+      "abbr": "dem",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "possessive-adjective",
+      "layer": "pos",
+      "parent": "adjective",
+      "name": "Possessive Adjective",
+      "abbr": "poss",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "quantitative-adjective",
+      "layer": "pos",
+      "parent": "adjective",
+      "name": "Adjective of Quantity/Number",
+      "abbr": "quant",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "comparative-adjective",
+      "layer": "pos",
+      "parent": "adjective",
+      "name": "Comparative Adjective",
+      "abbr": "compar",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "superlative-adjective",
+      "layer": "pos",
+      "parent": "adjective",
+      "name": "Superlative Adjective",
+      "abbr": "super",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "adverb",
+      "layer": "pos",
+      "parent": "",
+      "name": "Adverb",
+      "abbr": "Adv",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "adverb-of-manner",
+      "layer": "pos",
+      "parent": "adverb",
+      "name": "Adverb of Manner",
+      "abbr": "manner",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "adverb-of-time",
+      "layer": "pos",
+      "parent": "adverb",
+      "name": "Adverb of Time",
+      "abbr": "time",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "adverb-of-place",
+      "layer": "pos",
+      "parent": "adverb",
+      "name": "Adverb of Place",
+      "abbr": "place",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "adverb-of-frequency",
+      "layer": "pos",
+      "parent": "adverb",
+      "name": "Adverb of Frequency",
+      "abbr": "freq",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "adverb-of-degree",
+      "layer": "pos",
+      "parent": "adverb",
+      "name": "Adverb of Degree",
+      "abbr": "degree",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "relative-adverb",
+      "layer": "pos",
+      "parent": "adverb",
+      "name": "Relative Adverb",
+      "abbr": "rel",
+      "color": "#a06bf5",
+      "tier": "advanced"
+    },
+    {
+      "id": "pronoun",
+      "layer": "pos",
+      "parent": "",
+      "name": "Pronoun",
+      "abbr": "Pro",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "personal-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Personal Pronoun",
+      "abbr": "pers",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "possessive-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Possessive Pronoun",
+      "abbr": "poss",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "reflexive-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Reflexive Pronoun",
+      "abbr": "refl",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "relative-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Relative Pronoun",
+      "abbr": "rel",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "demonstrative-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Demonstrative Pronoun",
+      "abbr": "dem",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "interrogative-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Interrogative Pronoun",
+      "abbr": "interr",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "indefinite-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Indefinite Pronoun",
+      "abbr": "indef",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "emphatic-pronoun",
+      "layer": "pos",
+      "parent": "pronoun",
+      "name": "Emphatic Pronoun",
+      "abbr": "emph",
+      "color": "#f57f2c",
+      "tier": "advanced"
+    },
+    {
+      "id": "preposition",
+      "layer": "pos",
+      "parent": "",
+      "name": "Preposition",
+      "abbr": "Prep",
+      "color": "#1fbfa5",
+      "tier": "essential"
+    },
+    {
+      "id": "conjunction",
+      "layer": "pos",
+      "parent": "",
+      "name": "Conjunction",
+      "abbr": "Conj",
+      "color": "#ef5da8",
+      "tier": "essential"
+    },
+    {
+      "id": "coordinating-conjunction",
+      "layer": "pos",
+      "parent": "conjunction",
+      "name": "Coordinating Conjunction",
+      "abbr": "coord",
+      "color": "#ef5da8",
+      "tier": "essential"
+    },
+    {
+      "id": "subordinating-conjunction",
+      "layer": "pos",
+      "parent": "conjunction",
+      "name": "Subordinating Conjunction",
+      "abbr": "subord",
+      "color": "#ef5da8",
+      "tier": "essential"
+    },
+    {
+      "id": "correlative-conjunction",
+      "layer": "pos",
+      "parent": "conjunction",
+      "name": "Correlative Conjunction",
+      "abbr": "correl",
+      "color": "#ef5da8",
+      "tier": "essential"
+    },
+    {
+      "id": "determiner",
+      "layer": "pos",
+      "parent": "",
+      "name": "Determiner",
+      "abbr": "Det",
+      "color": "#8fc93a",
+      "tier": "essential"
+    },
+    {
+      "id": "article",
+      "layer": "pos",
+      "parent": "determiner",
+      "name": "Article",
+      "abbr": "art",
+      "color": "#8fc93a",
+      "tier": "essential"
+    },
+    {
+      "id": "definite-article",
+      "layer": "pos",
+      "parent": "determiner",
+      "name": "Definite Article",
+      "abbr": "def",
+      "color": "#8fc93a",
+      "tier": "essential"
+    },
+    {
+      "id": "indefinite-article",
+      "layer": "pos",
+      "parent": "determiner",
+      "name": "Indefinite Article",
+      "abbr": "a/an",
+      "color": "#8fc93a",
+      "tier": "essential"
+    },
+    {
+      "id": "interjection",
+      "layer": "pos",
+      "parent": "",
+      "name": "Interjection",
+      "abbr": "Int",
+      "color": "#e3c229",
+      "tier": "essential"
+    },
+    {
+      "id": "subject",
+      "layer": "part",
+      "parent": "",
+      "name": "Subject",
+      "abbr": "Subj",
+      "color": "#38bdf8",
+      "tier": "essential"
+    },
+    {
+      "id": "simple-subject",
+      "layer": "part",
+      "parent": "subject",
+      "name": "Simple Subject",
+      "abbr": "SS",
+      "color": "#0ea5e9",
+      "tier": "essential"
+    },
+    {
+      "id": "complete-subject",
+      "layer": "part",
+      "parent": "subject",
+      "name": "Complete Subject",
+      "abbr": "CS",
+      "color": "#7dd3fc",
+      "tier": "essential"
+    },
+    {
+      "id": "compound-subject",
+      "layer": "part",
+      "parent": "subject",
+      "name": "Compound Subject",
+      "abbr": "CmpS",
+      "color": "#2563eb",
+      "tier": "essential"
+    },
+    {
+      "id": "understood-subject",
+      "layer": "part",
+      "parent": "subject",
+      "name": "Understood Subject",
+      "abbr": "(You)",
+      "color": "#bae6fd",
+      "tier": "essential"
+    },
+    {
+      "id": "predicate",
+      "layer": "part",
+      "parent": "",
+      "name": "Predicate",
+      "abbr": "Pred",
+      "color": "#fb7185",
+      "tier": "essential"
+    },
+    {
+      "id": "simple-predicate",
+      "layer": "part",
+      "parent": "predicate",
+      "name": "Simple Predicate",
+      "abbr": "SP",
+      "color": "#f43f5e",
+      "tier": "essential"
+    },
+    {
+      "id": "complete-predicate",
+      "layer": "part",
+      "parent": "predicate",
+      "name": "Complete Predicate",
+      "abbr": "CP",
+      "color": "#fda4af",
+      "tier": "essential"
+    },
+    {
+      "id": "compound-predicate",
+      "layer": "part",
+      "parent": "predicate",
+      "name": "Compound Predicate",
+      "abbr": "CmpP",
+      "color": "#e11d48",
+      "tier": "essential"
+    },
+    {
+      "id": "object",
+      "layer": "part",
+      "parent": "",
+      "name": "Object",
+      "abbr": "Obj",
+      "color": "#34d399",
+      "tier": "essential"
+    },
+    {
+      "id": "direct-object",
+      "layer": "part",
+      "parent": "object",
+      "name": "Direct Object",
+      "abbr": "DO",
+      "color": "#34d399",
+      "tier": "essential"
+    },
+    {
+      "id": "indirect-object",
+      "layer": "part",
+      "parent": "object",
+      "name": "Indirect Object",
+      "abbr": "IO",
+      "color": "#34d399",
+      "tier": "essential"
+    },
+    {
+      "id": "object-of-preposition",
+      "layer": "part",
+      "parent": "object",
+      "name": "Object of the Preposition",
+      "abbr": "OP",
+      "color": "#34d399",
+      "tier": "essential"
+    },
+    {
+      "id": "complement",
+      "layer": "part",
+      "parent": "",
+      "name": "Complement",
+      "abbr": "Comp",
+      "color": "#c084fc",
+      "tier": "essential"
+    },
+    {
+      "id": "subject-complement",
+      "layer": "part",
+      "parent": "complement",
+      "name": "Subject Complement",
+      "abbr": "SC",
+      "color": "#c084fc",
+      "tier": "essential"
+    },
+    {
+      "id": "predicate-nominative",
+      "layer": "part",
+      "parent": "complement",
+      "name": "Predicate Nominative",
+      "abbr": "PN",
+      "color": "#c084fc",
+      "tier": "essential"
+    },
+    {
+      "id": "predicate-adjective",
+      "layer": "part",
+      "parent": "complement",
+      "name": "Predicate Adjective",
+      "abbr": "PA",
+      "color": "#c084fc",
+      "tier": "essential"
+    },
+    {
+      "id": "object-complement",
+      "layer": "part",
+      "parent": "complement",
+      "name": "Object Complement",
+      "abbr": "OC",
+      "color": "#c084fc",
+      "tier": "advanced"
+    },
+    {
+      "id": "appositive",
+      "layer": "part",
+      "parent": "",
+      "name": "Appositive",
+      "abbr": "Appos",
+      "color": "#fbbf24",
+      "tier": "essential"
+    },
+    {
+      "id": "noun-phrase",
+      "layer": "phrase",
+      "parent": "",
+      "name": "Noun Phrase",
+      "abbr": "NP",
+      "color": "#f5a623",
+      "tier": "essential"
+    },
+    {
+      "id": "verb-phrase",
+      "layer": "phrase",
+      "parent": "",
+      "name": "Verb Phrase",
+      "abbr": "VP",
+      "color": "#f4574d",
+      "tier": "essential"
+    },
+    {
+      "id": "prepositional-phrase",
+      "layer": "phrase",
+      "parent": "",
+      "name": "Prepositional Phrase",
+      "abbr": "PP",
+      "color": "#1fbfa5",
+      "tier": "essential"
+    },
+    {
+      "id": "verbal-phrase",
+      "layer": "phrase",
+      "parent": "",
+      "name": "Verbal Phrase",
+      "abbr": "VerbP",
+      "color": "#8b5cf6",
+      "tier": "essential"
+    },
+    {
+      "id": "gerund-phrase",
+      "layer": "phrase",
+      "parent": "verbal-phrase",
+      "name": "Gerund Phrase",
+      "abbr": "GerP",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "infinitive-phrase",
+      "layer": "phrase",
+      "parent": "verbal-phrase",
+      "name": "Infinitive Phrase",
+      "abbr": "InfP",
+      "color": "#4d9df4",
+      "tier": "essential"
+    },
+    {
+      "id": "participial-phrase",
+      "layer": "phrase",
+      "parent": "verbal-phrase",
+      "name": "Participial Phrase",
+      "abbr": "PartP",
+      "color": "#ef5da8",
+      "tier": "essential"
+    },
+    {
+      "id": "appositive-phrase",
+      "layer": "phrase",
+      "parent": "",
+      "name": "Appositive Phrase",
+      "abbr": "AppP",
+      "color": "#2fbf6b",
+      "tier": "essential"
+    },
+    {
+      "id": "absolute-phrase",
+      "layer": "phrase",
+      "parent": "",
+      "name": "Absolute Phrase",
+      "abbr": "AbsP",
+      "color": "#e3c229",
+      "tier": "essential"
+    },
+    {
+      "id": "independent-clause",
+      "layer": "clause",
+      "parent": "",
+      "name": "Independent Clause",
+      "abbr": "IC",
+      "color": "#38bdf8",
+      "tier": "essential"
+    },
+    {
+      "id": "dependent-clause",
+      "layer": "clause",
+      "parent": "",
+      "name": "Dependent Clause",
+      "abbr": "DC",
+      "color": "#f57f2c",
+      "tier": "essential"
+    },
+    {
+      "id": "relative-clause",
+      "layer": "clause",
+      "parent": "dependent-clause",
+      "name": "Relative (Adjective) Clause",
+      "abbr": "RC",
+      "color": "#a06bf5",
+      "tier": "essential"
+    },
+    {
+      "id": "adverbial-clause",
+      "layer": "clause",
+      "parent": "dependent-clause",
+      "name": "Adverbial Clause",
+      "abbr": "AdvC",
+      "color": "#1fbfa5",
+      "tier": "essential"
+    },
+    {
+      "id": "noun-clause",
+      "layer": "clause",
+      "parent": "dependent-clause",
+      "name": "Noun Clause",
+      "abbr": "NC",
+      "color": "#f5a623",
+      "tier": "essential"
+    }
+  ],
+  "sentenceTypes": [
+    {
+      "axis": "structure",
+      "id": "simple",
+      "name": "Simple",
+      "abbr": "S",
+      "color": "#22c55e"
+    },
+    {
+      "axis": "structure",
+      "id": "compound",
+      "name": "Compound",
+      "abbr": "Cd",
+      "color": "#3b82f6"
+    },
+    {
+      "axis": "structure",
+      "id": "complex",
+      "name": "Complex",
+      "abbr": "Cx",
+      "color": "#a855f7"
+    },
+    {
+      "axis": "structure",
+      "id": "compound-complex",
+      "name": "Compound-Complex",
+      "abbr": "CdCx",
+      "color": "#ec4899"
+    },
+    {
+      "axis": "purpose",
+      "id": "declarative",
+      "name": "Declarative",
+      "abbr": "Decl",
+      "color": "#0ea5e9"
+    },
+    {
+      "axis": "purpose",
+      "id": "interrogative",
+      "name": "Interrogative",
+      "abbr": "Interr",
+      "color": "#f59e0b"
+    },
+    {
+      "axis": "purpose",
+      "id": "imperative",
+      "name": "Imperative",
+      "abbr": "Imper",
+      "color": "#14b8a6"
+    },
+    {
+      "axis": "purpose",
+      "id": "exclamatory",
+      "name": "Exclamatory",
+      "abbr": "Excl",
+      "color": "#ef4444"
+    }
+  ],
+  "counts": {
+    "spanLabels": 87,
+    "sentenceTypes": 8,
+    "byTier": {
+      "essential": 83,
+      "advanced": 4
+    }
+  }
+}

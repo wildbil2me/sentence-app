@@ -1,0 +1,400 @@
+{
+  "format": "grammar-lab-lesson",
+  "version": 1,
+  "title": "Sample: The Fox and the River",
+  "description": "A four-sentence demo annotated at every level — parts of speech, sentence parts (simple, complete, and compound subjects and predicates), phrases, clauses, and each sentence's type. Duplicate it, present it, or quiz on it.",
+  "layers": [
+    "pos",
+    "part",
+    "phrase",
+    "clause"
+  ],
+  "sentences": [
+    {
+      "text": "The curious fox darted across the frozen river.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner"
+        },
+        {
+          "start": 4,
+          "end": 11,
+          "label": "adjective"
+        },
+        {
+          "start": 12,
+          "end": 15,
+          "label": "noun"
+        },
+        {
+          "start": 16,
+          "end": 22,
+          "label": "verb"
+        },
+        {
+          "start": 23,
+          "end": 29,
+          "label": "preposition"
+        },
+        {
+          "start": 30,
+          "end": 33,
+          "label": "determiner"
+        },
+        {
+          "start": 34,
+          "end": 40,
+          "label": "adjective"
+        },
+        {
+          "start": 41,
+          "end": 47,
+          "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 15,
+          "label": "complete-subject",
+          "note": "The simple subject plus its modifiers."
+        },
+        {
+          "start": 12,
+          "end": 15,
+          "label": "simple-subject",
+          "note": "The one main noun the sentence is about."
+        },
+        {
+          "start": 16,
+          "end": 47,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 16,
+          "end": 22,
+          "label": "simple-predicate",
+          "note": "The verb by itself."
+        },
+        {
+          "start": 0,
+          "end": 15,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 23,
+          "end": 47,
+          "label": "prepositional-phrase",
+          "note": "Acts as an adverb: it tells where the fox darted."
+        },
+        {
+          "start": 0,
+          "end": 47,
+          "label": "independent-clause",
+          "note": "A complete thought that stands on its own."
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "Because the ice was thin, she moved carefully.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 7,
+          "label": "conjunction",
+          "note": "A subordinating conjunction — it makes the clause dependent."
+        },
+        {
+          "start": 8,
+          "end": 11,
+          "label": "determiner"
+        },
+        {
+          "start": 12,
+          "end": 15,
+          "label": "noun"
+        },
+        {
+          "start": 16,
+          "end": 19,
+          "label": "verb"
+        },
+        {
+          "start": 20,
+          "end": 25,
+          "label": "adjective"
+        },
+        {
+          "start": 26,
+          "end": 29,
+          "label": "pronoun"
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "verb"
+        },
+        {
+          "start": 36,
+          "end": 46,
+          "label": "adverb"
+        },
+        {
+          "start": 26,
+          "end": 29,
+          "label": "complete-subject",
+          "note": "Here the complete and simple subject are the same single word."
+        },
+        {
+          "start": 30,
+          "end": 46,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 20,
+          "end": 25,
+          "label": "complement",
+          "note": "A subject complement: it completes “the ice was…”"
+        },
+        {
+          "start": 0,
+          "end": 25,
+          "label": "dependent-clause",
+          "note": "It has a subject and verb but can’t stand alone."
+        },
+        {
+          "start": 0,
+          "end": 25,
+          "label": "adverbial-clause",
+          "note": "It tells WHY she moved carefully."
+        },
+        {
+          "start": 26,
+          "end": 46,
+          "label": "independent-clause"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "Her paws, quick and silent, barely touched the icy surface.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "pronoun",
+          "note": "A possessive pronoun acting as a determiner."
+        },
+        {
+          "start": 4,
+          "end": 9,
+          "label": "noun"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "label": "adjective"
+        },
+        {
+          "start": 16,
+          "end": 19,
+          "label": "conjunction"
+        },
+        {
+          "start": 20,
+          "end": 27,
+          "label": "adjective"
+        },
+        {
+          "start": 28,
+          "end": 34,
+          "label": "adverb"
+        },
+        {
+          "start": 35,
+          "end": 42,
+          "label": "verb"
+        },
+        {
+          "start": 43,
+          "end": 46,
+          "label": "determiner"
+        },
+        {
+          "start": 47,
+          "end": 50,
+          "label": "adjective"
+        },
+        {
+          "start": 51,
+          "end": 59,
+          "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 27,
+          "label": "complete-subject"
+        },
+        {
+          "start": 4,
+          "end": 9,
+          "label": "simple-subject"
+        },
+        {
+          "start": 28,
+          "end": 59,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 35,
+          "end": 42,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 43,
+          "end": 59,
+          "label": "direct-object",
+          "note": "It receives the action: what did the paws touch?"
+        },
+        {
+          "start": 0,
+          "end": 9,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 43,
+          "end": 59,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 0,
+          "end": 59,
+          "label": "independent-clause"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "The fox and the hare raced downhill and leaped over the log.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner"
+        },
+        {
+          "start": 4,
+          "end": 7,
+          "label": "noun"
+        },
+        {
+          "start": 8,
+          "end": 11,
+          "label": "conjunction"
+        },
+        {
+          "start": 12,
+          "end": 15,
+          "label": "determiner"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "label": "noun"
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "verb"
+        },
+        {
+          "start": 27,
+          "end": 35,
+          "label": "adverb"
+        },
+        {
+          "start": 36,
+          "end": 39,
+          "label": "conjunction"
+        },
+        {
+          "start": 40,
+          "end": 46,
+          "label": "verb"
+        },
+        {
+          "start": 47,
+          "end": 51,
+          "label": "preposition"
+        },
+        {
+          "start": 56,
+          "end": 60,
+          "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 20,
+          "label": "compound-subject",
+          "note": "Two subjects, one verb — joined by “and.”"
+        },
+        {
+          "start": 4,
+          "end": 7,
+          "label": "simple-subject"
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "label": "simple-subject"
+        },
+        {
+          "start": 21,
+          "end": 60,
+          "label": "compound-predicate",
+          "note": "Two verbs, one subject — joined by “and.”"
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 40,
+          "end": 46,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 47,
+          "end": 60,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 0,
+          "end": 60,
+          "label": "independent-clause",
+          "note": "Still ONE clause — a compound subject and predicate do not make a compound sentence."
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    }
+  ]
+}

@@ -1,0 +1,439 @@
+{
+  "format": "grammar-lab-lesson",
+  "version": 1,
+  "title": "Parts of Speech Close-Up",
+  "description": "Drill-down practice: each word labeled with its specific type — common vs. proper nouns, action vs. linking vs. helping verbs, the pronoun and adjective types, articles, and more.",
+  "layers": [
+    "pos"
+  ],
+  "sentences": [
+    {
+      "text": "The team's brave captain from London shared her courage here during the storm.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "definite-article"
+        },
+        {
+          "start": 4,
+          "end": 10,
+          "label": "possessive-noun"
+        },
+        {
+          "start": 11,
+          "end": 16,
+          "label": "descriptive-adjective"
+        },
+        {
+          "start": 17,
+          "end": 24,
+          "label": "common-noun"
+        },
+        {
+          "start": 25,
+          "end": 29,
+          "label": "preposition"
+        },
+        {
+          "start": 30,
+          "end": 36,
+          "label": "proper-noun"
+        },
+        {
+          "start": 37,
+          "end": 43,
+          "label": "transitive-verb",
+          "note": "It takes a direct object — shared what? her courage."
+        },
+        {
+          "start": 44,
+          "end": 47,
+          "label": "possessive-adjective"
+        },
+        {
+          "start": 48,
+          "end": 55,
+          "label": "abstract-noun"
+        },
+        {
+          "start": 56,
+          "end": 60,
+          "label": "adverb-of-place"
+        },
+        {
+          "start": 61,
+          "end": 67,
+          "label": "preposition"
+        },
+        {
+          "start": 68,
+          "end": 71,
+          "label": "definite-article"
+        },
+        {
+          "start": 72,
+          "end": 78,
+          "label": "concrete-noun"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "She is a French doctor, and she can help anyone quickly.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "personal-pronoun"
+        },
+        {
+          "start": 4,
+          "end": 6,
+          "label": "linking-verb"
+        },
+        {
+          "start": 7,
+          "end": 8,
+          "label": "indefinite-article"
+        },
+        {
+          "start": 9,
+          "end": 15,
+          "label": "proper-adjective"
+        },
+        {
+          "start": 16,
+          "end": 23,
+          "label": "common-noun"
+        },
+        {
+          "start": 24,
+          "end": 27,
+          "label": "coordinating-conjunction"
+        },
+        {
+          "start": 28,
+          "end": 31,
+          "label": "personal-pronoun"
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "modal-verb"
+        },
+        {
+          "start": 36,
+          "end": 40,
+          "label": "action-verb"
+        },
+        {
+          "start": 41,
+          "end": 47,
+          "label": "indefinite-pronoun"
+        },
+        {
+          "start": 48,
+          "end": 56,
+          "label": "adverb-of-manner"
+        }
+      ],
+      "types": {
+        "structure": "compound",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "They have finished, but that is not yours.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "personal-pronoun"
+        },
+        {
+          "start": 5,
+          "end": 9,
+          "label": "helping-verb"
+        },
+        {
+          "start": 10,
+          "end": 19,
+          "label": "action-verb"
+        },
+        {
+          "start": 20,
+          "end": 23,
+          "label": "coordinating-conjunction"
+        },
+        {
+          "start": 24,
+          "end": 28,
+          "label": "demonstrative-pronoun"
+        },
+        {
+          "start": 29,
+          "end": 31,
+          "label": "linking-verb"
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "adverb-of-degree",
+          "note": "A negating adverb."
+        },
+        {
+          "start": 36,
+          "end": 42,
+          "label": "possessive-pronoun"
+        }
+      ],
+      "types": {
+        "structure": "compound",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "The icier path was the most dangerous, so we walked very carefully.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "definite-article"
+        },
+        {
+          "start": 4,
+          "end": 9,
+          "label": "comparative-adjective"
+        },
+        {
+          "start": 10,
+          "end": 14,
+          "label": "common-noun"
+        },
+        {
+          "start": 15,
+          "end": 18,
+          "label": "linking-verb"
+        },
+        {
+          "start": 19,
+          "end": 22,
+          "label": "definite-article"
+        },
+        {
+          "start": 23,
+          "end": 38,
+          "label": "superlative-adjective"
+        },
+        {
+          "start": 39,
+          "end": 41,
+          "label": "coordinating-conjunction"
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "personal-pronoun"
+        },
+        {
+          "start": 45,
+          "end": 51,
+          "label": "intransitive-verb",
+          "note": "No direct object — nothing receives the action."
+        },
+        {
+          "start": 52,
+          "end": 56,
+          "label": "adverb-of-degree"
+        },
+        {
+          "start": 57,
+          "end": 67,
+          "label": "adverb-of-manner"
+        }
+      ],
+      "types": {
+        "structure": "compound",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "Which of those three books that you read is your favorite?",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 5,
+          "label": "interrogative-pronoun"
+        },
+        {
+          "start": 6,
+          "end": 8,
+          "label": "preposition"
+        },
+        {
+          "start": 9,
+          "end": 14,
+          "label": "demonstrative-adjective"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "label": "quantitative-adjective"
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "common-noun"
+        },
+        {
+          "start": 27,
+          "end": 31,
+          "label": "relative-pronoun"
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "personal-pronoun"
+        },
+        {
+          "start": 36,
+          "end": 40,
+          "label": "action-verb"
+        },
+        {
+          "start": 41,
+          "end": 43,
+          "label": "linking-verb"
+        },
+        {
+          "start": 44,
+          "end": 48,
+          "label": "possessive-adjective"
+        },
+        {
+          "start": 49,
+          "end": 58,
+          "label": "descriptive-adjective"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "interrogative"
+      }
+    },
+    {
+      "text": "Always believe in yourself today.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "adverb-of-frequency"
+        },
+        {
+          "start": 7,
+          "end": 14,
+          "label": "action-verb",
+          "note": "A command — the subject “you” is understood."
+        },
+        {
+          "start": 15,
+          "end": 17,
+          "label": "preposition"
+        },
+        {
+          "start": 18,
+          "end": 26,
+          "label": "reflexive-pronoun"
+        },
+        {
+          "start": 27,
+          "end": 33,
+          "label": "adverb-of-time"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "imperative"
+      }
+    },
+    {
+      "text": "Wow, neither the team nor the crowd left, because they were truly excited!",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "interjection"
+        },
+        {
+          "start": 5,
+          "end": 12,
+          "label": "correlative-conjunction",
+          "note": "Half of the pair “neither … nor.”"
+        },
+        {
+          "start": 13,
+          "end": 16,
+          "label": "definite-article"
+        },
+        {
+          "start": 17,
+          "end": 21,
+          "label": "collective-noun"
+        },
+        {
+          "start": 22,
+          "end": 25,
+          "label": "correlative-conjunction"
+        },
+        {
+          "start": 26,
+          "end": 29,
+          "label": "definite-article"
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "collective-noun"
+        },
+        {
+          "start": 36,
+          "end": 41,
+          "label": "intransitive-verb"
+        },
+        {
+          "start": 42,
+          "end": 49,
+          "label": "subordinating-conjunction"
+        },
+        {
+          "start": 50,
+          "end": 54,
+          "label": "personal-pronoun"
+        },
+        {
+          "start": 55,
+          "end": 59,
+          "label": "linking-verb"
+        },
+        {
+          "start": 60,
+          "end": 65,
+          "label": "adverb-of-degree"
+        },
+        {
+          "start": 66,
+          "end": 74,
+          "label": "descriptive-adjective"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "exclamatory"
+      }
+    }
+  ]
+}

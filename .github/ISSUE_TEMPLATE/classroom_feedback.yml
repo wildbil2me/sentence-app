@@ -1,0 +1,56 @@
+name: 🍎 Classroom feedback (pilot)
+description: You used Grammar Lab with students — tell us how it went.
+title: "[pilot] "
+labels: ["pilot-feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the most useful kind of issue during the pilot. Nothing here is
+        required except the first box — partial answers are welcome.
+
+  - type: textarea
+    id: how-it-went
+    attributes:
+      label: How did the lesson go?
+      description: What you were teaching, what worked, what got in the way.
+    validations:
+      required: true
+
+  - type: input
+    id: grade
+    attributes:
+      label: Grade level / course
+      placeholder: 9th grade English I
+
+  - type: dropdown
+    id: modes-used
+    attributes:
+      label: What did you use?
+      multiple: true
+      options:
+        - ✎ Edit — built my own lesson
+        - ✎ Edit — started from a built-in example
+        - ⬆ Import JSON — a file I made outside the app
+        - ▶ Present on a projector
+        - 🎯 Practice with students
+        - Nothing yet — just looking around
+
+  - type: textarea
+    id: labels
+    attributes:
+      label: Did the grammar labels match how you teach?
+      description: |
+        Anything missing, named differently than your textbook, or too granular?
+        The taxonomy is the part most likely to need changing.
+
+  - type: textarea
+    id: friction
+    attributes:
+      label: Where did you or your students get stuck?
+      description: Confusing buttons, steps you had to explain twice, things that felt slow.
+
+  - type: textarea
+    id: wish
+    attributes:
+      label: One thing you'd change first

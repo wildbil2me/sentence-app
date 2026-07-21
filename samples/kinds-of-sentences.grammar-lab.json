@@ -1,0 +1,425 @@
+{
+  "format": "grammar-lab-lesson",
+  "version": 1,
+  "title": "Kinds of Sentences",
+  "description": "A plain-language set for teaching sentence types at a glance: the four purposes and the four structures, each sentence tagged. Great for the “name that sentence” quiz.",
+  "layers": [
+    "pos",
+    "part",
+    "phrase",
+    "clause"
+  ],
+  "sentences": [
+    {
+      "text": "The team practiced hard all week.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner"
+        },
+        {
+          "start": 4,
+          "end": 8,
+          "label": "noun"
+        },
+        {
+          "start": 9,
+          "end": 18,
+          "label": "verb"
+        },
+        {
+          "start": 19,
+          "end": 23,
+          "label": "adverb"
+        },
+        {
+          "start": 24,
+          "end": 27,
+          "label": "determiner"
+        },
+        {
+          "start": 28,
+          "end": 33,
+          "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 8,
+          "label": "complete-subject"
+        },
+        {
+          "start": 4,
+          "end": 8,
+          "label": "simple-subject"
+        },
+        {
+          "start": 9,
+          "end": 33,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 9,
+          "end": 18,
+          "label": "simple-predicate"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "Are you ready for the big game?",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "verb",
+          "note": "The verb comes first because it is a question."
+        },
+        {
+          "start": 4,
+          "end": 7,
+          "label": "pronoun"
+        },
+        {
+          "start": 4,
+          "end": 7,
+          "label": "simple-subject"
+        },
+        {
+          "start": 8,
+          "end": 13,
+          "label": "adjective",
+          "note": "A predicate adjective describing “you.”"
+        },
+        {
+          "start": 8,
+          "end": 13,
+          "label": "complement"
+        },
+        {
+          "start": 14,
+          "end": 31,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 22,
+          "end": 25,
+          "label": "adjective"
+        },
+        {
+          "start": 26,
+          "end": 31,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "interrogative"
+      }
+    },
+    {
+      "text": "Pass the ball to me.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "verb",
+          "note": "A command — the subject “you” is understood."
+        },
+        {
+          "start": 0,
+          "end": 20,
+          "label": "complete-predicate",
+          "note": "The whole sentence is the predicate; the subject is the understood “you.”"
+        },
+        {
+          "start": 0,
+          "end": 4,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 5,
+          "end": 8,
+          "label": "determiner"
+        },
+        {
+          "start": 9,
+          "end": 13,
+          "label": "noun"
+        },
+        {
+          "start": 5,
+          "end": 13,
+          "label": "direct-object"
+        },
+        {
+          "start": 14,
+          "end": 20,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "pronoun"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "imperative"
+      }
+    },
+    {
+      "text": "We finally won the championship!",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 0,
+          "end": 2,
+          "label": "simple-subject"
+        },
+        {
+          "start": 3,
+          "end": 10,
+          "label": "adverb"
+        },
+        {
+          "start": 11,
+          "end": 14,
+          "label": "verb"
+        },
+        {
+          "start": 3,
+          "end": 32,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 11,
+          "end": 14,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 15,
+          "end": 18,
+          "label": "determiner"
+        },
+        {
+          "start": 19,
+          "end": 32,
+          "label": "noun"
+        },
+        {
+          "start": 15,
+          "end": 32,
+          "label": "direct-object"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "exclamatory"
+      }
+    },
+    {
+      "text": "The rain stopped, and the sun came out.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner"
+        },
+        {
+          "start": 4,
+          "end": 8,
+          "label": "noun"
+        },
+        {
+          "start": 9,
+          "end": 17,
+          "label": "verb"
+        },
+        {
+          "start": 18,
+          "end": 21,
+          "label": "conjunction",
+          "note": "A coordinating conjunction joining two independent clauses."
+        },
+        {
+          "start": 22,
+          "end": 25,
+          "label": "determiner"
+        },
+        {
+          "start": 26,
+          "end": 29,
+          "label": "noun"
+        },
+        {
+          "start": 30,
+          "end": 34,
+          "label": "verb"
+        },
+        {
+          "start": 35,
+          "end": 39,
+          "label": "adverb"
+        },
+        {
+          "start": 0,
+          "end": 17,
+          "label": "independent-clause"
+        },
+        {
+          "start": 22,
+          "end": 39,
+          "label": "independent-clause"
+        }
+      ],
+      "types": {
+        "structure": "compound",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "Because we practiced, we played well.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 7,
+          "label": "conjunction",
+          "note": "A subordinating conjunction — it makes the clause dependent."
+        },
+        {
+          "start": 8,
+          "end": 10,
+          "label": "pronoun"
+        },
+        {
+          "start": 11,
+          "end": 21,
+          "label": "verb"
+        },
+        {
+          "start": 22,
+          "end": 24,
+          "label": "pronoun"
+        },
+        {
+          "start": 25,
+          "end": 31,
+          "label": "verb"
+        },
+        {
+          "start": 32,
+          "end": 37,
+          "label": "adverb"
+        },
+        {
+          "start": 0,
+          "end": 21,
+          "label": "dependent-clause"
+        },
+        {
+          "start": 0,
+          "end": 21,
+          "label": "adverbial-clause",
+          "note": "It tells WHY they played well."
+        },
+        {
+          "start": 22,
+          "end": 37,
+          "label": "independent-clause"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "When the whistle blew, the crowd cheered, and the players celebrated.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "conjunction"
+        },
+        {
+          "start": 5,
+          "end": 8,
+          "label": "determiner"
+        },
+        {
+          "start": 9,
+          "end": 16,
+          "label": "noun"
+        },
+        {
+          "start": 17,
+          "end": 22,
+          "label": "verb"
+        },
+        {
+          "start": 23,
+          "end": 26,
+          "label": "determiner"
+        },
+        {
+          "start": 27,
+          "end": 32,
+          "label": "noun"
+        },
+        {
+          "start": 33,
+          "end": 41,
+          "label": "verb"
+        },
+        {
+          "start": 42,
+          "end": 45,
+          "label": "conjunction"
+        },
+        {
+          "start": 46,
+          "end": 49,
+          "label": "determiner"
+        },
+        {
+          "start": 50,
+          "end": 57,
+          "label": "noun"
+        },
+        {
+          "start": 58,
+          "end": 69,
+          "label": "verb"
+        },
+        {
+          "start": 0,
+          "end": 22,
+          "label": "adverbial-clause",
+          "note": "The dependent clause — it can't stand alone."
+        },
+        {
+          "start": 23,
+          "end": 41,
+          "label": "independent-clause"
+        },
+        {
+          "start": 42,
+          "end": 69,
+          "label": "independent-clause"
+        }
+      ],
+      "types": {
+        "structure": "compound-complex",
+        "purpose": "declarative"
+      }
+    }
+  ]
+}

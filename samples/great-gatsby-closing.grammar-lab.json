@@ -1,0 +1,303 @@
+{
+  "format": "grammar-lab-lesson",
+  "version": 1,
+  "title": "The Great Gatsby — Closing Lines",
+  "description": "Fitzgerald's famous final paragraph. A showcase of appositive, prepositional, and participial phrases plus a relative clause and a compound sentence. (Em-dashes lightly regularized into sentences.)",
+  "layers": [
+    "pos",
+    "part",
+    "phrase",
+    "clause"
+  ],
+  "sentences": [
+    {
+      "text": "Gatsby believed in the green light, the orgastic future that year by year recedes before us.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "noun",
+          "note": "A proper noun and the subject of the sentence."
+        },
+        {
+          "start": 0,
+          "end": 6,
+          "label": "subject"
+        },
+        {
+          "start": 7,
+          "end": 15,
+          "label": "verb"
+        },
+        {
+          "start": 16,
+          "end": 35,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 19,
+          "end": 22,
+          "label": "determiner"
+        },
+        {
+          "start": 23,
+          "end": 28,
+          "label": "adjective"
+        },
+        {
+          "start": 29,
+          "end": 35,
+          "label": "noun"
+        },
+        {
+          "start": 36,
+          "end": 55,
+          "label": "appositive-phrase",
+          "note": "Renames 'the green light'."
+        },
+        {
+          "start": 40,
+          "end": 48,
+          "label": "adjective"
+        },
+        {
+          "start": 49,
+          "end": 55,
+          "label": "noun"
+        },
+        {
+          "start": 56,
+          "end": 92,
+          "label": "relative-clause",
+          "note": "Describes 'the future'."
+        },
+        {
+          "start": 56,
+          "end": 60,
+          "label": "pronoun"
+        },
+        {
+          "start": 74,
+          "end": 81,
+          "label": "verb"
+        },
+        {
+          "start": 82,
+          "end": 92,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 89,
+          "end": 92,
+          "label": "pronoun"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "It eluded us then, but that's no matter.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 18,
+          "label": "independent-clause"
+        },
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 9,
+          "label": "verb"
+        },
+        {
+          "start": 10,
+          "end": 12,
+          "label": "pronoun"
+        },
+        {
+          "start": 13,
+          "end": 18,
+          "label": "adverb"
+        },
+        {
+          "start": 19,
+          "end": 22,
+          "label": "conjunction",
+          "note": "Joins two independent clauses into a compound sentence."
+        },
+        {
+          "start": 23,
+          "end": 40,
+          "label": "independent-clause"
+        },
+        {
+          "start": 23,
+          "end": 29,
+          "label": "pronoun"
+        },
+        {
+          "start": 30,
+          "end": 32,
+          "label": "determiner"
+        },
+        {
+          "start": 33,
+          "end": 40,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "compound",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "Tomorrow we will run faster, and stretch out our arms farther.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 8,
+          "label": "adverb"
+        },
+        {
+          "start": 9,
+          "end": 11,
+          "label": "pronoun"
+        },
+        {
+          "start": 12,
+          "end": 16,
+          "label": "verb",
+          "note": "A helping verb forming the future tense."
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "verb"
+        },
+        {
+          "start": 21,
+          "end": 28,
+          "label": "adverb"
+        },
+        {
+          "start": 29,
+          "end": 32,
+          "label": "conjunction"
+        },
+        {
+          "start": 33,
+          "end": 40,
+          "label": "verb"
+        },
+        {
+          "start": 41,
+          "end": 44,
+          "label": "adverb",
+          "note": "A particle completing the phrasal verb 'stretch out'."
+        },
+        {
+          "start": 45,
+          "end": 53,
+          "label": "direct-object"
+        },
+        {
+          "start": 45,
+          "end": 48,
+          "label": "determiner"
+        },
+        {
+          "start": 49,
+          "end": 53,
+          "label": "noun"
+        },
+        {
+          "start": 54,
+          "end": 62,
+          "label": "adverb"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "So we beat on, boats against the current, borne back ceaselessly into the past.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "conjunction"
+        },
+        {
+          "start": 3,
+          "end": 5,
+          "label": "pronoun"
+        },
+        {
+          "start": 6,
+          "end": 10,
+          "label": "verb"
+        },
+        {
+          "start": 11,
+          "end": 14,
+          "label": "adverb"
+        },
+        {
+          "start": 15,
+          "end": 41,
+          "label": "appositive-phrase",
+          "note": "A metaphor renaming 'we'."
+        },
+        {
+          "start": 21,
+          "end": 41,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 33,
+          "end": 41,
+          "label": "noun"
+        },
+        {
+          "start": 42,
+          "end": 79,
+          "label": "participial-phrase",
+          "note": "'Borne' is a past participle describing the boats."
+        },
+        {
+          "start": 42,
+          "end": 47,
+          "label": "verb"
+        },
+        {
+          "start": 53,
+          "end": 64,
+          "label": "adverb"
+        },
+        {
+          "start": 65,
+          "end": 79,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 74,
+          "end": 79,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    }
+  ]
+}

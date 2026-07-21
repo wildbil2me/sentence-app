@@ -1,0 +1,605 @@
+{
+  "format": "grammar-lab-lesson",
+  "version": 1,
+  "title": "Romeo and Juliet — Prologue",
+  "description": "Shakespeare's opening sonnet, spoken by the Chorus. Labeled line by line to show parts of speech, phrases, and the relative and adverbial clauses woven through the verse. Because the sonnet's sentences run across several lines, only the two lines that stand alone as complete sentences carry a sentence-type badge — the rest are fragments.",
+  "layers": [
+    "pos",
+    "part",
+    "phrase",
+    "clause"
+  ],
+  "sentences": [
+    {
+      "text": "Two households, both alike in dignity,",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner",
+          "note": "A number acting as a determiner."
+        },
+        {
+          "start": 4,
+          "end": 15,
+          "label": "noun"
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "adjective"
+        },
+        {
+          "start": 27,
+          "end": 38,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 30,
+          "end": 38,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "In fair Verona, where we lay our scene,",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 15,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 3,
+          "end": 7,
+          "label": "adjective"
+        },
+        {
+          "start": 8,
+          "end": 15,
+          "label": "noun"
+        },
+        {
+          "start": 16,
+          "end": 39,
+          "label": "relative-clause",
+          "note": "Describes Verona — it tells which place."
+        },
+        {
+          "start": 22,
+          "end": 24,
+          "label": "pronoun"
+        },
+        {
+          "start": 25,
+          "end": 28,
+          "label": "verb"
+        },
+        {
+          "start": 29,
+          "end": 32,
+          "label": "determiner"
+        },
+        {
+          "start": 33,
+          "end": 39,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "From ancient grudge break to new mutiny,",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 19,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 5,
+          "end": 12,
+          "label": "adjective"
+        },
+        {
+          "start": 13,
+          "end": 19,
+          "label": "noun"
+        },
+        {
+          "start": 20,
+          "end": 25,
+          "label": "verb"
+        },
+        {
+          "start": 26,
+          "end": 40,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 29,
+          "end": 32,
+          "label": "adjective"
+        },
+        {
+          "start": 33,
+          "end": 40,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "Where civil blood makes civil hands unclean.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 44,
+          "label": "adverbial-clause",
+          "note": "Tells the result of the grudge breaking out."
+        },
+        {
+          "start": 6,
+          "end": 11,
+          "label": "adjective"
+        },
+        {
+          "start": 12,
+          "end": 17,
+          "label": "noun"
+        },
+        {
+          "start": 18,
+          "end": 23,
+          "label": "verb"
+        },
+        {
+          "start": 24,
+          "end": 29,
+          "label": "adjective"
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "noun"
+        },
+        {
+          "start": 36,
+          "end": 44,
+          "label": "adjective",
+          "note": "An object complement — it describes 'hands'."
+        }
+      ]
+    },
+    {
+      "text": "From forth the fatal loins of these two foes",
+      "annotations": [
+        {
+          "start": 15,
+          "end": 20,
+          "label": "adjective"
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "noun"
+        },
+        {
+          "start": 27,
+          "end": 44,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 30,
+          "end": 35,
+          "label": "determiner"
+        },
+        {
+          "start": 36,
+          "end": 39,
+          "label": "determiner"
+        },
+        {
+          "start": 40,
+          "end": 44,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "A pair of star-cross'd lovers take their life;",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 29,
+          "label": "noun-phrase",
+          "note": "The full subject of this clause."
+        },
+        {
+          "start": 0,
+          "end": 1,
+          "label": "determiner"
+        },
+        {
+          "start": 2,
+          "end": 6,
+          "label": "noun"
+        },
+        {
+          "start": 7,
+          "end": 29,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 10,
+          "end": 22,
+          "label": "adjective"
+        },
+        {
+          "start": 23,
+          "end": 29,
+          "label": "noun"
+        },
+        {
+          "start": 30,
+          "end": 34,
+          "label": "verb"
+        },
+        {
+          "start": 35,
+          "end": 46,
+          "label": "direct-object"
+        },
+        {
+          "start": 35,
+          "end": 40,
+          "label": "determiner"
+        },
+        {
+          "start": 41,
+          "end": 46,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "Whose misadventured piteous overthrows",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 5,
+          "label": "determiner",
+          "note": "A relative possessive — it points back to the lovers."
+        },
+        {
+          "start": 6,
+          "end": 19,
+          "label": "adjective"
+        },
+        {
+          "start": 20,
+          "end": 27,
+          "label": "adjective"
+        },
+        {
+          "start": 28,
+          "end": 38,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "Do with their death bury their parents' strife.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "verb",
+          "note": "A helping (auxiliary) verb paired with 'bury'."
+        },
+        {
+          "start": 3,
+          "end": 19,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 8,
+          "end": 13,
+          "label": "determiner"
+        },
+        {
+          "start": 14,
+          "end": 19,
+          "label": "noun"
+        },
+        {
+          "start": 20,
+          "end": 24,
+          "label": "verb"
+        },
+        {
+          "start": 25,
+          "end": 30,
+          "label": "determiner"
+        },
+        {
+          "start": 31,
+          "end": 39,
+          "label": "noun"
+        },
+        {
+          "start": 40,
+          "end": 47,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "The fearful passage of their death-mark'd love,",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 47,
+          "label": "noun-phrase",
+          "note": "Part of the long subject of 'Is' two lines down."
+        },
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner"
+        },
+        {
+          "start": 4,
+          "end": 11,
+          "label": "adjective"
+        },
+        {
+          "start": 12,
+          "end": 19,
+          "label": "noun"
+        },
+        {
+          "start": 20,
+          "end": 47,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 29,
+          "end": 41,
+          "label": "adjective"
+        },
+        {
+          "start": 42,
+          "end": 47,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "And the continuance of their parents' rage,",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "conjunction"
+        },
+        {
+          "start": 4,
+          "end": 7,
+          "label": "determiner"
+        },
+        {
+          "start": 8,
+          "end": 19,
+          "label": "noun"
+        },
+        {
+          "start": 20,
+          "end": 43,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 29,
+          "end": 37,
+          "label": "noun"
+        },
+        {
+          "start": 38,
+          "end": 43,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "Which, but their children's end, nought could remove,",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "pronoun",
+          "note": "A relative pronoun standing for the parents' rage."
+        },
+        {
+          "start": 7,
+          "end": 32,
+          "label": "prepositional-phrase",
+          "note": "Here 'but' means 'except for'."
+        },
+        {
+          "start": 17,
+          "end": 27,
+          "label": "noun"
+        },
+        {
+          "start": 28,
+          "end": 32,
+          "label": "noun"
+        },
+        {
+          "start": 33,
+          "end": 39,
+          "label": "pronoun",
+          "note": "An old word for 'nothing'."
+        },
+        {
+          "start": 40,
+          "end": 45,
+          "label": "verb"
+        },
+        {
+          "start": 46,
+          "end": 53,
+          "label": "verb"
+        }
+      ]
+    },
+    {
+      "text": "Is now the two hours' traffic of our stage;",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "verb"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "adverb"
+        },
+        {
+          "start": 7,
+          "end": 10,
+          "label": "determiner"
+        },
+        {
+          "start": 11,
+          "end": 14,
+          "label": "determiner"
+        },
+        {
+          "start": 15,
+          "end": 21,
+          "label": "noun"
+        },
+        {
+          "start": 22,
+          "end": 29,
+          "label": "noun"
+        },
+        {
+          "start": 30,
+          "end": 43,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 33,
+          "end": 36,
+          "label": "determiner"
+        },
+        {
+          "start": 37,
+          "end": 43,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "The which if you with patient ears attend,",
+      "annotations": [
+        {
+          "start": 10,
+          "end": 42,
+          "label": "adverbial-clause",
+          "note": "A condition — 'if' you listen patiently."
+        },
+        {
+          "start": 10,
+          "end": 12,
+          "label": "conjunction"
+        },
+        {
+          "start": 13,
+          "end": 16,
+          "label": "pronoun"
+        },
+        {
+          "start": 17,
+          "end": 34,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 22,
+          "end": 29,
+          "label": "adjective"
+        },
+        {
+          "start": 30,
+          "end": 34,
+          "label": "noun"
+        },
+        {
+          "start": 35,
+          "end": 42,
+          "label": "verb"
+        }
+      ]
+    },
+    {
+      "text": "What here shall miss, our toil shall strive to mend.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 21,
+          "label": "noun-clause",
+          "note": "Acts as the object of 'mend' — whatever the play leaves out."
+        },
+        {
+          "start": 5,
+          "end": 9,
+          "label": "adverb"
+        },
+        {
+          "start": 10,
+          "end": 15,
+          "label": "verb"
+        },
+        {
+          "start": 16,
+          "end": 21,
+          "label": "verb"
+        },
+        {
+          "start": 22,
+          "end": 25,
+          "label": "determiner"
+        },
+        {
+          "start": 26,
+          "end": 30,
+          "label": "noun"
+        },
+        {
+          "start": 31,
+          "end": 36,
+          "label": "verb"
+        },
+        {
+          "start": 37,
+          "end": 43,
+          "label": "verb"
+        },
+        {
+          "start": 44,
+          "end": 52,
+          "label": "infinitive-phrase"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      }
+    }
+  ]
+}

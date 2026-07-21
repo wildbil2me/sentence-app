@@ -1,0 +1,69 @@
+name: 🐛 Bug report
+description: Something in the app behaved wrong.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. If a specific lesson misbehaves, exporting it
+        (**Export JSON** on the lesson card) and pasting the file below makes it
+        far easier to reproduce.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you got instead.
+      placeholder: |
+        1. Opened the Fox example in Edit mode
+        2. Dragged across "the frozen river" and picked Noun Phrase
+        3. Expected a bar under all three words; only "river" got labelled
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Which mode?
+      options:
+        - Library / lesson list
+        - ✎ Edit (teacher)
+        - ▶ Present (projector)
+        - 🎯 Practice (student quiz)
+        - Import / Export JSON
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: how-opened
+    attributes:
+      label: How were you running it?
+      options:
+        - The live GitHub Pages site
+        - Double-clicked index.html from a local copy
+        - A local web server (python -m http.server, Live Server, …)
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device
+      placeholder: Chrome 131 on a Windows laptop / Safari on an iPad
+    validations:
+      required: true
+
+  - type: textarea
+    id: lesson-json
+    attributes:
+      label: Lesson JSON (optional)
+      description: Paste the exported lesson, if one is involved. It is inserted as a code block automatically.
+      render: json
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors (optional)
+      description: F12 → Console. Red lines only.
+      render: text

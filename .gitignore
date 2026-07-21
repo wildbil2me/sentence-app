@@ -1,0 +1,17 @@
+# Grammar Lab has no build step and no dependencies — this list is short on purpose.
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
+
+# Node is only used to run tools/smoke-test.js; there is no package to install.
+node_modules/
+npm-debug.log*
+
+# Scratch output from the headless DOM check
+tools/.tmp-*/
+*.local.json

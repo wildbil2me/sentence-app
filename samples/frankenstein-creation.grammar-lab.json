@@ -1,0 +1,310 @@
+{
+  "format": "grammar-lab-lesson",
+  "version": 1,
+  "title": "Frankenstein — The Creation",
+  "description": "Victor brings the creature to life. Rich in complex sentences: a cleft construction, relative clauses, noun phrases, and a semicolon-joined compound sentence.",
+  "layers": [
+    "pos",
+    "phrase",
+    "clause"
+  ],
+  "sentences": [
+    {
+      "text": "It was on a dreary night of November that I beheld the accomplishment of my toils.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "verb"
+        },
+        {
+          "start": 7,
+          "end": 24,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 12,
+          "end": 18,
+          "label": "adjective"
+        },
+        {
+          "start": 19,
+          "end": 24,
+          "label": "noun"
+        },
+        {
+          "start": 25,
+          "end": 36,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 28,
+          "end": 36,
+          "label": "noun"
+        },
+        {
+          "start": 37,
+          "end": 82,
+          "label": "dependent-clause",
+          "note": "A cleft sentence: 'It was... that I beheld...' emphasizes the night."
+        },
+        {
+          "start": 42,
+          "end": 43,
+          "label": "pronoun"
+        },
+        {
+          "start": 44,
+          "end": 50,
+          "label": "verb"
+        },
+        {
+          "start": 51,
+          "end": 82,
+          "label": "noun-phrase",
+          "note": "The direct object — what Victor beheld."
+        },
+        {
+          "start": 55,
+          "end": 69,
+          "label": "noun"
+        },
+        {
+          "start": 70,
+          "end": 82,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 73,
+          "end": 75,
+          "label": "determiner"
+        },
+        {
+          "start": 76,
+          "end": 82,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "With an anxiety that almost amounted to agony, I collected the instruments of life around me.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 15,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 8,
+          "end": 15,
+          "label": "noun"
+        },
+        {
+          "start": 16,
+          "end": 46,
+          "label": "relative-clause",
+          "note": "Describes 'anxiety'."
+        },
+        {
+          "start": 16,
+          "end": 20,
+          "label": "pronoun"
+        },
+        {
+          "start": 21,
+          "end": 27,
+          "label": "adverb"
+        },
+        {
+          "start": 28,
+          "end": 36,
+          "label": "verb"
+        },
+        {
+          "start": 37,
+          "end": 46,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 40,
+          "end": 46,
+          "label": "noun"
+        },
+        {
+          "start": 47,
+          "end": 93,
+          "label": "independent-clause"
+        },
+        {
+          "start": 47,
+          "end": 48,
+          "label": "pronoun"
+        },
+        {
+          "start": 49,
+          "end": 58,
+          "label": "verb"
+        },
+        {
+          "start": 59,
+          "end": 82,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 63,
+          "end": 74,
+          "label": "noun"
+        },
+        {
+          "start": 75,
+          "end": 82,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 78,
+          "end": 82,
+          "label": "noun"
+        },
+        {
+          "start": 83,
+          "end": 93,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 90,
+          "end": 93,
+          "label": "pronoun"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "I saw the dull yellow eye of the creature open; it breathed hard, and a convulsive motion agitated its limbs.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 1,
+          "label": "pronoun"
+        },
+        {
+          "start": 2,
+          "end": 5,
+          "label": "verb"
+        },
+        {
+          "start": 6,
+          "end": 41,
+          "label": "noun-phrase",
+          "note": "The direct object of 'saw'."
+        },
+        {
+          "start": 10,
+          "end": 14,
+          "label": "adjective"
+        },
+        {
+          "start": 15,
+          "end": 21,
+          "label": "adjective"
+        },
+        {
+          "start": 22,
+          "end": 25,
+          "label": "noun"
+        },
+        {
+          "start": 26,
+          "end": 41,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 33,
+          "end": 41,
+          "label": "noun"
+        },
+        {
+          "start": 42,
+          "end": 47,
+          "label": "verb",
+          "note": "A bare infinitive completing 'saw the eye open'."
+        },
+        {
+          "start": 48,
+          "end": 65,
+          "label": "independent-clause"
+        },
+        {
+          "start": 48,
+          "end": 50,
+          "label": "pronoun"
+        },
+        {
+          "start": 51,
+          "end": 59,
+          "label": "verb"
+        },
+        {
+          "start": 60,
+          "end": 65,
+          "label": "adverb"
+        },
+        {
+          "start": 66,
+          "end": 69,
+          "label": "conjunction"
+        },
+        {
+          "start": 70,
+          "end": 109,
+          "label": "independent-clause"
+        },
+        {
+          "start": 70,
+          "end": 89,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 72,
+          "end": 82,
+          "label": "adjective"
+        },
+        {
+          "start": 83,
+          "end": 89,
+          "label": "noun"
+        },
+        {
+          "start": 90,
+          "end": 98,
+          "label": "verb"
+        },
+        {
+          "start": 99,
+          "end": 102,
+          "label": "determiner"
+        },
+        {
+          "start": 103,
+          "end": 109,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "compound",
+        "purpose": "declarative"
+      }
+    }
+  ]
+}

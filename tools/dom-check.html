@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grammar Lab — DOM check</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<!--
+  Headless render check. Not part of the app — open it (or dump it) to confirm
+  every label in the taxonomy actually renders as a span bar, and that the
+  editor palette builds for all four layers. Run with:
+
+    msedge --headless=new --dump-dom \
+      --user-data-dir=<a temp dir>  file:///C:/dev/sentences/tools/dom-check.html \
+      > dump.html
+    node tools/dom-check-report.js dump.html
+
+  The temp user-data-dir is required or the dump comes back empty, and the URL
+  needs a Windows-style drive (file:///C:/…) or the browser loads an error page.
+
+  Results are summarized in #result as PASS/FAIL lines. Read them with
+  dom-check-report.js, NOT by grepping the dump — the dump includes this file's
+  own script, and the strings "PASS" and "FAIL" appear in it as source text.
+-->
+<body>
+  <main id="app"></main>
+  <pre id="result"></pre>
+
+  <script src="../js/labels.js"></script>
+  <script src="../js/tokenize.js"></script>
+  <script src="../js/store.js"></script>
+  <script src="../js/examples.js"></script>
+  <script src="../js/render.js"></script>
+  <script src="../js/editor.js"></script>
+
+  <script>
+  (function () {
+    var out = [];
+    var fails = 0;
+    function check(name, cond) {
+      out.push((cond ? "PASS  " : "FAIL  ") + name);
+      if (!cond) fails++;
+    }
+
+    window.onerror = function (msg, src, line) {
+      out.push("FAIL  uncaught error: " + msg + " @" + src + ":" + line);
+      fails++;
+      document.getElementById("result").textContent = out.join("\n");
+    };
+
+    var app = document.getElementById("app");
+
+    // 1. Every label renders its mark over a real sentence: POS labels become
+    //    chips above the word, the other three layers become span bars.
+    //    One annotation per sentence keeps the lane packing trivial.
+    Object.keys(GL.LABELS).forEach(function (id) {
+      var label = GL.LABELS[id];
+      var sentence = {
+        id: GL.uid(), text: "The curious fox darted across the frozen river.",
+        annotations: [{ id: GL.uid(), start: 4, end: 15, label: id, note: "" }],
+      };
+      var r = GL.renderSentence(sentence, { layers: [label.layer] });
+      app.appendChild(r.root);
+      var isPos = label.layer === "pos";
+      var mark = r.root.querySelector(isPos ? ".gl-chip" : ".gl-bar");
+      check("label " + id + " renders a " + (isPos ? "chip" : "bar"), !!mark);
+      if (mark) {
+        check("label " + id + " mark carries its color",
+          (mark.getAttribute("style") || "").indexOf(label.color) !== -1);
+      }
+      // A subtype must also render its parent's broad-class chip above it.
+      if (isPos && label.parent) {
+        check("subtype " + id + " renders a parent chip",
+          !!r.root.querySelector(".gl-chip-parent"));
+      }
+    });
+
+    // 2. Each sample lesson renders every one of its annotations.
+    GL.EXAMPLES.forEach(function (ex) {
+      var lesson = ex.build();
+      var marks = 0, expected = 0;
+      lesson.sentences.forEach(function (s) {
+        expected += s.annotations.length;
+        var r = GL.renderSentence(s, { layers: lesson.layers });
+        app.appendChild(r.root);
+        // Count one mark per annotation: bars, plus the *specific* chips only
+        // (a POS subtype adds a second, parent chip that isn't its own mark).
+        marks += r.root.querySelectorAll(".gl-bar").length +
+          r.root.querySelectorAll(".gl-chip:not(.gl-chip-parent)").length;
+      });
+      check("example " + ex.id + ": rendered " + marks + "/" + expected + " annotation marks",
+        marks === expected && expected > 0);
+    });
+
+    // 3. The editor palette builds for all four layers, in both tier modes.
+    [false, true].forEach(function (essentialOnly) {
+      GL.LAYER_ORDER.forEach(function (layerId) {
+        var groups = 0, buttons = 0;
+        if (GL.layerHasSubtypes(layerId)) {
+          GL.baseLabelsForLayer(layerId).forEach(function (baseId) {
+            var children = GL.filterTier(GL.childrenOf(baseId), essentialOnly);
+            if (essentialOnly && !GL.isEssential(baseId) && !children.length) return;
+            groups++;
+            buttons += 1 + children.length;
+          });
+        } else {
+          buttons = groups = GL.filterTier(GL.labelsForLayer(layerId), essentialOnly).length;
+        }
+        check("palette layer " + layerId + " (essentialOnly=" + essentialOnly + "): " +
+          groups + " groups / " + buttons + " buttons", groups > 0 && buttons > 0);
+      });
+    });
+
+    out.push(fails ? fails + " FAILURE(S)" : "ALL DOM CHECKS PASSED");
+    document.getElementById("result").textContent = out.join("\n");
+  })();
+  </script>
+</body>
+</html>

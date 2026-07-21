@@ -1,0 +1,264 @@
+{
+  "format": "grammar-lab-lesson",
+  "version": 1,
+  "title": "Dracula — The Count Appears",
+  "description": "Jonathan Harker meets Count Dracula. Features an inverted subject, participial phrases, and both relative and adverbial clauses.",
+  "layers": [
+    "pos",
+    "part",
+    "phrase",
+    "clause"
+  ],
+  "sentences": [
+    {
+      "text": "Within stood a tall old man, clean-shaven save for a long white moustache, and clad in black from head to foot.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 6,
+          "label": "adverb"
+        },
+        {
+          "start": 7,
+          "end": 12,
+          "label": "verb"
+        },
+        {
+          "start": 13,
+          "end": 28,
+          "label": "noun-phrase",
+          "note": "The subject — inverted so it follows the verb."
+        },
+        {
+          "start": 13,
+          "end": 14,
+          "label": "determiner"
+        },
+        {
+          "start": 15,
+          "end": 19,
+          "label": "adjective"
+        },
+        {
+          "start": 20,
+          "end": 23,
+          "label": "adjective"
+        },
+        {
+          "start": 24,
+          "end": 28,
+          "label": "noun"
+        },
+        {
+          "start": 29,
+          "end": 41,
+          "label": "adjective"
+        },
+        {
+          "start": 42,
+          "end": 74,
+          "label": "prepositional-phrase",
+          "note": "'Save for' means 'except for'."
+        },
+        {
+          "start": 53,
+          "end": 57,
+          "label": "adjective"
+        },
+        {
+          "start": 58,
+          "end": 63,
+          "label": "adjective"
+        },
+        {
+          "start": 64,
+          "end": 74,
+          "label": "noun"
+        },
+        {
+          "start": 75,
+          "end": 78,
+          "label": "conjunction"
+        },
+        {
+          "start": 79,
+          "end": 111,
+          "label": "participial-phrase",
+          "note": "'Clad' is a past participle describing the man."
+        },
+        {
+          "start": 79,
+          "end": 83,
+          "label": "verb"
+        },
+        {
+          "start": 84,
+          "end": 92,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 87,
+          "end": 92,
+          "label": "noun"
+        },
+        {
+          "start": 93,
+          "end": 111,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 98,
+          "end": 102,
+          "label": "noun"
+        },
+        {
+          "start": 106,
+          "end": 111,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      }
+    },
+    {
+      "text": "He held in his hand an antique silver lamp, which threw long, quivering shadows as it flickered in the draught of the open door.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 0,
+          "end": 2,
+          "label": "subject"
+        },
+        {
+          "start": 3,
+          "end": 7,
+          "label": "verb"
+        },
+        {
+          "start": 8,
+          "end": 19,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 11,
+          "end": 14,
+          "label": "determiner"
+        },
+        {
+          "start": 15,
+          "end": 19,
+          "label": "noun"
+        },
+        {
+          "start": 20,
+          "end": 43,
+          "label": "noun-phrase",
+          "note": "The direct object of 'held'."
+        },
+        {
+          "start": 23,
+          "end": 30,
+          "label": "adjective"
+        },
+        {
+          "start": 31,
+          "end": 37,
+          "label": "adjective"
+        },
+        {
+          "start": 38,
+          "end": 43,
+          "label": "noun"
+        },
+        {
+          "start": 44,
+          "end": 79,
+          "label": "relative-clause",
+          "note": "Describes 'the lamp'."
+        },
+        {
+          "start": 44,
+          "end": 49,
+          "label": "pronoun"
+        },
+        {
+          "start": 50,
+          "end": 55,
+          "label": "verb"
+        },
+        {
+          "start": 56,
+          "end": 61,
+          "label": "adjective"
+        },
+        {
+          "start": 62,
+          "end": 71,
+          "label": "adjective",
+          "note": "A present participle used as an adjective."
+        },
+        {
+          "start": 72,
+          "end": 79,
+          "label": "noun"
+        },
+        {
+          "start": 80,
+          "end": 128,
+          "label": "adverbial-clause",
+          "note": "Tells when the shadows were thrown."
+        },
+        {
+          "start": 80,
+          "end": 82,
+          "label": "conjunction"
+        },
+        {
+          "start": 83,
+          "end": 85,
+          "label": "pronoun"
+        },
+        {
+          "start": 86,
+          "end": 95,
+          "label": "verb"
+        },
+        {
+          "start": 96,
+          "end": 110,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 103,
+          "end": 110,
+          "label": "noun"
+        },
+        {
+          "start": 111,
+          "end": 128,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 118,
+          "end": 122,
+          "label": "adjective"
+        },
+        {
+          "start": 123,
+          "end": 128,
+          "label": "noun"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      }
+    }
+  ]
+}

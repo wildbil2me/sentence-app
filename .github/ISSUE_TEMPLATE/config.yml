@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 🧪 Try Grammar Lab
+    url: https://github.com/YOUR-GITHUB-USERNAME/grammar-lab#try-it
+    about: Open the live app before filing — the bug may already be fixed.
+  - name: 💬 Ask a question / share a lesson idea
+    url: https://github.com/YOUR-GITHUB-USERNAME/grammar-lab/discussions
+    about: For anything that isn't a bug or a specific request.

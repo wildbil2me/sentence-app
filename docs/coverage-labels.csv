@@ -1,0 +1,88 @@
+layer,id,parent,name,abbr,color,tier
+pos,noun,,"Noun",N,#f5a623,essential
+pos,common-noun,noun,"Common Noun",com,#f5a623,essential
+pos,proper-noun,noun,"Proper Noun",prop,#f5a623,essential
+pos,collective-noun,noun,"Collective Noun",coll,#f5a623,essential
+pos,abstract-noun,noun,"Abstract Noun",abs,#f5a623,essential
+pos,concrete-noun,noun,"Concrete Noun",conc,#f5a623,essential
+pos,possessive-noun,noun,"Possessive Noun",pos,#f5a623,essential
+pos,verb,,"Verb",V,#f4574d,essential
+pos,action-verb,verb,"Action Verb",act,#f4574d,essential
+pos,linking-verb,verb,"Linking Verb",link,#f4574d,essential
+pos,helping-verb,verb,"Helping (Auxiliary) Verb",help,#f4574d,essential
+pos,transitive-verb,verb,"Transitive Verb",trans,#f4574d,essential
+pos,intransitive-verb,verb,"Intransitive Verb",intr,#f4574d,essential
+pos,modal-verb,verb,"Modal Verb",modal,#f4574d,essential
+pos,regular-verb,verb,"Regular Verb",reg,#f4574d,essential
+pos,irregular-verb,verb,"Irregular Verb",irr,#f4574d,essential
+pos,gerund,verb,"Gerund",ger,#f4574d,essential
+pos,participle,verb,"Participle",part.,#f4574d,essential
+pos,infinitive,verb,"Infinitive",inf,#f4574d,essential
+pos,particle,verb,"Particle (phrasal verb)",prt,#f4574d,advanced
+pos,adjective,,"Adjective",Adj,#4d9df4,essential
+pos,descriptive-adjective,adjective,"Descriptive Adjective",desc,#4d9df4,essential
+pos,proper-adjective,adjective,"Proper Adjective",prop,#4d9df4,essential
+pos,demonstrative-adjective,adjective,"Demonstrative Adjective",dem,#4d9df4,essential
+pos,possessive-adjective,adjective,"Possessive Adjective",poss,#4d9df4,essential
+pos,quantitative-adjective,adjective,"Adjective of Quantity/Number",quant,#4d9df4,essential
+pos,comparative-adjective,adjective,"Comparative Adjective",compar,#4d9df4,essential
+pos,superlative-adjective,adjective,"Superlative Adjective",super,#4d9df4,essential
+pos,adverb,,"Adverb",Adv,#a06bf5,essential
+pos,adverb-of-manner,adverb,"Adverb of Manner",manner,#a06bf5,essential
+pos,adverb-of-time,adverb,"Adverb of Time",time,#a06bf5,essential
+pos,adverb-of-place,adverb,"Adverb of Place",place,#a06bf5,essential
+pos,adverb-of-frequency,adverb,"Adverb of Frequency",freq,#a06bf5,essential
+pos,adverb-of-degree,adverb,"Adverb of Degree",degree,#a06bf5,essential
+pos,relative-adverb,adverb,"Relative Adverb",rel,#a06bf5,advanced
+pos,pronoun,,"Pronoun",Pro,#f57f2c,essential
+pos,personal-pronoun,pronoun,"Personal Pronoun",pers,#f57f2c,essential
+pos,possessive-pronoun,pronoun,"Possessive Pronoun",poss,#f57f2c,essential
+pos,reflexive-pronoun,pronoun,"Reflexive Pronoun",refl,#f57f2c,essential
+pos,relative-pronoun,pronoun,"Relative Pronoun",rel,#f57f2c,essential
+pos,demonstrative-pronoun,pronoun,"Demonstrative Pronoun",dem,#f57f2c,essential
+pos,interrogative-pronoun,pronoun,"Interrogative Pronoun",interr,#f57f2c,essential
+pos,indefinite-pronoun,pronoun,"Indefinite Pronoun",indef,#f57f2c,essential
+pos,emphatic-pronoun,pronoun,"Emphatic Pronoun",emph,#f57f2c,advanced
+pos,preposition,,"Preposition",Prep,#1fbfa5,essential
+pos,conjunction,,"Conjunction",Conj,#ef5da8,essential
+pos,coordinating-conjunction,conjunction,"Coordinating Conjunction",coord,#ef5da8,essential
+pos,subordinating-conjunction,conjunction,"Subordinating Conjunction",subord,#ef5da8,essential
+pos,correlative-conjunction,conjunction,"Correlative Conjunction",correl,#ef5da8,essential
+pos,determiner,,"Determiner",Det,#8fc93a,essential
+pos,article,determiner,"Article",art,#8fc93a,essential
+pos,definite-article,determiner,"Definite Article",def,#8fc93a,essential
+pos,indefinite-article,determiner,"Indefinite Article",a/an,#8fc93a,essential
+pos,interjection,,"Interjection",Int,#e3c229,essential
+part,subject,,"Subject",Subj,#38bdf8,essential
+part,simple-subject,subject,"Simple Subject",SS,#0ea5e9,essential
+part,complete-subject,subject,"Complete Subject",CS,#7dd3fc,essential
+part,compound-subject,subject,"Compound Subject",CmpS,#2563eb,essential
+part,understood-subject,subject,"Understood Subject",(You),#bae6fd,essential
+part,predicate,,"Predicate",Pred,#fb7185,essential
+part,simple-predicate,predicate,"Simple Predicate",SP,#f43f5e,essential
+part,complete-predicate,predicate,"Complete Predicate",CP,#fda4af,essential
+part,compound-predicate,predicate,"Compound Predicate",CmpP,#e11d48,essential
+part,object,,"Object",Obj,#34d399,essential
+part,direct-object,object,"Direct Object",DO,#34d399,essential
+part,indirect-object,object,"Indirect Object",IO,#34d399,essential
+part,object-of-preposition,object,"Object of the Preposition",OP,#34d399,essential
+part,complement,,"Complement",Comp,#c084fc,essential
+part,subject-complement,complement,"Subject Complement",SC,#c084fc,essential
+part,predicate-nominative,complement,"Predicate Nominative",PN,#c084fc,essential
+part,predicate-adjective,complement,"Predicate Adjective",PA,#c084fc,essential
+part,object-complement,complement,"Object Complement",OC,#c084fc,advanced
+part,appositive,,"Appositive",Appos,#fbbf24,essential
+phrase,noun-phrase,,"Noun Phrase",NP,#f5a623,essential
+phrase,verb-phrase,,"Verb Phrase",VP,#f4574d,essential
+phrase,prepositional-phrase,,"Prepositional Phrase",PP,#1fbfa5,essential
+phrase,verbal-phrase,,"Verbal Phrase",VerbP,#8b5cf6,essential
+phrase,gerund-phrase,verbal-phrase,"Gerund Phrase",GerP,#a06bf5,essential
+phrase,infinitive-phrase,verbal-phrase,"Infinitive Phrase",InfP,#4d9df4,essential
+phrase,participial-phrase,verbal-phrase,"Participial Phrase",PartP,#ef5da8,essential
+phrase,appositive-phrase,,"Appositive Phrase",AppP,#2fbf6b,essential
+phrase,absolute-phrase,,"Absolute Phrase",AbsP,#e3c229,essential
+clause,independent-clause,,"Independent Clause",IC,#38bdf8,essential
+clause,dependent-clause,,"Dependent Clause",DC,#f57f2c,essential
+clause,relative-clause,dependent-clause,"Relative (Adjective) Clause",RC,#a06bf5,essential
+clause,adverbial-clause,dependent-clause,"Adverbial Clause",AdvC,#1fbfa5,essential
+clause,noun-clause,dependent-clause,"Noun Clause",NC,#f5a623,essential
