@@ -680,6 +680,17 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
 }
 .dot.is-on { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
 
+/* Full screen: the view leaves #app's centered column, so it supplies its own
+   backdrop, padding, and scroll. The stage grows to fill the extra height. */
+.view-present.is-fullscreen {
+  background: var(--bg);
+  padding: 26px 40px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.view-present.is-fullscreen .stage { flex: 1 1 auto; }
+
 /* ====================================================================
    Quiz mode
    ==================================================================== */

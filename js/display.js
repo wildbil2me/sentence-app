@@ -35,6 +35,7 @@
       '  <span class="spacer"></span>' +
       '  <a class="btn" href="#/edit/' + lesson.id + '">✎ Edit</a>' +
       '  <a class="btn" href="#/quiz/' + lesson.id + '">🎯 Quiz</a>' +
+      '  <button class="btn" data-act="fullscreen" hidden></button>' +
       "</header>" +
       '<div class="present-controls">' +
       '  <div class="layer-chips" data-role="chips"></div>' +
@@ -181,12 +182,43 @@
       visible = []; renderChips(); renderStage();
     });
 
+    // Full screen — the Fullscreen API works from file:// and needs no network.
+    // Unprefixed covers modern Edge/Chrome; the webkit fallback is cheap insurance.
+    var fsBtn = view.querySelector('[data-act="fullscreen"]');
+    var reqFs = view.requestFullscreen || view.webkitRequestFullscreen;
+    var exitFs = document.exitFullscreen || document.webkitExitFullscreen;
+    function fsActive() {
+      return (document.fullscreenElement || document.webkitFullscreenElement) === view;
+    }
+    function syncFsBtn() {
+      var on = fsActive();
+      view.classList.toggle("is-fullscreen", on);
+      fsBtn.textContent = on ? "🡼 Exit full screen" : "⛶ Full screen";
+    }
+    function toggleFullscreen() {
+      if (fsActive()) { if (exitFs) exitFs.call(document); }
+      else if (reqFs) { reqFs.call(view); }
+    }
+    if ((document.fullscreenEnabled || document.webkitFullscreenEnabled) && reqFs) {
+      fsBtn.hidden = false;
+      syncFsBtn();
+      fsBtn.addEventListener("click", toggleFullscreen);
+      document.addEventListener("fullscreenchange", syncFsBtn);
+      document.addEventListener("webkitfullscreenchange", syncFsBtn);
+    }
+
     function onKey(e) {
       if (e.key === "ArrowLeft") go(-1);
       if (e.key === "ArrowRight") go(1);
+      if ((e.key === "f" || e.key === "F") && !fsBtn.hidden) toggleFullscreen();
     }
     document.addEventListener("keydown", onKey);
-    wjt.onViewCleanup(function () { document.removeEventListener("keydown", onKey); });
+    wjt.onViewCleanup(function () {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("fullscreenchange", syncFsBtn);
+      document.removeEventListener("webkitfullscreenchange", syncFsBtn);
+      if (fsActive() && exitFs) exitFs.call(document);
+    });
 
     renderChips();
     renderStage();
