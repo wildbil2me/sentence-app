@@ -3,6 +3,7 @@
   "use strict";
   window.wjt = window.wjt || {};
   wjt.views = wjt.views || {};
+  wjt.VERSION = "0.1.0";
 
   /* ---------------- toasts ---------------- */
   wjt.toast = function (msg, ms) {
@@ -58,8 +59,12 @@
     var fileInput = view.querySelector('[data-role="file"]');
 
     view.querySelector('[data-act="new"]').addEventListener("click", function () {
-      var lesson = wjt.store.save(wjt.store.create());
-      location.hash = "#/edit/" + lesson.id;
+      try {
+        var lesson = wjt.store.save(wjt.store.create());
+        location.hash = "#/edit/" + lesson.id;
+      } catch (e) {
+        wjt.toast(e.message, 6000);
+      }
     });
 
     view.querySelector('[data-act="library"]').addEventListener("click", function () {
@@ -78,11 +83,13 @@
         reader.onload = function () {
           try {
             var data = JSON.parse(reader.result);
-            var result = wjt.importLesson(data);
-            wjt.store.save(result.lesson);
-            imported++;
-            wjt.toast("Imported “" + result.lesson.title + "”" +
-              (result.warnings.length ? " with " + result.warnings.length + " warning(s) — see console." : "."));
+            var result = wjt.importBundle(data);
+            if (!result.lessons.length) throw new Error("No usable lessons in the file.");
+            result.lessons.forEach(function (l) { wjt.store.save(l); });
+            imported += result.lessons.length;
+            wjt.toast("Imported " + result.lessons.length + " lesson" +
+              (result.lessons.length === 1 ? "" : "s") +
+              (result.warnings.length ? " (" + result.warnings.length + " warning(s) — see console)." : "."));
             result.warnings.forEach(function (w) { console.warn("[Sentence Forge import]", w); });
             // The lessons grid lives on the Library screen — go show it there.
             if (location.hash === "#/library") route();
@@ -110,7 +117,10 @@
 
     view.innerHTML =
       '<section data-role="my-lessons">' +
-      '  <h2 class="section-title">Your lessons</h2>' +
+      '  <div class="section-head">' +
+      '    <h2 class="section-title">Your lessons</h2>' +
+      '    <button class="btn btn-sm" data-act="export-all" title="Download every lesson as one JSON">⬇ Export all</button>' +
+      "  </div>" +
       '  <div class="lesson-grid" data-role="lessons"></div>' +
       "</section>" +
       '<section class="examples-block" data-role="examples-block">' +
@@ -188,13 +198,22 @@
           '  <button class="btn btn-primary" data-act="load">＋ Add to my lessons</button>' +
           "</div>";
         card.querySelector('[data-act="load"]').addEventListener("click", function () {
-          var lesson = wjt.store.save(ex.build());
-          wjt.toast("Loaded “" + lesson.title + "”.");
-          location.hash = "#/present/" + lesson.id;
+          try {
+            var lesson = wjt.store.save(ex.build());
+            wjt.toast("Loaded “" + lesson.title + "”.");
+            location.hash = "#/present/" + lesson.id;
+          } catch (e) {
+            wjt.toast(e.message, 6000);
+          }
         });
         examplesEl.appendChild(card);
       });
     }
+
+    view.querySelector('[data-act="export-all"]').addEventListener("click", function () {
+      if (!wjt.store.list().length) { wjt.toast("No lessons to export."); return; }
+      wjt.downloadJson(wjt.exportAllLessons(), "sentence-forge-lessons.json");
+    });
 
     renderLessons();
     renderExamples();
@@ -222,6 +241,9 @@
     document.getElementById("theme-toggle").addEventListener("click", function () {
       applyTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light");
     });
+
+    var vEl = document.querySelector('[data-role="version"]');
+    if (vEl) vEl.textContent = "v" + wjt.VERSION;
 
     // First run: seed the sample so the app never starts empty.
     if (!localStorage.getItem("sentenceForge.seeded") && !wjt.store.list().length) {

@@ -1,5 +1,5 @@
 ---
-status: todo   # todo | doing | done
+status: done   # todo | doing | done
 created: 2026-07-22
 ---
 
@@ -8,6 +8,16 @@ created: 2026-07-22
 Implements **workstream P1** of [docs/roadmap-0.1.0.md](../docs/roadmap-0.1.0.md).
 Everything here is **additive and format-safe** — no taxonomy or lesson-format
 change. Lesson format stays `version: 1`; this adds the *app* version `0.1.0`.
+
+> **Adapted 2026-07-22 for the landing-page split.** After this plan was
+> written, the front end was refactored: the old single landing page became a
+> clean **Home splash** (`wjt.views.home`) plus a separate **Library screen**
+> (`wjt.views.library`, at `#/library`). The lessons + examples grids now live on
+> Library; the file-import handler moved into the Home view and already loops over
+> multiple files and navigates to `#/library` on success. Line numbers and the
+> `.btn-row`/`renderLessons()` anchors below have been re-pointed to the current
+> code, and **Export all now lands on the Library screen** (that's where lessons
+> are shown), not the Home splash. The DOM-check baseline is now **238** post-split.
 
 ## Why
 
@@ -41,14 +51,27 @@ wjt.exportAllLessons = function () {
 };
 ```
 
-**[js/app.js](../js/app.js)** — library hero. Add a button to the `.btn-row` at
-[app.js:47-50](../js/app.js#L47-L50):
+**[js/app.js](../js/app.js)** — **Library view** (`wjt.views.library`), not the
+Home splash. Add an "Export all" action to the "Your lessons" section header.
+The section is currently a bare `<h2>` at [app.js:112-115](../js/app.js#L112-L115):
 
 ```html
-<button class="btn btn-big" data-act="export-all">⬇ Export all</button>
+<section data-role="my-lessons">
+  <div class="section-head">
+    <h2 class="section-title">Your lessons</h2>
+    <button class="btn btn-sm" data-act="export-all" title="Download every lesson as one JSON">⬇ Export all</button>
+  </div>
+  <div class="lesson-grid" data-role="lessons"></div>
+</section>
 ```
 
-Wire it near the other hero handlers (~line 150):
+(If a `.section-head` flex row doesn't already exist, a one-line CSS rule —
+`display:flex; align-items:center; justify-content:space-between; gap:12px;` —
+keeps the title and button on one row. Reuse an existing pattern if there is one.)
+
+Wire it inside `wjt.views.library`, alongside `renderLessons()` /
+`renderExamples()` (before the `renderLessons(); renderExamples();` calls at
+[app.js:199-200](../js/app.js#L199-L200)):
 
 ```js
 view.querySelector('[data-act="export-all"]').addEventListener("click", function () {
@@ -93,9 +116,13 @@ wjt.importBundle = function (data) {
 };
 ```
 
-**[js/app.js](../js/app.js)** — route the file-change handler
-([app.js:157-177](../js/app.js#L157-L177)) through `importBundle` instead of
-`importLesson`. Each file may now be a bundle *or* a single lesson:
+**[js/app.js](../js/app.js)** — the file-change handler now lives in the **Home
+view** and already loops over multiple selected files
+([app.js:72-96](../js/app.js#L72-L96)), calling `wjt.importLesson(data)` and
+saving one lesson per file. Route each file's `reader.onload` through
+`importBundle` instead, so any file may itself be a bundle *or* a single lesson.
+The existing loop already navigates to `#/library` on success — keep that; just
+make the per-file body count *lessons* rather than *files*:
 
 ```js
 reader.onload = function () {
@@ -104,16 +131,24 @@ reader.onload = function () {
     var result = wjt.importBundle(data);
     if (!result.lessons.length) throw new Error("No usable lessons in the file.");
     result.lessons.forEach(function (l) { wjt.store.save(l); });   // save() may throw — see Task C
+    imported += result.lessons.length;
     wjt.toast("Imported " + result.lessons.length + " lesson" +
       (result.lessons.length === 1 ? "" : "s") +
       (result.warnings.length ? " (" + result.warnings.length + " warning(s) — see console)." : "."));
     result.warnings.forEach(function (w) { console.warn("[Sentence Forge import]", w); });
-    renderLessons();
+    // Existing behavior: surface the result on the Library screen.
+    if (location.hash === "#/library") route();
+    else location.hash = "#/library";
   } catch (e) {
     wjt.toast("Import failed: " + e.message, 5000);
   }
 };
 ```
+
+Note the Library view rebuilds its own grid on entry (it calls its local
+`renderLessons()` at [app.js:199](../js/app.js#L199)), so navigating to
+`#/library` — or `route()` when already there — is what refreshes the list; there
+is no top-level `renderLessons()` to call from Home.
 
 ### Task C — Guard the `localStorage` write failure
 
@@ -136,14 +171,18 @@ function writeAll(list) {
 
 Then handle it at the call sites that are currently unguarded:
 
-- **[js/editor.js:16](../js/editor.js#L16)** — the autosave `wjt.store.save(lesson)`.
-  This is the important one: it's silent and frequent. Wrap it:
+- **[js/editor.js:16](../js/editor.js#L16)** — the autosave `wjt.store.save(lesson)`
+  inside `save()`. This is the important one: it's silent and frequent. Wrap it:
   `try { wjt.store.save(lesson); } catch (e) { wjt.toast(e.message, 6000); }`
-- **[js/app.js:137](../js/app.js#L137)** (load example) and
-  **[js/app.js:146](../js/app.js#L146)** (new lesson) — wrap in `try/catch` →
-  `wjt.toast`, and don't navigate on failure.
-- Import (Task B) is already inside `try/catch`.
-- The first-run seed at [app.js:212](../js/app.js#L212) can stay as-is (best-effort).
+- **[js/app.js:61](../js/app.js#L61)** — **New lesson** in the Home view
+  (`wjt.store.save(wjt.store.create())` then `location.hash = "#/edit/…"`). Wrap
+  in `try/catch` → `wjt.toast`, and don't navigate on failure.
+- **[js/app.js:191](../js/app.js#L191)** — **load example** ("＋ Add to my
+  lessons"), now inside the Library view's `renderExamples()`
+  (`wjt.store.save(ex.build())` then navigate to present). Same treatment.
+- Import (Task B) is already inside `try/catch` (per file, in the Home view).
+- The first-run seed at [app.js:227-228](../js/app.js#L227-L228) can stay as-is
+  (best-effort).
 
 *Pure change — the try/catch doesn't touch the DOM, so store.js stays load-safe
 and the smoke test's fake `localStorage` path (which succeeds) is unaffected.*
@@ -156,14 +195,17 @@ and the smoke test's fake `localStorage` path (which succeeds) is unaffected.*
   ([index.html:18](../index.html#L18)):
   `<footer class="appfoot"><span data-role="version"></span></footer>`
 - **[js/app.js](../js/app.js)** boot (inside the `DOMContentLoaded` handler,
-  ~line 204): `var vEl = document.querySelector('[data-role="version"]'); if (vEl) vEl.textContent = "v" + wjt.VERSION;`
+  ~[app.js:220-234](../js/app.js#L220-L234), e.g. after `applyTheme(...)`):
+  `var vEl = document.querySelector('[data-role="version"]'); if (vEl) vEl.textContent = "v" + wjt.VERSION;`
+  The footer is outside `#app`, so set it once at boot — it isn't re-rendered per route.
 - **[css/styles.css](../css/styles.css)** — a small, muted, unobtrusive footer:
 
 ```css
 .appfoot { text-align: center; padding: 24px 12px; color: var(--muted); font-size: 12px; }
 ```
 
-(Use the existing muted-text custom property name — check `:root` in styles.css;
+(`--muted` is the existing muted-text token — confirmed in `:root`,
+[styles.css:12](../css/styles.css#L12) / [:32](../css/styles.css#L32). Reuse it;
 don't invent a new token.)
 
 ## Out of scope (separate work orders)
@@ -185,18 +227,26 @@ don't invent a new token.)
 - `node tools/gen-docs.js --check` and
   `node tools/validate-lesson.js samples/*.json docs/custom-gpt-instructions.md`
   both pass.
-- Browser DOM check reports **238 passed, 0 failed** (the footer + new library
-  button change the DOM — if the count moves, investigate before landing, and
-  update [docs/project/dom-structure.md](../docs/project/dom-structure.md) for the
-  new `<footer class="appfoot">` and the `Export all` button).
+- Browser DOM check: the post-split baseline is **238 passed, 0 failed**. The
+  global `<footer class="appfoot">` and the Library-view `Export all` button both
+  change the DOM, so the pass **count will move** — that's expected here (unlike
+  the usual "must stay 238"). Confirm 0 failed, sanity-check the new count, then
+  update [docs/project/dom-structure.md](../docs/project/dom-structure.md): the
+  footer under the **global** shell (after `#toasts`, outside `#app`) and the
+  `Export all` button in the **Library** view's "Your lessons" section head. (The
+  doc already documents separate Home and Library views.)
 - Manual smoke in the app (open `index.html` directly — must work from `file://`):
-  1. **Export all** downloads one JSON containing every lesson.
-  2. Delete a lesson, then **Import** that file → the lesson returns with a new
-     id, and any lessons you kept are untouched (merge, no overwrite).
+  1. On **Library** (`#/library`), **Export all** downloads one JSON containing
+     every lesson.
+  2. Delete a lesson, then **Import JSON** from the Home splash → import lands you
+     on Library, the lesson returns with a new id, and any lessons you kept are
+     untouched (merge, no overwrite).
   3. A single-lesson file from the per-card ⬇ export still imports (backward compat).
-  4. Simulate a write failure (DevTools → fill storage, or block storage) →
+  4. A multi-file selection (Import accepts `multiple`) — a bundle *and* a single
+     lesson at once — imports both.
+  5. Simulate a write failure (DevTools → fill storage, or block storage) →
      editing shows the "storage is full" toast instead of losing work silently.
-  5. Footer shows **v0.1.0**.
+  6. Footer shows **v0.1.0** on both Home and Library.
 - Report results honestly, per [CLAUDE.md](../CLAUDE.md); a red check is not "done."
 
 ## Notes

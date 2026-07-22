@@ -13,7 +13,7 @@
 
     var savedFlash = null;
     function save() {
-      wjt.store.save(lesson);
+      try { wjt.store.save(lesson); } catch (e) { wjt.toast(e.message, 6000); return; }
       if (savedFlash) {
         savedFlash.classList.remove("show");
         void savedFlash.offsetWidth; // restart the animation

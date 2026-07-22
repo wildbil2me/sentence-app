@@ -37,7 +37,14 @@
   }
 
   function writeAll(list) {
-    localStorage.setItem(KEY, JSON.stringify(list));
+    try {
+      localStorage.setItem(KEY, JSON.stringify(list));
+    } catch (e) {
+      var err = new Error("Couldn’t save — browser storage is full or disabled. " +
+        "Export your lessons to a file so you don’t lose work.");
+      err.code = "STORAGE_WRITE_FAILED";
+      throw err;
+    }
   }
 
   wjt.store = {
@@ -213,6 +220,37 @@
     // Only written when on, so the default (full palette) stays implicit.
     if (lesson.essentialOnly) doc.essentialOnly = true;
     return doc;
+  };
+
+  /** One document holding every stored lesson (volatile ids dropped per lesson). */
+  wjt.exportAllLessons = function () {
+    return {
+      format: "sentence-forge-bundle",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      lessons: wjt.store.list().map(wjt.exportLesson),
+    };
+  };
+
+  /** Normalize an uploaded doc (bundle | array | single lesson) into lessons. */
+  wjt.importBundle = function (data) {
+    var docs;
+    if (data && Array.isArray(data.lessons)) docs = data.lessons;   // { lessons: [...] }
+    else if (Array.isArray(data)) docs = data;                       // bare array
+    else docs = [data];                                              // single lesson (existing shape)
+
+    var lessons = [], warnings = [], failed = 0;
+    docs.forEach(function (d, i) {
+      try {
+        var r = wjt.importLesson(d);
+        lessons.push(r.lesson);
+        r.warnings.forEach(function (w) { warnings.push("Lesson " + (i + 1) + ": " + w); });
+      } catch (e) {
+        failed++;
+        warnings.push("Lesson " + (i + 1) + " skipped: " + e.message);
+      }
+    });
+    return { lessons: lessons, warnings: warnings, failed: failed };
   };
 
   wjt.downloadJson = function (obj, filename) {

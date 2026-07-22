@@ -439,6 +439,9 @@ body {
   color: var(--muted);
   margin: 26px 0 12px;
 }
+.section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.section-head .section-title { margin-bottom: 0; }
+.appfoot { text-align: center; padding: 24px 12px; color: var(--muted); font-size: 12px; }
 .section-sub { margin: -6px 0 12px; }
 .examples-block { margin-top: 8px; }
 .example-card { display: flex; flex-direction: column; border-style: dashed; }

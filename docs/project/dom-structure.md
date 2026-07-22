@@ -36,12 +36,14 @@ body
 │  └─ button#theme-toggle       ← ☀️ / 🌙, wired in app.js
 ├─ main#app                     ← every view replaces this element's contents
 ├─ div#toasts[aria-live=polite] ← transient .toast children, added by wjt.toast()
+├─ footer.appfoot               ← span[data-role=version], set once at boot ("v" + wjt.VERSION)
 └─ <script> ×9                  ← load order IS the dependency graph
 ```
 
 `#app` is the single mount point. `route()` in [`js/app.js`](../../js/app.js)
-clears it and calls one view function per hash. `#toasts` and `#theme-toggle`
-live *outside* `#app`, so they persist across navigations.
+clears it and calls one view function per hash. `#toasts`, `#theme-toggle`, and
+`.appfoot` live *outside* `#app`, so they persist across navigations — the footer
+version string is written once at boot, not per route.
 
 ## Conventions (read this first)
 
@@ -216,7 +218,9 @@ view's "Library" button and from the "← Library" back-links in every other vie
 ```
 div.view.view-library
 ├─ section[data-role=my-lessons]
-│  ├─ h2.section-title "Your lessons"
+│  ├─ div.section-head              ← flex row: title + Export-all
+│  │  ├─ h2.section-title "Your lessons"
+│  │  └─ button[data-act=export-all] "⬇ Export all"   ← wjt.exportAllLessons()
 │  └─ div.lesson-grid[data-role=lessons]
 │     └─ article.card.lesson-card    ×N   (or .empty-state card if none)
 │        ├─ h3, p.lesson-desc
