@@ -330,6 +330,17 @@
   };
 
   /* ---------------- routing ---------------- */
+  // After a view swap, land focus on the new view's primary heading so keyboard
+  // and screen-reader users start at the *content*, not the page chrome (`route()`
+  // replaces #app wholesale, which otherwise drops focus back to <body>). Falls
+  // back to #app itself for a view with no h1/h2 (the editor). scrollTo(0,0)
+  // already ran, so suppress the focus-scroll to avoid a double jump.
+  function focusView(container) {
+    var target = container.querySelector("h1, h2") || container;
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+  }
+
   function route() {
     runCleanups();
     wjt.closePopover();
@@ -338,11 +349,13 @@
     var parts = hash.split("/");
     window.scrollTo(0, 0);
 
-    if (parts[0] === "edit" && parts[1]) return wjt.views.editor(container, parts[1]);
-    if (parts[0] === "present" && parts[1]) return wjt.views.present(container, parts[1]);
-    if (parts[0] === "quiz" && parts[1]) return wjt.views.quiz(container, parts[1]);
-    if (parts[0] === "library") return wjt.views.library(container);
-    return wjt.views.home(container);
+    if (parts[0] === "edit" && parts[1]) wjt.views.editor(container, parts[1]);
+    else if (parts[0] === "present" && parts[1]) wjt.views.present(container, parts[1]);
+    else if (parts[0] === "quiz" && parts[1]) wjt.views.quiz(container, parts[1]);
+    else if (parts[0] === "library") wjt.views.library(container);
+    else wjt.views.home(container);
+
+    focusView(container);
   }
 
   // Full repaint of the current view — used by the palette toggle, since a

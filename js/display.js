@@ -54,13 +54,17 @@
       "  </nav>" +
       "</div>" +
       '<div class="present-legend" data-role="legend" hidden></div>' +
-      '<aside class="explain card" data-role="explain" hidden></aside>';
+      '<aside class="explain card" data-role="explain" hidden></aside>' +
+      // Persistent live region (outside the rebuilt stage) so paging to a new
+      // sentence is announced to a screen reader, not just shown on screen.
+      '<div class="sr-only" data-role="slide-live" aria-live="polite"></div>';
 
     var chipsEl = view.querySelector('[data-role="chips"]');
     var stageEl = view.querySelector('[data-role="stage"]');
     var explainEl = view.querySelector('[data-role="explain"]');
     var dotsEl = view.querySelector('[data-role="dots"]');
     var legendEl = view.querySelector('[data-role="legend"]');
+    var liveEl = view.querySelector('[data-role="slide-live"]');
 
     // The Key legend is a transient view toggle (like Show all): off by default,
     // not persisted. renderLegend() rebuilds it from the current sentence and the
@@ -216,6 +220,10 @@
       stageEl.innerHTML =
         '<div class="stage-counter">Sentence ' + (idx + 1) + " of " + lesson.sentences.length + "</div>";
       var sentence = lesson.sentences[idx];
+      if (liveEl) {
+        liveEl.textContent = "Sentence " + (idx + 1) + " of " +
+          lesson.sentences.length + ": " + sentence.text;
+      }
       var r = wjt.renderSentence(sentence, {
         layers: visible,
         // Lay out every layer this lesson teaches so the block keeps a constant

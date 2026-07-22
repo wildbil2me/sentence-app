@@ -369,6 +369,11 @@
       box.className = "palette";
       var quoted = wjt.spanText(sentence.text, span);
       if (quoted.length > 44) quoted = quoted.slice(0, 42) + "…";
+      // Modal label picker: name the target span so a screen reader announces
+      // what is being labelled when focus lands inside.
+      box.setAttribute("role", "dialog");
+      box.setAttribute("aria-modal", "true");
+      box.setAttribute("aria-label", "Choose a label for “" + quoted + "”");
       box.innerHTML = '<div class="palette-target">“' + wjt.escapeHtml(quoted) + "”</div>";
 
       function labelButton(labelId, isSub) {
@@ -398,6 +403,10 @@
         .forEach(function (layerId) {
           var group = document.createElement("div");
           group.className = "palette-group";
+          // Expose the layer grouping so a screen reader announces which layer a
+          // label belongs to when moving between the grouped buttons.
+          group.setAttribute("role", "group");
+          group.setAttribute("aria-label", wjt.LAYERS[layerId].name);
           group.innerHTML = '<div class="palette-group-name">' + wjt.LAYERS[layerId].name + "</div>";
           var shown = 0;
 
@@ -431,10 +440,39 @@
           if (shown) box.appendChild(group);
         });
 
+      var prevFocus = document.activeElement;
       var pop = wjt.showPopover(rect, box);
+
+      // Modal picker: land focus on the first label, trap Tab within the popover
+      // while open, and restore focus on close — mirrors wjt.confirmDialog. The
+      // Escape/outside-click dismiss is already wired by wjt.showPopover; the
+      // MutationObserver below hangs the restore off any close path.
+      var firstLabel = box.querySelector(".palette-label");
+      if (firstLabel) firstLabel.focus();
+
+      function trapTab(e) {
+        if (e.key !== "Tab") return;
+        var f = box.querySelectorAll(".palette-label");
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+      document.addEventListener("keydown", trapTab);
+
+      var torn = false;
+      function teardown() {
+        if (torn) return;
+        torn = true;
+        document.removeEventListener("keydown", trapTab);
+        if (prevFocus && prevFocus.focus) { try { prevFocus.focus(); } catch (e) { /* gone */ } }
+      }
+      // Drop the trap handler if the view is swapped while the popover is open.
+      wjt.onViewCleanup(teardown);
+
       // If the popover is dismissed without choosing, clear the selection.
       var obs = new MutationObserver(function () {
-        if (!document.body.contains(pop)) { obs.disconnect(); onCancel && onCancel(); }
+        if (!document.body.contains(pop)) { obs.disconnect(); teardown(); onCancel && onCancel(); }
       });
       obs.observe(document.body, { childList: true });
     }

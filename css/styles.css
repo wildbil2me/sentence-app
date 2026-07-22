@@ -69,6 +69,40 @@ body {
   min-height: 100vh;
 }
 
+/* ---------------- accessibility helpers ---------------- */
+/* Visually hidden but exposed to assistive tech (screen-reader-only live
+   regions, off-screen labels). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip-to-content: off-screen until focused, so the first Tab from a cold load
+   jumps a keyboard user past the top bar into #app. */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 9px 16px;
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
 /* ---------------- top bar ---------------- */
 .topbar {
   display: flex;

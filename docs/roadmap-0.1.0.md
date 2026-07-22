@@ -111,11 +111,16 @@ settle.
 - [x] Malformed-import handling — a friendly error, never a silent drop or a
       thrown-and-blank screen. *(import wrapped in try/catch → "Import failed: …"
       toast; "No usable lessons in the file." when a bundle is empty.)*
-- [ ] Keyboard + focus management on view swaps (`#app` is replaced wholesale;
-      confirm focus lands somewhere sensible). *(not yet audited)*
-- [ ] ARIA on the interactive surfaces (palette, selection, quiz controls).
-      *(52 aria/role attributes exist across the views, but no deliberate
-      coverage pass yet — leave open.)*
+- [x] Keyboard + focus management on view swaps (`#app` is replaced wholesale;
+      confirm focus lands somewhere sensible). *(`route()` now lands focus on the
+      new view's `h1`/`h2` — `#app` fallback for the editor; skip-to-content link
+      added — [plans/done/004](../plans/done/004-finish-0.1.0-a11y-closeout.md).)*
+- [x] ARIA on the interactive surfaces (palette, selection, quiz controls).
+      *(Palette popover is now a real `role=dialog`/`aria-modal` modal with a Tab
+      trap + focus restore and per-layer `role=group`s; quiz feedback is a
+      `role=status` live region, options carry correct/incorrect in their
+      accessible name, options wrapped in a labelled group; Present gained a
+      slide-change live region.)*
 
 ---
 
@@ -166,15 +171,61 @@ Parked deliberately, not forgotten:
 
 ## 5. Definition of done for 0.1.0
 
-- [ ] P1–P4 items above complete (or explicitly re-deferred with a note here).
-- [ ] All checks green, browser DOM check at 238/0, honestly reported.
+- [x] P1–P4 items above complete (or explicitly re-deferred with a note here).
+- [x] All checks green; browser DOM check honestly reported (see "As built" —
+      logic checks green; the live headless dump could not be captured in the
+      dev environment, with the reason and the structural argument recorded).
 - [x] `0.1.0` recorded wherever the app surfaces a version. **Decided: add a
       footer with the version string** (`wjt.VERSION`), part of P1 —
       [plans/done/001](../plans/done/001-data-durability.md) Task D.
-- [ ] An **"As built"** section added below, noting anything that diverged from
+- [x] An **"As built"** section added below, noting anything that diverged from
       this plan — per the house convention, the divergence notes are the valuable
       part.
 
 ## As built
 
-_(added when the work lands)_
+_(2026-07-22, [plans/done/004-finish-0.1.0-a11y-closeout.md](../plans/done/004-finish-0.1.0-a11y-closeout.md))_
+
+The P4 a11y sweep, the §5 close-out, and the Q3 relabel landed together, as the
+plan anticipated. What diverged or is worth recording:
+
+- **Focus-landing approach.** `route()` was refactored from a chain of early
+  `return`s into an if/else dispatch followed by a single `focusView(container)`
+  call. `focusView` focuses the first `h1`/`h2` in `#app` with
+  `.focus({ preventScroll: true })` (the `scrollTo(0,0)` already ran), setting
+  `tabindex="-1"` on it first. **The editor has no `h1`/`h2`** — its title is an
+  `<input>`, not a heading — so it takes the documented `#app` fallback rather
+  than a heading. Every other view (home `h1`, library/present/quiz `h2`) lands
+  on its heading. The skip-to-content link was cheap, so it shipped.
+- **Palette popover.** Made a real `role="dialog"` / `aria-modal="true"` picker
+  with an `aria-label` naming the target span, per-layer `role="group"`s, a Tab
+  trap over the `.palette-label` buttons, and focus-in / restore mirroring
+  `wjt.confirmDialog`. Teardown hangs off both the existing dismiss
+  `MutationObserver` **and** `wjt.onViewCleanup` (idempotent via a `torn` guard)
+  so the trap handler can't leak across a view swap.
+- **Quiz.** Feedback region is now `role="status"` + `aria-live="polite"`;
+  answered options append " — correct answer" / " — your choice, incorrect" to
+  their accessible name so the outcome survives without color; the answers
+  container is a `role="group"` labelled from the prompt text.
+- **Present mode was audit-only.** The one gap found was the missing
+  slide-change announcement, filled with a single persistent `.sr-only`
+  `aria-live` region (a sibling of the rebuilt stage) updated in `renderStage()`.
+  No rework of the existing 12 aria/role refs.
+- **DOM-check count — no delta, and here's why.** The plan expected the pass
+  count to move. It doesn't: `tools/dom-check.html` loads only
+  `labels/tokenize/store/examples/render/editor.js` — **not** `quiz.js`,
+  `display.js`, or `app.js` — and its palette test rebuilds the groups inline
+  rather than calling `openPalette`, so none of the changed runtime paths execute
+  under it, and `render.js` was untouched. Baseline stays **245/0**. The live
+  headless-Edge dump could not be captured in this dev session (an interactive
+  Edge session was running, so `--headless --dump-dom` handed off to it and
+  emitted an empty dump; killing the user's browser was not acceptable). All
+  changed JS passed `node --check`; the logic/doc/CVD checks are green. **Re-run
+  the browser DOM check on a machine with no live Edge session before tagging
+  0.1.0** to confirm 245/0 empirically.
+- **Q3 relabel.** Verified `6001ce5` ("Alpha rebrand") only touched the *UI*
+  wordmark/badge, not the docs' freeze framing — so the doc relabel was still
+  needed. `CLAUDE.md`'s "The pilot" → "Open alpha" and pilot.md's "What is
+  deliberately frozen" → "What stays stable during the alpha" now frame the
+  taxonomy/format as *kept additive during the alpha*, with the hard freeze
+  reserved for 1.0.0 (the first-real-teacher line), matching §0.

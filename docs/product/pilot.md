@@ -5,7 +5,7 @@ a live class period. The pilot exists to fix that before more gets built on top
 of assumptions.
 
 - [What we're trying to learn](#what-were-trying-to-learn)
-- [What is deliberately frozen](#what-is-deliberately-frozen)
+- [What stays stable during the alpha](#what-stays-stable-during-the-alpha)
 - [Running a pilot lesson](#running-a-pilot-lesson)
 - [How to report back](#how-to-report-back)
 - [What we'll do with it](#what-well-do-with-it)
@@ -51,18 +51,23 @@ technical risk in the product. If lessons vanish overnight on a cart of
 Chromebooks, export/import is not a sufficient sharing story and that's a
 significant finding.
 
-## What is deliberately frozen
+## What stays stable during the alpha
+
+The app is in **open alpha** — usable, single-user, not yet committed to format
+stability. That commitment becomes a promise at **1.0.0**, the first-real-teacher
+line (see [roadmap-0.1.0.md](../roadmap-0.1.0.md) §0). Until then these are kept
+deliberately stable anyway, because a break costs real prep work today:
 
 **The taxonomy.** 87 labels across four layers, plus the sentence-type badges.
-No new labels during the pilot unless a teacher hits a real, blocking gap in a
+No new labels during the alpha unless a teacher hits a real, blocking gap in a
 real lesson — and then it goes in as a
 [feature request](https://github.com/wildbil2me/sentence-app/issues/new?template=feature_request.yml) with the
 lesson attached, not as a speculative addition. Adding label 88 is the easiest
 way to feel productive while learning nothing.
 
-**The lesson format.** Breaking it during the pilot would destroy prep work that
-exists only in a teacher's browser and in files they exported. Changes must stay
-additive; see [lesson-json.md](../project/lesson-json.md#compatibility).
+**The lesson format.** Breaking it now would destroy prep work that exists only
+in a teacher's browser and in files they exported. Changes must stay additive;
+see [lesson-json.md](../project/lesson-json.md#compatibility).
 
 **The three modes.** No fourth mode, no gradebook, no accounts. See the
 [non-goals](overview.md#deliberate-non-goals).

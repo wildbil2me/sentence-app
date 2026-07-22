@@ -134,11 +134,16 @@ mode. Wording/CSS-only tweaks don't count; structural changes do.
 - **Reparenting is free; renaming ids is not.** Both Tier 2 reparentings shipped
   with zero data migration because ids were preserved. Preserve that property.
 
-## The pilot
+## Open alpha
 
-The app is heading into a classroom testing phase on GitHub Pages
-([docs/product/pilot.md](docs/product/pilot.md)). During it, the **taxonomy and
-the lesson format are frozen** except for real, blocking gaps found in real
-lessons. Bug fixes, wording, and accessibility are always in scope. A format
-break during the pilot silently destroys prep work that exists only in a
-teacher's browser.
+The app is in **open alpha** (`0.x`): usable and heading into classroom testing
+on GitHub Pages ([docs/product/pilot.md](docs/product/pilot.md)), but not yet
+committed to format stability. The hard freeze becomes a promise at **1.0.0 —
+the first real teacher** ([docs/roadmap-0.1.0.md](docs/roadmap-0.1.0.md) §0);
+until then format changes are still cheap.
+
+Even so, keep the **taxonomy and lesson format additive** during the alpha —
+change them only for a real, blocking gap found in a real lesson. A format break
+silently destroys prep work that exists only in a teacher's browser and in the
+JSON they've exported, and keeps the author's own sample lessons round-tripping.
+Bug fixes, wording, and accessibility are always in scope.

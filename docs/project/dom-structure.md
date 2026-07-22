@@ -30,6 +30,7 @@ injected into `#app`. Full file: [`index.html`](../../index.html).
 
 ```
 body
+├─ a.skip-link[href="#app"]     ← "Skip to content"; off-screen until focused (CSS .skip-link)
 ├─ nav.topbar
 │  ├─ a.brand[href="#/"]        ← svg.anvil + "Sentence Forge" wordmark
 │  ├─ button#palette-toggle     ← 🎨, aria-pressed; toggles default/cbSafe grammar palette, wired in app.js
@@ -50,7 +51,11 @@ the confirm being `.btn-danger` for destructive actions). It closes on confirm,
 cancel, backdrop click, or Escape, and restores focus on close.
 
 `#app` is the single mount point. `route()` in [`js/app.js`](../../js/app.js)
-clears it and calls one view function per hash. `#toasts`, `#palette-toggle`,
+clears it and calls one view function per hash, then `focusView()` moves focus to
+the new view's first `h1`/`h2` (given `tabindex="-1"`, focused with
+`preventScroll`) — or to `#app` itself when a view has none, e.g. the editor,
+whose title is an `<input>`. This keeps keyboard/AT users on the content after a
+swap instead of dropping to `<body>`. `#toasts`, `#palette-toggle`,
 `#theme-toggle`, and `.appfoot` live *outside* `#app`, so they persist across
 navigations — the footer version string is written once at boot, not per route.
 The palette toggle rewrites grammar colors in `wjt.LABELS`/`SENTENCE_TYPES` and
@@ -198,7 +203,9 @@ One floating popover at a time, managed by `wjt.showPopover(rect, contentEl)` /
 `div.gl-popover` **to `document.body`** (not inside a view), positions it near the
 anchor rect, and dismisses on outside-click or Escape. Callers supply the inner
 content element; the editor uses it for the label palette and the annotation
-details (below).
+details (below). The palette content is itself a focus-trapped modal dialog
+(`role="dialog"`, see below); `wjt.showPopover` provides the positioning and the
+outside-click/Escape dismiss, the caller adds the dialog semantics and the trap.
 
 ---
 
@@ -299,9 +306,12 @@ Two **popover contents** (shown via `wjt.showPopover`, so they live on
 `document.body`, not in this tree):
 
 ```
-div.palette                              ← label picker, opened on selection
+div.palette[role=dialog][aria-modal=true][aria-label="Choose a label for “…”"]
+│                                        ← label picker, opened on selection.
+│                                          Modal: focus lands on the first label,
+│                                          Tab is trapped, focus restored on close.
 ├─ div.palette-target "“selected text”"
-└─ div.palette-group   ×visible-layer
+└─ div.palette-group[role=group][aria-label=<layer name>]   ×visible-layer
    ├─ div.palette-group-name
    └─ div.palette-grid            (or .palette-grid.palette-grid-stacked for
       └─ button.palette-label       drill-down layers, wrapping .palette-subgroup
@@ -347,7 +357,11 @@ div.view.view-present   (.is-fullscreen when the Fullscreen API is active)
 │  └─ div.legend-group ×(shown layers)             ← div.legend-layer heading +
 │                                                     div.legend-items (span.legend-item ×labels:
 │                                                     span.swatch + b abbr + name)
-└─ aside.explain.card[data-role=explain][hidden]   ← label explainer, filled on chip click
+├─ aside.explain.card[data-role=explain][hidden]   ← label explainer, filled on chip click
+└─ div.sr-only[data-role=slide-live][aria-live=polite]  ← persistent (outside the
+                                                     rebuilt stage) so paging to a
+                                                     new sentence is announced;
+                                                     renderStage() sets its text
 ```
 
 The `.explain` aside is filled by `showExplain()` (annotation),
@@ -391,11 +405,13 @@ div.view.view-quiz
    ├─ div.quiz-count "Question i of N"
    ├─ h3.quiz-prompt[data-role=prompt]     ← <mark> for "highlighted"; .prompt-label for "find"
    ├─ div.quiz-stage[data-role=stage]      ← renderSentence(showAnnotations:false)
-   ├─ div.quiz-answers[data-role=answers]
+   ├─ div.quiz-answers[data-role=answers][role=group][aria-label=<prompt text>]
    │  └─ button.quiz-option ×options       (mc / sentence-type)   .is-right/.is-wrong
    │     — OR —  button[data-act=check|clear]  (find: drag on the stage grid)
-   └─ div.quiz-feedback[data-role=feedback][hidden]   .is-right/.is-wrong
-      └─ text + optional p.ann-note + button[data-act=next]
+   │     After answering, each option's aria-label gains " — correct answer" /
+   │     " — your choice, incorrect" so the outcome isn't color-only.
+   └─ div.quiz-feedback[data-role=feedback][role=status][aria-live=polite][hidden]
+      └─ text + optional p.ann-note + button[data-act=next]   .is-right/.is-wrong
 ```
 
 Three question types share this frame: `mc` (highlighted span → multiple

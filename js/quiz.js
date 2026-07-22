@@ -212,8 +212,8 @@
           '  <div class="quiz-count">Question ' + (qi + 1) + " of " + questions.length + "</div>" +
           '  <h3 class="quiz-prompt" data-role="prompt"></h3>' +
           '  <div class="quiz-stage" data-role="stage"></div>' +
-          '  <div class="quiz-answers" data-role="answers"></div>' +
-          '  <div class="quiz-feedback" data-role="feedback" hidden></div>' +
+          '  <div class="quiz-answers" data-role="answers" role="group"></div>' +
+          '  <div class="quiz-feedback" data-role="feedback" role="status" aria-live="polite" hidden></div>' +
           "</section>";
 
         var promptEl = view.querySelector('[data-role="prompt"]');
@@ -260,9 +260,15 @@
               answersEl.querySelectorAll(".quiz-option").forEach(function (o) { o.disabled = true; });
               var right = optId === q.ann.label;
               b.classList.add(right ? "is-right" : "is-wrong");
+              // Carry correct/incorrect in the accessible name too — color alone
+              // doesn't reach a screen reader.
+              b.setAttribute("aria-label", opt.name + (right ? " — correct answer" : " — your choice, incorrect"));
               if (!right) {
                 answersEl.querySelectorAll(".quiz-option").forEach(function (o) {
-                  if (o.textContent === label.name) o.classList.add("is-right");
+                  if (o.textContent === label.name) {
+                    o.classList.add("is-right");
+                    o.setAttribute("aria-label", label.name + " — correct answer");
+                  }
                 });
               }
               finishQuestion(right,
@@ -289,9 +295,13 @@
               answersEl.querySelectorAll(".quiz-option").forEach(function (o) { o.disabled = true; });
               var right = optId === q.answer;
               b.classList.add(right ? "is-right" : "is-wrong");
+              b.setAttribute("aria-label", opt.name + (right ? " — correct answer" : " — your choice, incorrect"));
               if (!right) {
                 answersEl.querySelectorAll(".quiz-option").forEach(function (o) {
-                  if (o.textContent === answerOpt.name) o.classList.add("is-right");
+                  if (o.textContent === answerOpt.name) {
+                    o.classList.add("is-right");
+                    o.setAttribute("aria-label", answerOpt.name + " — correct answer");
+                  }
                 });
               }
               finishQuestion(right,
@@ -340,6 +350,10 @@
               wjt.escapeHtml(wjt.spanText(q.sentence.text, q.ann)) + "</b>”. " + label.desc);
           });
         }
+
+        // Name the answer group after the (now-populated) prompt so a screen
+        // reader announces what the options belong to.
+        answersEl.setAttribute("aria-label", promptEl.textContent);
       }
 
       /* -------- results -------- */
