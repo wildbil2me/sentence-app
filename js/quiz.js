@@ -54,7 +54,7 @@
         '<div class="card empty-state"><div class="empty-emoji">🎯</div>' +
         "<h3>Nothing to quiz on yet</h3>" +
         "<p>This lesson has no labels. Ask your teacher to add some, or open the editor.</p>" +
-        '<div class="btn-row btn-row-center"><a class="btn" href="#/">← Library</a>' +
+        '<div class="btn-row btn-row-center"><a class="btn" href="#/library">← Library</a>' +
         '<a class="btn btn-primary" href="#/edit/' + lesson.id + '">Open editor</a></div></div>';
       return;
     }
@@ -119,7 +119,7 @@
     function renderSetup() {
       view.innerHTML =
         '<header class="present-head">' +
-        '  <a class="btn btn-ghost" href="#/">← Library</a>' +
+        '  <a class="btn btn-ghost" href="#/library">← Library</a>' +
         '  <div class="present-title"><h2>🎯 Quiz: ' + wjt.escapeHtml(lesson.title) + "</h2>" +
         '  <p class="muted-note">Practice on your own — answers get instant feedback.</p></div>' +
         "</header>" +
@@ -359,7 +359,7 @@
           '  <div class="btn-row btn-row-center">' +
           '    <button class="btn btn-primary btn-big" data-act="retry">↻ Try again</button>' +
           '    <button class="btn" data-act="setup">Change setup</button>' +
-          '    <a class="btn" href="#/">← Library</a>' +
+          '    <a class="btn" href="#/library">← Library</a>' +
           "  </div>" +
           "</section>";
 

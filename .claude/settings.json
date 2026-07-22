@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "before=$(git rev-parse HEAD 2>/dev/null); git pull --ff-only >/dev/null 2>&1; code=$?; after=$(git rev-parse HEAD 2>/dev/null); if [ $code -ne 0 ]; then m=\"could not fast-forward (diverged or uncommitted changes blocking) - pull by hand\"; elif [ \"$before\" = \"$after\" ]; then m=\"already up to date\"; else n=$(git rev-list --count \"$before..$after\" 2>/dev/null); m=\"pulled $n new commit(s) - review before continuing\"; fi; printf '{\"systemMessage\":\"sentence-forge: %s\",\"suppressOutput\":true}' \"$m\"",
+            "statusMessage": "Pulling latest from git..."
+          }
+        ]
+      }
+    ]
+  }
+}

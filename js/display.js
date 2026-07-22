@@ -27,7 +27,7 @@
 
     view.innerHTML =
       '<header class="present-head">' +
-      '  <a class="btn btn-ghost" href="#/">← Library</a>' +
+      '  <a class="btn btn-ghost" href="#/library">← Library</a>' +
       '  <div class="present-title">' +
       "    <h2>" + wjt.escapeHtml(lesson.title) + "</h2>" +
       (lesson.description ? '<p class="muted-note">' + wjt.escapeHtml(lesson.description) + "</p>" : "") +

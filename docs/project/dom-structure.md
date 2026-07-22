@@ -15,6 +15,7 @@ keeping accurate, because everything visual depends on it.
 - [Conventions](#conventions-read-this-first)
 - [The sentence renderer](#the-sentence-renderer-the-grid) ← the important one
 - [The popover](#the-popover)
+- [Home view](#home-view)
 - [Library view](#library-view)
 - [Editor view](#editor-view)
 - [Present view](#present-view)
@@ -181,24 +182,39 @@ details (below).
 
 ---
 
-## Library view
+## Home view
 
-Built by `wjt.views.library` in [`js/app.js`](../../js/app.js).
+The splash landing at `#/`, built by `wjt.views.home` in
+[`js/app.js`](../../js/app.js). The three buttons sit *below* the animation.
+"New lesson" creates a lesson and opens the editor; "Import JSON" opens the file
+picker (then routes to `#/library`); "Library" routes to `#/library`.
 
 ```
-div.view.view-library
+div.view.view-home
 ├─ section.hero
-│  ├─ h1, p
-│  ├─ div.btn-row.btn-row-center
-│  │  ├─ button[data-act=new]      "＋ New lesson"
-│  │  ├─ button[data-act=import]   "⬆ Import JSON"
-│  │  └─ button[data-act=examples] "📚 Browse examples"
+│  ├─ h1                            ← "Sentence " + span.fx "Forge" + span.hero-alpha "Alpha"
+│  │                                  span.fx carries the forge-heat gradient; .hero-alpha is the badge
+│  ├─ p                             ← "A workshop for the study of sentence structure."
 │  └─ input[type=file][data-role=file][hidden][multiple]
 ├─ section.blocks-demo[data-role=blocks-demo][aria-hidden]   ← self-playing layer demo
 │  ├─ p.blocks-demo-cap
 │  └─ div.blocks-demo-card.card[data-role=blocks-demo-host]  ← wjt.buildBlocksDemo() fills this
 │     ├─ div.blocks-demo-stage → .gl-sentence (see Sentence grid)
 │     └─ div.blocks-demo-steps  ← span.blocks-demo-pill ×4, .blocks-demo-arrow between
+└─ div.btn-row.btn-row-center.hero-actions
+   ├─ button[data-act=new]      "＋ New lesson"
+   ├─ button[data-act=import]   "⬆ Import JSON"
+   └─ button[data-act=library]  "📚 Library"
+```
+
+## Library view
+
+Your lessons + the example library, at `#/library`, built by
+`wjt.views.library` in [`js/app.js`](../../js/app.js). Reached from the Home
+view's "Library" button and from the "← Library" back-links in every other view.
+
+```
+div.view.view-library
 ├─ section[data-role=my-lessons]
 │  ├─ h2.section-title "Your lessons"
 │  └─ div.lesson-grid[data-role=lessons]
@@ -226,7 +242,7 @@ own sub-renders.
 div.view.view-editor
 ├─ header.editor-head.card
 │  ├─ div.editor-head-top
-│  │  ├─ a[href=#/] "← Library"
+│  │  ├─ a[href=#/library] "← Library"
 │  │  ├─ span.saved-flash "Saved ✓"   ← flashes on save()
 │  │  ├─ span.spacer
 │  │  └─ a #/present · a #/quiz · button[data-act=export]

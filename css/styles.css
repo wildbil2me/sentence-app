@@ -42,6 +42,17 @@
   color-scheme: light;
 }
 
+/* "Forge heat" brand palette — the glowing-metal gradient shared by the hero
+   wordmark and the top-bar brand. Theme-independent (identical in light/dark). */
+:root {
+  --forge-gradient: linear-gradient(
+    100deg,
+    #b31217 0%, #ff4e00 20%, #ff9a00 35%, #ffd400 50%,
+    #ff9a00 65%, #ff4e00 80%, #b31217 100%
+  );
+  --forge-solid: #ff7a1a;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
@@ -86,10 +97,17 @@ body {
 .topbar .brand .anvil {
   width: 22px;
   height: 22px;
-  fill: var(--accent);
+  fill: var(--forge-solid);
   flex: none;
 }
-.topbar .brand em { font-style: normal; color: var(--accent); }
+.topbar .brand em {
+  font-style: normal;
+  background: var(--forge-gradient);
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 .topbar .kofi {
   margin-left: auto;
@@ -285,12 +303,8 @@ body {
   font-weight: 800;
   letter-spacing: -1px;
 }
-.hero h1 span {
-  background: linear-gradient(
-    100deg,
-    #b31217 0%, #ff4e00 20%, #ff9a00 35%, #ffd400 50%,
-    #ff9a00 65%, #ff4e00 80%, #b31217 100%
-  );
+.hero h1 .fx {
+  background: var(--forge-gradient);
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -303,10 +317,26 @@ body {
   100% { background-position: 0% 50%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero h1 span { animation: none; }
+  .hero h1 .fx { animation: none; }
+}
+/* "Alpha" badge riding the end of the wordmark. */
+.hero h1 .hero-alpha {
+  display: inline-block;
+  vertical-align: top;
+  transform: translateY(0.35em);
+  margin-left: 10px;
+  font-size: 0.28em;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  background: var(--forge-solid);
+  border-radius: 999px;
+  padding: 4px 10px;
 }
 .hero p { color: var(--muted); margin-top: 8px; font-size: 16px; }
-.hero .btn-row { margin-top: 22px; }
+.hero-actions { margin: 20px 0 42px; }
 
 /* ---- "how the blocks work" self-playing demo (above Your lessons) ---- */
 .blocks-demo { text-align: center; margin: 6px 0 8px; }

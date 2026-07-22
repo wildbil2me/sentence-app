@@ -17,6 +17,7 @@ start in **product**. If you are changing *how it works*, start in **project**.
 | Document | What's in it |
 |---|---|
 | [project/architecture.md](project/architecture.md) | How the app is put together, the `wjt` namespace, the annotation model, and why there's no build step. |
+| [project/style-guide.md](project/style-guide.md) | The light/dark interface palette, grammar colors, their UI roles, and handoff rules for sibling apps. |
 | [project/dom-structure.md](project/dom-structure.md) | A map of the HTML each view generates — the sentence-grid renderer and every view's tree — for layout work. |
 | [project/lesson-json.md](project/lesson-json.md) | The lesson file format, precisely — every field, every rule the importer enforces. |
 | [project/testing.md](project/testing.md) | The two check suites, how to run each, and what to do when one fails. |

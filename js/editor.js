@@ -31,7 +31,7 @@
     header.className = "editor-head card";
     header.innerHTML =
       '<div class="editor-head-top">' +
-      '  <a class="btn btn-ghost" href="#/">← Library</a>' +
+      '  <a class="btn btn-ghost" href="#/library">← Library</a>' +
       '  <span class="saved-flash" aria-live="polite">Saved ✓</span>' +
       '  <span class="spacer"></span>' +
       '  <a class="btn" href="#/present/' + lesson.id + '">▶ Present</a>' +

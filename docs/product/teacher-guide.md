@@ -19,19 +19,21 @@ Open the app. On first run it seeds itself with **Sample: The Fox and the
 River** — four sentences labeled at every level — so there's always something to
 click.
 
-The home page (the **library**) has three buttons and two lists:
+The home page is a splash with the self-playing demo and three buttons:
 
 - **＋ New lesson** — start from a blank passage.
 - **⬆ Import JSON** — load a lesson file someone sent you (or that you generated;
   see [AI-assisted authoring](#ai-assisted-authoring)). You can select several
-  files at once.
-- **📚 Browse examples** — jumps to the built-in library.
-- **Your lessons** — everything you've made, newest first. Each card has
-  ▶ Present, 🎯 Practice, ✎ Edit, and small buttons to ⬇ export, ⧉ duplicate, and
-  ✕ delete.
-- **📚 Example library** — seven ready-made, fully labeled passages. **＋ Add to
-  my lessons** drops an editable copy into your list; the original is never
-  changed, so you can always take a fresh copy.
+  files at once; you land in the library afterward.
+- **📚 Library** — opens the **library** screen, which holds two lists:
+  - **Your lessons** — everything you've made, newest first. Each card has
+    ▶ Present, 🎯 Practice, ✎ Edit, and small buttons to ⬇ export, ⧉ duplicate,
+    and ✕ delete.
+  - **📚 Example library** — seven ready-made, fully labeled passages. **＋ Add
+    to my lessons** drops an editable copy into your list; the original is never
+    changed, so you can always take a fresh copy.
+
+Every other view has a **← Library** link back to that screen.
 
 > **Where lessons live.** In this browser, on this computer — nowhere else. They
 > survive closing the tab and restarting the machine, but *not* clearing site

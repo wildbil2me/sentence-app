@@ -32,7 +32,76 @@
     if (btn) btn.textContent = theme === "light" ? "🌙" : "☀️";
   }
 
-  /* ---------------- library view ---------------- */
+  /* ---------------- home (splash) view ---------------- */
+  wjt.views.home = function (container) {
+    container.innerHTML = "";
+    var view = document.createElement("div");
+    view.className = "view view-home";
+    container.appendChild(view);
+
+    view.innerHTML =
+      '<section class="hero">' +
+      '  <h1>Sentence <span class="fx">Forge</span><span class="hero-alpha">Alpha</span></h1>' +
+      "  <p>A workshop for the study of sentence structure.</p>" +
+      '  <input type="file" accept=".json,application/json" data-role="file" hidden multiple />' +
+      "</section>" +
+      '<section class="blocks-demo" data-role="blocks-demo" aria-hidden="true">' +
+      '  <p class="blocks-demo-cap">Label the same sentence at four layers — watch them stack:</p>' +
+      '  <div class="blocks-demo-card card" data-role="blocks-demo-host"></div>' +
+      "</section>" +
+      '<div class="btn-row btn-row-center hero-actions">' +
+      '  <button class="btn btn-primary btn-big" data-act="new">＋ New lesson</button>' +
+      '  <button class="btn btn-big" data-act="import">⬆ Import JSON</button>' +
+      '  <button class="btn btn-big" data-act="library">📚 Library</button>' +
+      "</div>";
+
+    var fileInput = view.querySelector('[data-role="file"]');
+
+    view.querySelector('[data-act="new"]').addEventListener("click", function () {
+      var lesson = wjt.store.save(wjt.store.create());
+      location.hash = "#/edit/" + lesson.id;
+    });
+
+    view.querySelector('[data-act="library"]').addEventListener("click", function () {
+      location.hash = "#/library";
+    });
+
+    view.querySelector('[data-act="import"]').addEventListener("click", function () {
+      fileInput.click();
+    });
+    fileInput.addEventListener("change", function () {
+      var files = Array.prototype.slice.call(fileInput.files || []);
+      fileInput.value = "";
+      var imported = 0;
+      files.forEach(function (file) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var data = JSON.parse(reader.result);
+            var result = wjt.importLesson(data);
+            wjt.store.save(result.lesson);
+            imported++;
+            wjt.toast("Imported “" + result.lesson.title + "”" +
+              (result.warnings.length ? " with " + result.warnings.length + " warning(s) — see console." : "."));
+            result.warnings.forEach(function (w) { console.warn("[Sentence Forge import]", w); });
+            // The lessons grid lives on the Library screen — go show it there.
+            if (location.hash === "#/library") route();
+            else location.hash = "#/library";
+          } catch (e) {
+            wjt.toast("Import failed: " + e.message, 5000);
+          }
+        };
+        reader.readAsText(file);
+      });
+    });
+
+    var demoHost = view.querySelector('[data-role="blocks-demo-host"]');
+    if (demoHost && wjt.buildBlocksDemo) {
+      wjt.onViewCleanup(wjt.buildBlocksDemo(demoHost));
+    }
+  };
+
+  /* ---------------- library view (your lessons + examples) ---------------- */
   wjt.views.library = function (container) {
     container.innerHTML = "";
     var view = document.createElement("div");
@@ -40,20 +109,6 @@
     container.appendChild(view);
 
     view.innerHTML =
-      '<section class="hero">' +
-      "  <h1>Sentence <span>Forge</span></h1>" +
-      "  <p>Label the building blocks of any sentence — words, parts, phrases, and clauses —<br/>then present the breakdown to your class or let students quiz themselves.</p>" +
-      '  <div class="btn-row btn-row-center">' +
-      '    <button class="btn btn-primary btn-big" data-act="new">＋ New lesson</button>' +
-      '    <button class="btn btn-big" data-act="import">⬆ Import JSON</button>' +
-      '    <button class="btn btn-big" data-act="examples">📚 Browse examples</button>' +
-      "  </div>" +
-      '  <input type="file" accept=".json,application/json" data-role="file" hidden multiple />' +
-      "</section>" +
-      '<section class="blocks-demo" data-role="blocks-demo" aria-hidden="true">' +
-      '  <p class="blocks-demo-cap">Label the same sentence at four layers — watch them stack:</p>' +
-      '  <div class="blocks-demo-card card" data-role="blocks-demo-host"></div>' +
-      "</section>" +
       '<section data-role="my-lessons">' +
       '  <h2 class="section-title">Your lessons</h2>' +
       '  <div class="lesson-grid" data-role="lessons"></div>' +
@@ -66,7 +121,6 @@
 
     var lessonsEl = view.querySelector('[data-role="lessons"]');
     var examplesEl = view.querySelector('[data-role="examples"]');
-    var fileInput = view.querySelector('[data-role="file"]');
 
     function renderLessons() {
       var lessons = wjt.store.list();
@@ -142,47 +196,8 @@
       });
     }
 
-    view.querySelector('[data-act="new"]').addEventListener("click", function () {
-      var lesson = wjt.store.save(wjt.store.create());
-      location.hash = "#/edit/" + lesson.id;
-    });
-
-    view.querySelector('[data-act="examples"]').addEventListener("click", function () {
-      view.querySelector('[data-role="examples-block"]').scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    view.querySelector('[data-act="import"]').addEventListener("click", function () {
-      fileInput.click();
-    });
-    fileInput.addEventListener("change", function () {
-      var files = Array.prototype.slice.call(fileInput.files || []);
-      fileInput.value = "";
-      files.forEach(function (file) {
-        var reader = new FileReader();
-        reader.onload = function () {
-          try {
-            var data = JSON.parse(reader.result);
-            var result = wjt.importLesson(data);
-            wjt.store.save(result.lesson);
-            wjt.toast("Imported “" + result.lesson.title + "”" +
-              (result.warnings.length ? " with " + result.warnings.length + " warning(s) — see console." : "."));
-            result.warnings.forEach(function (w) { console.warn("[Sentence Forge import]", w); });
-            renderLessons();
-          } catch (e) {
-            wjt.toast("Import failed: " + e.message, 5000);
-          }
-        };
-        reader.readAsText(file);
-      });
-    });
-
     renderLessons();
     renderExamples();
-
-    var demoHost = view.querySelector('[data-role="blocks-demo-host"]');
-    if (demoHost && wjt.buildBlocksDemo) {
-      wjt.onViewCleanup(wjt.buildBlocksDemo(demoHost));
-    }
   };
 
   /* ---------------- routing ---------------- */
@@ -197,7 +212,8 @@
     if (parts[0] === "edit" && parts[1]) return wjt.views.editor(container, parts[1]);
     if (parts[0] === "present" && parts[1]) return wjt.views.present(container, parts[1]);
     if (parts[0] === "quiz" && parts[1]) return wjt.views.quiz(container, parts[1]);
-    return wjt.views.library(container);
+    if (parts[0] === "library") return wjt.views.library(container);
+    return wjt.views.home(container);
   }
 
   /* ---------------- boot ---------------- */
