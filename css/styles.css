@@ -122,6 +122,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 40;
+  -webkit-backdrop-filter: blur(12px);   /* Safari < 18 needs the prefix */
   backdrop-filter: blur(12px);
   background: color-mix(in srgb, var(--bg) 78%, transparent);
   border-bottom: 1px solid var(--line);
@@ -755,6 +756,7 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   justify-content: center;
   padding: 16px;
   background: color-mix(in srgb, var(--bg) 55%, transparent);
+  -webkit-backdrop-filter: blur(3px);   /* Safari < 18 needs the prefix */
   backdrop-filter: blur(3px);
 }
 .modal {
@@ -978,6 +980,12 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
     bottom: 0;
     width: var(--nav-w);
     overflow: hidden;
+    /* Prev/Next are pinned to the rail's ends and every .btn lifts 1px on hover
+       (transform: translateY(-1px)); flush against this overflow:hidden edge the
+       top button's lift was clipped. The padding keeps the lift inside the clip
+       box. The dot strip does its own scrolling, so the rail never overflows. */
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
   /* The scrolling dot strip that lets this work is in the base `.dots` rule
      further down — declaring it here would be overridden by that later rule.
