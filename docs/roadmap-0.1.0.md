@@ -22,7 +22,8 @@ ready to tag `v0.1.0`** · **Date:** 2026-07-22
 > check (which now drives the real Present/Quiz views) report **0 failed** at
 > 1280×720, 1366×768, 1920×1080, and 1024×768 in headless Edge. See the audit's
 > "As remediated" table. **Still owed before "ready to tag":** the manual
-> cross-browser pass (Firefox, Safari/iPad landscape, Fullscreen, 125%/150% zoom,
+> cross-browser pass (Firefox, Safari/iPad landscape — floor is **Safari 16.2**,
+> see [Q5](#3-open-questions); Fullscreen, 125%/150% zoom,
 > touch, light theme / CB-safe palette / reduced motion). UI-6 (palette) and
 > UI-10 (Editor navigation) are deferred to [plans/006](../plans/006-palette-scale-followup.md)
 > and [plans/007](../plans/007-editor-navigation-followup.md).
@@ -174,6 +175,7 @@ Report results honestly — a red run is not "done."
 | Q2 | "Import all" — merge into existing lessons or replace the whole list? | **Decided: merge with fresh ids.** | `importLesson` already mints new ids, so merge is non-destructive *and* free — no id collisions, no "replace" path to guard. See [plans/001](../plans/001-data-durability.md) Task B. |
 | Q3 | Fold the stale "pilot/frozen" language now? | **Decided: relabel to "open alpha" now.** | [CLAUDE.md](../CLAUDE.md) "The pilot" and [pilot.md](product/pilot.md) assert a freeze that protects nobody yet. Docs-only change; its own small work order. |
 | Q4 | Promote a general `docs/roadmap.md` and rename the taxonomy one? | **Deferred.** | Would touch CLAUDE.md references; not worth it mid-polish. This file is `roadmap-0.1.0.md` for now. |
+| Q5 | What Safari/WebKit version does `0.1.0` support? | **Decided: Safari 16.2 as the floor.** | 16.2 (Dec 2022) is the first version with `color-mix()`, which all 21 grammar-color declarations depend on; below it the label colors drop out. A lower floor (Safari 15 — macOS Monterey / iPadOS 15, still in service on some school machines) would need a solid fallback line before each `color-mix`. Deferred as *additive* progressive-enhancement CSS — no JS/format change, no data migration — to add later **iff** a real Safari-15 classroom machine appears. `-webkit-backdrop-filter` prefix added now (Safari 16–17 need it; unrelated to the floor). See the cross-browser item still owed in §5 / the 2026-07-22 gate note. |
 
 ---
 
