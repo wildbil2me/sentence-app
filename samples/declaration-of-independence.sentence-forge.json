@@ -1,0 +1,2682 @@
+{
+  "format": "sentence-forge-lesson",
+  "version": 1,
+  "title": "The Declaration of Independence — Opening",
+  "description": "The first fifteen sentences of the 1776 Declaration, from the Preamble through the opening grievances. A parts-of-speech close read: every word is tagged, and Jefferson's long periodic sentences push presentation layout to its limits. (Em-dashes lightly regularized into sentence breaks; only the word layer is labeled.)",
+  "layers": [
+    "pos"
+  ],
+  "sentences": [
+    {
+      "text": "When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "conjunction",
+          "note": "Here “when” opens a long introductory clause."
+        },
+        {
+          "start": 5,
+          "end": 7,
+          "label": "preposition"
+        },
+        {
+          "start": 8,
+          "end": 11,
+          "label": "determiner"
+        },
+        {
+          "start": 12,
+          "end": 18,
+          "label": "noun"
+        },
+        {
+          "start": 19,
+          "end": 21,
+          "label": "preposition"
+        },
+        {
+          "start": 22,
+          "end": 27,
+          "label": "adjective"
+        },
+        {
+          "start": 28,
+          "end": 35,
+          "label": "noun"
+        },
+        {
+          "start": 36,
+          "end": 38,
+          "label": "pronoun"
+        },
+        {
+          "start": 39,
+          "end": 46,
+          "label": "verb"
+        },
+        {
+          "start": 47,
+          "end": 56,
+          "label": "adjective"
+        },
+        {
+          "start": 57,
+          "end": 60,
+          "label": "preposition"
+        },
+        {
+          "start": 61,
+          "end": 64,
+          "label": "determiner"
+        },
+        {
+          "start": 65,
+          "end": 71,
+          "label": "noun"
+        },
+        {
+          "start": 72,
+          "end": 83,
+          "label": "infinitive",
+          "note": "“to” + the base verb — an infinitive."
+        },
+        {
+          "start": 84,
+          "end": 87,
+          "label": "determiner"
+        },
+        {
+          "start": 88,
+          "end": 97,
+          "label": "adjective"
+        },
+        {
+          "start": 98,
+          "end": 103,
+          "label": "noun"
+        },
+        {
+          "start": 104,
+          "end": 109,
+          "label": "pronoun",
+          "note": "A relative pronoun standing for the bands."
+        },
+        {
+          "start": 110,
+          "end": 114,
+          "label": "verb"
+        },
+        {
+          "start": 115,
+          "end": 124,
+          "label": "verb"
+        },
+        {
+          "start": 125,
+          "end": 129,
+          "label": "pronoun"
+        },
+        {
+          "start": 130,
+          "end": 134,
+          "label": "preposition"
+        },
+        {
+          "start": 135,
+          "end": 143,
+          "label": "pronoun"
+        },
+        {
+          "start": 144,
+          "end": 147,
+          "label": "conjunction"
+        },
+        {
+          "start": 148,
+          "end": 157,
+          "label": "infinitive"
+        },
+        {
+          "start": 158,
+          "end": 163,
+          "label": "preposition"
+        },
+        {
+          "start": 164,
+          "end": 167,
+          "label": "determiner"
+        },
+        {
+          "start": 168,
+          "end": 174,
+          "label": "noun"
+        },
+        {
+          "start": 175,
+          "end": 177,
+          "label": "preposition"
+        },
+        {
+          "start": 178,
+          "end": 181,
+          "label": "determiner"
+        },
+        {
+          "start": 182,
+          "end": 188,
+          "label": "noun"
+        },
+        {
+          "start": 189,
+          "end": 192,
+          "label": "determiner"
+        },
+        {
+          "start": 193,
+          "end": 201,
+          "label": "adjective"
+        },
+        {
+          "start": 202,
+          "end": 205,
+          "label": "conjunction"
+        },
+        {
+          "start": 206,
+          "end": 211,
+          "label": "adjective"
+        },
+        {
+          "start": 212,
+          "end": 219,
+          "label": "noun"
+        },
+        {
+          "start": 220,
+          "end": 222,
+          "label": "preposition"
+        },
+        {
+          "start": 223,
+          "end": 228,
+          "label": "pronoun"
+        },
+        {
+          "start": 229,
+          "end": 232,
+          "label": "determiner"
+        },
+        {
+          "start": 233,
+          "end": 237,
+          "label": "noun"
+        },
+        {
+          "start": 238,
+          "end": 240,
+          "label": "preposition"
+        },
+        {
+          "start": 241,
+          "end": 247,
+          "label": "noun"
+        },
+        {
+          "start": 248,
+          "end": 251,
+          "label": "conjunction"
+        },
+        {
+          "start": 252,
+          "end": 254,
+          "label": "preposition"
+        },
+        {
+          "start": 255,
+          "end": 263,
+          "label": "noun",
+          "note": "“Nature's” is a possessive noun."
+        },
+        {
+          "start": 264,
+          "end": 267,
+          "label": "noun"
+        },
+        {
+          "start": 268,
+          "end": 275,
+          "label": "verb"
+        },
+        {
+          "start": 276,
+          "end": 281,
+          "label": "pronoun"
+        },
+        {
+          "start": 282,
+          "end": 283,
+          "label": "determiner"
+        },
+        {
+          "start": 284,
+          "end": 290,
+          "label": "adjective"
+        },
+        {
+          "start": 291,
+          "end": 298,
+          "label": "noun"
+        },
+        {
+          "start": 299,
+          "end": 301,
+          "label": "preposition"
+        },
+        {
+          "start": 302,
+          "end": 305,
+          "label": "determiner"
+        },
+        {
+          "start": 306,
+          "end": 314,
+          "label": "noun"
+        },
+        {
+          "start": 315,
+          "end": 317,
+          "label": "preposition"
+        },
+        {
+          "start": 318,
+          "end": 325,
+          "label": "noun"
+        },
+        {
+          "start": 326,
+          "end": 334,
+          "label": "verb"
+        },
+        {
+          "start": 335,
+          "end": 339,
+          "label": "conjunction",
+          "note": "“that” introduces a noun clause, so it is a conjunction here."
+        },
+        {
+          "start": 340,
+          "end": 344,
+          "label": "pronoun"
+        },
+        {
+          "start": 345,
+          "end": 351,
+          "label": "verb"
+        },
+        {
+          "start": 352,
+          "end": 359,
+          "label": "verb"
+        },
+        {
+          "start": 360,
+          "end": 363,
+          "label": "determiner"
+        },
+        {
+          "start": 364,
+          "end": 370,
+          "label": "noun"
+        },
+        {
+          "start": 371,
+          "end": 376,
+          "label": "pronoun"
+        },
+        {
+          "start": 377,
+          "end": 382,
+          "label": "verb"
+        },
+        {
+          "start": 383,
+          "end": 387,
+          "label": "pronoun"
+        },
+        {
+          "start": 388,
+          "end": 390,
+          "label": "preposition"
+        },
+        {
+          "start": 391,
+          "end": 394,
+          "label": "determiner"
+        },
+        {
+          "start": 395,
+          "end": 406,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 7,
+          "label": "verb"
+        },
+        {
+          "start": 8,
+          "end": 13,
+          "label": "determiner"
+        },
+        {
+          "start": 14,
+          "end": 20,
+          "label": "noun"
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "infinitive"
+        },
+        {
+          "start": 27,
+          "end": 40,
+          "label": "adjective",
+          "note": "Hyphenated, so it is one token."
+        },
+        {
+          "start": 41,
+          "end": 45,
+          "label": "conjunction"
+        },
+        {
+          "start": 46,
+          "end": 49,
+          "label": "determiner"
+        },
+        {
+          "start": 50,
+          "end": 53,
+          "label": "noun"
+        },
+        {
+          "start": 54,
+          "end": 57,
+          "label": "verb"
+        },
+        {
+          "start": 58,
+          "end": 65,
+          "label": "verb"
+        },
+        {
+          "start": 66,
+          "end": 72,
+          "label": "adjective"
+        },
+        {
+          "start": 73,
+          "end": 77,
+          "label": "conjunction"
+        },
+        {
+          "start": 78,
+          "end": 82,
+          "label": "pronoun"
+        },
+        {
+          "start": 83,
+          "end": 86,
+          "label": "verb"
+        },
+        {
+          "start": 87,
+          "end": 94,
+          "label": "verb"
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "label": "preposition"
+        },
+        {
+          "start": 98,
+          "end": 103,
+          "label": "determiner"
+        },
+        {
+          "start": 104,
+          "end": 111,
+          "label": "noun"
+        },
+        {
+          "start": 112,
+          "end": 116,
+          "label": "preposition"
+        },
+        {
+          "start": 117,
+          "end": 124,
+          "label": "adjective"
+        },
+        {
+          "start": 125,
+          "end": 136,
+          "label": "adjective",
+          "note": "Archaic spelling of “inalienable.”"
+        },
+        {
+          "start": 137,
+          "end": 144,
+          "label": "noun"
+        },
+        {
+          "start": 145,
+          "end": 149,
+          "label": "conjunction"
+        },
+        {
+          "start": 150,
+          "end": 155,
+          "label": "preposition"
+        },
+        {
+          "start": 156,
+          "end": 161,
+          "label": "pronoun",
+          "note": "“these” stands alone here, so it is a pronoun."
+        },
+        {
+          "start": 162,
+          "end": 165,
+          "label": "verb"
+        },
+        {
+          "start": 166,
+          "end": 171,
+          "label": "noun"
+        },
+        {
+          "start": 172,
+          "end": 179,
+          "label": "noun"
+        },
+        {
+          "start": 180,
+          "end": 183,
+          "label": "conjunction"
+        },
+        {
+          "start": 184,
+          "end": 187,
+          "label": "determiner"
+        },
+        {
+          "start": 188,
+          "end": 195,
+          "label": "noun"
+        },
+        {
+          "start": 196,
+          "end": 198,
+          "label": "preposition"
+        },
+        {
+          "start": 199,
+          "end": 209,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "conjunction",
+          "note": "Carries over the “we hold that …” sense."
+        },
+        {
+          "start": 5,
+          "end": 14,
+          "label": "infinitive"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "label": "determiner"
+        },
+        {
+          "start": 21,
+          "end": 28,
+          "label": "noun"
+        },
+        {
+          "start": 29,
+          "end": 40,
+          "label": "noun"
+        },
+        {
+          "start": 41,
+          "end": 44,
+          "label": "verb"
+        },
+        {
+          "start": 45,
+          "end": 55,
+          "label": "verb"
+        },
+        {
+          "start": 56,
+          "end": 61,
+          "label": "preposition"
+        },
+        {
+          "start": 62,
+          "end": 66,
+          "label": "noun"
+        },
+        {
+          "start": 67,
+          "end": 75,
+          "label": "participle",
+          "note": "An -ing participle describing Governments."
+        },
+        {
+          "start": 76,
+          "end": 81,
+          "label": "determiner"
+        },
+        {
+          "start": 82,
+          "end": 86,
+          "label": "adjective"
+        },
+        {
+          "start": 87,
+          "end": 93,
+          "label": "noun"
+        },
+        {
+          "start": 94,
+          "end": 98,
+          "label": "preposition"
+        },
+        {
+          "start": 99,
+          "end": 102,
+          "label": "determiner"
+        },
+        {
+          "start": 103,
+          "end": 110,
+          "label": "noun"
+        },
+        {
+          "start": 111,
+          "end": 113,
+          "label": "preposition"
+        },
+        {
+          "start": 114,
+          "end": 117,
+          "label": "determiner"
+        },
+        {
+          "start": 118,
+          "end": 127,
+          "label": "noun",
+          "note": "“the governed” — an adjective used as a noun."
+        }
+      ]
+    },
+    {
+      "text": "That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "conjunction"
+        },
+        {
+          "start": 5,
+          "end": 13,
+          "label": "conjunction"
+        },
+        {
+          "start": 14,
+          "end": 17,
+          "label": "determiner"
+        },
+        {
+          "start": 18,
+          "end": 22,
+          "label": "noun"
+        },
+        {
+          "start": 23,
+          "end": 25,
+          "label": "preposition"
+        },
+        {
+          "start": 26,
+          "end": 36,
+          "label": "noun"
+        },
+        {
+          "start": 37,
+          "end": 44,
+          "label": "verb"
+        },
+        {
+          "start": 45,
+          "end": 56,
+          "label": "adjective"
+        },
+        {
+          "start": 57,
+          "end": 59,
+          "label": "preposition"
+        },
+        {
+          "start": 60,
+          "end": 65,
+          "label": "determiner"
+        },
+        {
+          "start": 66,
+          "end": 71,
+          "label": "noun"
+        },
+        {
+          "start": 72,
+          "end": 74,
+          "label": "pronoun"
+        },
+        {
+          "start": 75,
+          "end": 77,
+          "label": "verb"
+        },
+        {
+          "start": 78,
+          "end": 81,
+          "label": "determiner"
+        },
+        {
+          "start": 82,
+          "end": 87,
+          "label": "noun"
+        },
+        {
+          "start": 88,
+          "end": 90,
+          "label": "preposition"
+        },
+        {
+          "start": 91,
+          "end": 94,
+          "label": "determiner"
+        },
+        {
+          "start": 95,
+          "end": 101,
+          "label": "noun"
+        },
+        {
+          "start": 102,
+          "end": 110,
+          "label": "infinitive"
+        },
+        {
+          "start": 111,
+          "end": 113,
+          "label": "conjunction"
+        },
+        {
+          "start": 114,
+          "end": 124,
+          "label": "infinitive"
+        },
+        {
+          "start": 125,
+          "end": 128,
+          "label": "pronoun"
+        },
+        {
+          "start": 129,
+          "end": 132,
+          "label": "conjunction"
+        },
+        {
+          "start": 133,
+          "end": 145,
+          "label": "infinitive"
+        },
+        {
+          "start": 146,
+          "end": 149,
+          "label": "adjective"
+        },
+        {
+          "start": 150,
+          "end": 161,
+          "label": "noun"
+        },
+        {
+          "start": 162,
+          "end": 168,
+          "label": "participle",
+          "note": "Opens a participial phrase modifying Government."
+        },
+        {
+          "start": 169,
+          "end": 172,
+          "label": "determiner"
+        },
+        {
+          "start": 173,
+          "end": 183,
+          "label": "noun"
+        },
+        {
+          "start": 184,
+          "end": 186,
+          "label": "preposition"
+        },
+        {
+          "start": 187,
+          "end": 191,
+          "label": "determiner"
+        },
+        {
+          "start": 192,
+          "end": 202,
+          "label": "noun"
+        },
+        {
+          "start": 203,
+          "end": 206,
+          "label": "conjunction"
+        },
+        {
+          "start": 207,
+          "end": 217,
+          "label": "participle"
+        },
+        {
+          "start": 218,
+          "end": 221,
+          "label": "determiner"
+        },
+        {
+          "start": 222,
+          "end": 228,
+          "label": "noun"
+        },
+        {
+          "start": 229,
+          "end": 231,
+          "label": "preposition"
+        },
+        {
+          "start": 232,
+          "end": 236,
+          "label": "determiner"
+        },
+        {
+          "start": 237,
+          "end": 242,
+          "label": "noun"
+        },
+        {
+          "start": 243,
+          "end": 245,
+          "label": "conjunction",
+          "note": "“as” introduces a comparison clause."
+        },
+        {
+          "start": 246,
+          "end": 248,
+          "label": "preposition"
+        },
+        {
+          "start": 249,
+          "end": 253,
+          "label": "pronoun"
+        },
+        {
+          "start": 254,
+          "end": 259,
+          "label": "verb"
+        },
+        {
+          "start": 260,
+          "end": 264,
+          "label": "verb"
+        },
+        {
+          "start": 265,
+          "end": 269,
+          "label": "adverb"
+        },
+        {
+          "start": 270,
+          "end": 276,
+          "label": "adjective"
+        },
+        {
+          "start": 277,
+          "end": 286,
+          "label": "infinitive"
+        },
+        {
+          "start": 287,
+          "end": 292,
+          "label": "determiner"
+        },
+        {
+          "start": 293,
+          "end": 299,
+          "label": "noun"
+        },
+        {
+          "start": 300,
+          "end": 303,
+          "label": "conjunction"
+        },
+        {
+          "start": 304,
+          "end": 314,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes; and accordingly all experience hath shewn, that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they are accustomed.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 9,
+          "label": "noun"
+        },
+        {
+          "start": 10,
+          "end": 17,
+          "label": "adverb"
+        },
+        {
+          "start": 18,
+          "end": 22,
+          "label": "verb"
+        },
+        {
+          "start": 23,
+          "end": 30,
+          "label": "verb"
+        },
+        {
+          "start": 31,
+          "end": 35,
+          "label": "conjunction"
+        },
+        {
+          "start": 36,
+          "end": 47,
+          "label": "noun"
+        },
+        {
+          "start": 48,
+          "end": 52,
+          "label": "adverb"
+        },
+        {
+          "start": 53,
+          "end": 64,
+          "label": "participle",
+          "note": "A past participle modifying Governments."
+        },
+        {
+          "start": 65,
+          "end": 71,
+          "label": "verb"
+        },
+        {
+          "start": 72,
+          "end": 75,
+          "label": "adverb"
+        },
+        {
+          "start": 76,
+          "end": 78,
+          "label": "verb"
+        },
+        {
+          "start": 79,
+          "end": 86,
+          "label": "verb"
+        },
+        {
+          "start": 87,
+          "end": 90,
+          "label": "preposition"
+        },
+        {
+          "start": 91,
+          "end": 96,
+          "label": "adjective"
+        },
+        {
+          "start": 97,
+          "end": 100,
+          "label": "conjunction"
+        },
+        {
+          "start": 101,
+          "end": 110,
+          "label": "adjective"
+        },
+        {
+          "start": 111,
+          "end": 118,
+          "label": "noun"
+        },
+        {
+          "start": 119,
+          "end": 122,
+          "label": "conjunction"
+        },
+        {
+          "start": 123,
+          "end": 134,
+          "label": "adverb"
+        },
+        {
+          "start": 135,
+          "end": 138,
+          "label": "determiner"
+        },
+        {
+          "start": 139,
+          "end": 149,
+          "label": "noun"
+        },
+        {
+          "start": 150,
+          "end": 154,
+          "label": "verb",
+          "note": "Archaic form of “has.”"
+        },
+        {
+          "start": 155,
+          "end": 161,
+          "label": "verb",
+          "note": "Archaic spelling of “shown.”"
+        },
+        {
+          "start": 162,
+          "end": 166,
+          "label": "conjunction"
+        },
+        {
+          "start": 167,
+          "end": 174,
+          "label": "noun"
+        },
+        {
+          "start": 175,
+          "end": 178,
+          "label": "verb"
+        },
+        {
+          "start": 179,
+          "end": 183,
+          "label": "adverb"
+        },
+        {
+          "start": 184,
+          "end": 192,
+          "label": "adjective",
+          "note": "Predicate adjective — “inclined.”"
+        },
+        {
+          "start": 193,
+          "end": 203,
+          "label": "infinitive"
+        },
+        {
+          "start": 204,
+          "end": 209,
+          "label": "conjunction"
+        },
+        {
+          "start": 210,
+          "end": 215,
+          "label": "noun"
+        },
+        {
+          "start": 216,
+          "end": 219,
+          "label": "verb"
+        },
+        {
+          "start": 220,
+          "end": 231,
+          "label": "adjective"
+        },
+        {
+          "start": 232,
+          "end": 236,
+          "label": "conjunction"
+        },
+        {
+          "start": 237,
+          "end": 245,
+          "label": "infinitive",
+          "note": "Here “right” is a verb — “to set right.”"
+        },
+        {
+          "start": 246,
+          "end": 256,
+          "label": "pronoun",
+          "note": "A reflexive pronoun."
+        },
+        {
+          "start": 257,
+          "end": 259,
+          "label": "preposition"
+        },
+        {
+          "start": 260,
+          "end": 270,
+          "label": "gerund",
+          "note": "An -ing verb form acting as a noun."
+        },
+        {
+          "start": 271,
+          "end": 274,
+          "label": "determiner"
+        },
+        {
+          "start": 275,
+          "end": 280,
+          "label": "noun"
+        },
+        {
+          "start": 281,
+          "end": 283,
+          "label": "preposition"
+        },
+        {
+          "start": 284,
+          "end": 289,
+          "label": "pronoun"
+        },
+        {
+          "start": 290,
+          "end": 294,
+          "label": "pronoun"
+        },
+        {
+          "start": 295,
+          "end": 298,
+          "label": "verb"
+        },
+        {
+          "start": 299,
+          "end": 310,
+          "label": "adjective",
+          "note": "Predicate adjective after “are.”"
+        }
+      ]
+    },
+    {
+      "text": "But when a long train of abuses and usurpations, pursuing invariably the same Object evinces a design to reduce them under absolute Despotism, it is their right, it is their duty, to throw off such Government, and to provide new Guards for their future security.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "conjunction"
+        },
+        {
+          "start": 4,
+          "end": 8,
+          "label": "conjunction"
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "label": "determiner"
+        },
+        {
+          "start": 11,
+          "end": 15,
+          "label": "adjective"
+        },
+        {
+          "start": 16,
+          "end": 21,
+          "label": "noun"
+        },
+        {
+          "start": 22,
+          "end": 24,
+          "label": "preposition"
+        },
+        {
+          "start": 25,
+          "end": 31,
+          "label": "noun"
+        },
+        {
+          "start": 32,
+          "end": 35,
+          "label": "conjunction"
+        },
+        {
+          "start": 36,
+          "end": 48,
+          "label": "noun"
+        },
+        {
+          "start": 49,
+          "end": 57,
+          "label": "participle",
+          "note": "Opens a participial phrase."
+        },
+        {
+          "start": 58,
+          "end": 68,
+          "label": "adverb"
+        },
+        {
+          "start": 69,
+          "end": 72,
+          "label": "determiner"
+        },
+        {
+          "start": 73,
+          "end": 77,
+          "label": "adjective"
+        },
+        {
+          "start": 78,
+          "end": 84,
+          "label": "noun"
+        },
+        {
+          "start": 85,
+          "end": 92,
+          "label": "verb"
+        },
+        {
+          "start": 93,
+          "end": 94,
+          "label": "determiner"
+        },
+        {
+          "start": 95,
+          "end": 101,
+          "label": "noun"
+        },
+        {
+          "start": 102,
+          "end": 111,
+          "label": "infinitive"
+        },
+        {
+          "start": 112,
+          "end": 116,
+          "label": "pronoun"
+        },
+        {
+          "start": 117,
+          "end": 122,
+          "label": "preposition"
+        },
+        {
+          "start": 123,
+          "end": 131,
+          "label": "adjective"
+        },
+        {
+          "start": 132,
+          "end": 142,
+          "label": "noun"
+        },
+        {
+          "start": 143,
+          "end": 145,
+          "label": "pronoun"
+        },
+        {
+          "start": 146,
+          "end": 148,
+          "label": "verb"
+        },
+        {
+          "start": 149,
+          "end": 154,
+          "label": "determiner"
+        },
+        {
+          "start": 155,
+          "end": 161,
+          "label": "noun"
+        },
+        {
+          "start": 162,
+          "end": 164,
+          "label": "pronoun"
+        },
+        {
+          "start": 165,
+          "end": 167,
+          "label": "verb"
+        },
+        {
+          "start": 168,
+          "end": 173,
+          "label": "determiner"
+        },
+        {
+          "start": 174,
+          "end": 179,
+          "label": "noun"
+        },
+        {
+          "start": 180,
+          "end": 188,
+          "label": "infinitive"
+        },
+        {
+          "start": 189,
+          "end": 192,
+          "label": "adverb",
+          "note": "A particle completing the phrasal verb “throw off.”"
+        },
+        {
+          "start": 193,
+          "end": 197,
+          "label": "determiner"
+        },
+        {
+          "start": 198,
+          "end": 209,
+          "label": "noun"
+        },
+        {
+          "start": 210,
+          "end": 213,
+          "label": "conjunction"
+        },
+        {
+          "start": 214,
+          "end": 224,
+          "label": "infinitive"
+        },
+        {
+          "start": 225,
+          "end": 228,
+          "label": "adjective"
+        },
+        {
+          "start": 229,
+          "end": 235,
+          "label": "noun"
+        },
+        {
+          "start": 236,
+          "end": 239,
+          "label": "preposition"
+        },
+        {
+          "start": 240,
+          "end": 245,
+          "label": "determiner"
+        },
+        {
+          "start": 246,
+          "end": 252,
+          "label": "adjective"
+        },
+        {
+          "start": 253,
+          "end": 262,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "Such has been the patient sufferance of these Colonies; and such is now the necessity which constrains them to alter their former Systems of Government.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "pronoun",
+          "note": "“Such” stands in for the whole prior idea, so it is a pronoun."
+        },
+        {
+          "start": 5,
+          "end": 8,
+          "label": "verb"
+        },
+        {
+          "start": 9,
+          "end": 13,
+          "label": "verb"
+        },
+        {
+          "start": 14,
+          "end": 17,
+          "label": "determiner"
+        },
+        {
+          "start": 18,
+          "end": 25,
+          "label": "adjective"
+        },
+        {
+          "start": 26,
+          "end": 36,
+          "label": "noun"
+        },
+        {
+          "start": 37,
+          "end": 39,
+          "label": "preposition"
+        },
+        {
+          "start": 40,
+          "end": 45,
+          "label": "determiner"
+        },
+        {
+          "start": 46,
+          "end": 55,
+          "label": "noun"
+        },
+        {
+          "start": 56,
+          "end": 59,
+          "label": "conjunction"
+        },
+        {
+          "start": 60,
+          "end": 64,
+          "label": "pronoun"
+        },
+        {
+          "start": 65,
+          "end": 67,
+          "label": "verb"
+        },
+        {
+          "start": 68,
+          "end": 71,
+          "label": "adverb"
+        },
+        {
+          "start": 72,
+          "end": 75,
+          "label": "determiner"
+        },
+        {
+          "start": 76,
+          "end": 85,
+          "label": "noun"
+        },
+        {
+          "start": 86,
+          "end": 91,
+          "label": "pronoun"
+        },
+        {
+          "start": 92,
+          "end": 102,
+          "label": "verb"
+        },
+        {
+          "start": 103,
+          "end": 107,
+          "label": "pronoun"
+        },
+        {
+          "start": 108,
+          "end": 116,
+          "label": "infinitive"
+        },
+        {
+          "start": 117,
+          "end": 122,
+          "label": "determiner"
+        },
+        {
+          "start": 123,
+          "end": 129,
+          "label": "adjective"
+        },
+        {
+          "start": 130,
+          "end": 137,
+          "label": "noun"
+        },
+        {
+          "start": 138,
+          "end": 140,
+          "label": "preposition"
+        },
+        {
+          "start": 141,
+          "end": 152,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "The history of the present King of Great Britain is a history of repeated injuries and usurpations, all having in direct object the establishment of an absolute Tyranny over these States.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 3,
+          "label": "determiner"
+        },
+        {
+          "start": 4,
+          "end": 11,
+          "label": "noun"
+        },
+        {
+          "start": 12,
+          "end": 14,
+          "label": "preposition"
+        },
+        {
+          "start": 15,
+          "end": 18,
+          "label": "determiner"
+        },
+        {
+          "start": 19,
+          "end": 26,
+          "label": "adjective"
+        },
+        {
+          "start": 27,
+          "end": 31,
+          "label": "noun"
+        },
+        {
+          "start": 32,
+          "end": 34,
+          "label": "preposition"
+        },
+        {
+          "start": 35,
+          "end": 40,
+          "label": "adjective"
+        },
+        {
+          "start": 41,
+          "end": 48,
+          "label": "noun"
+        },
+        {
+          "start": 49,
+          "end": 51,
+          "label": "verb"
+        },
+        {
+          "start": 52,
+          "end": 53,
+          "label": "determiner"
+        },
+        {
+          "start": 54,
+          "end": 61,
+          "label": "noun"
+        },
+        {
+          "start": 62,
+          "end": 64,
+          "label": "preposition"
+        },
+        {
+          "start": 65,
+          "end": 73,
+          "label": "adjective"
+        },
+        {
+          "start": 74,
+          "end": 82,
+          "label": "noun"
+        },
+        {
+          "start": 83,
+          "end": 86,
+          "label": "conjunction"
+        },
+        {
+          "start": 87,
+          "end": 99,
+          "label": "noun"
+        },
+        {
+          "start": 100,
+          "end": 103,
+          "label": "pronoun",
+          "note": "“all” stands alone as the subject of the phrase."
+        },
+        {
+          "start": 104,
+          "end": 110,
+          "label": "participle",
+          "note": "An -ing participle."
+        },
+        {
+          "start": 111,
+          "end": 113,
+          "label": "preposition"
+        },
+        {
+          "start": 114,
+          "end": 120,
+          "label": "adjective"
+        },
+        {
+          "start": 121,
+          "end": 127,
+          "label": "noun"
+        },
+        {
+          "start": 128,
+          "end": 131,
+          "label": "determiner"
+        },
+        {
+          "start": 132,
+          "end": 145,
+          "label": "noun"
+        },
+        {
+          "start": 146,
+          "end": 148,
+          "label": "preposition"
+        },
+        {
+          "start": 149,
+          "end": 151,
+          "label": "determiner"
+        },
+        {
+          "start": 152,
+          "end": 160,
+          "label": "adjective"
+        },
+        {
+          "start": 161,
+          "end": 168,
+          "label": "noun"
+        },
+        {
+          "start": 169,
+          "end": 173,
+          "label": "preposition"
+        },
+        {
+          "start": 174,
+          "end": 179,
+          "label": "determiner"
+        },
+        {
+          "start": 180,
+          "end": 187,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "To prove this, let Facts be submitted to a candid world.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 8,
+          "label": "infinitive",
+          "note": "An infinitive phrase opens the sentence."
+        },
+        {
+          "start": 9,
+          "end": 14,
+          "label": "pronoun",
+          "note": "A demonstrative pronoun — the object of “prove.”"
+        },
+        {
+          "start": 15,
+          "end": 18,
+          "label": "verb"
+        },
+        {
+          "start": 19,
+          "end": 24,
+          "label": "noun"
+        },
+        {
+          "start": 25,
+          "end": 27,
+          "label": "verb"
+        },
+        {
+          "start": 28,
+          "end": 37,
+          "label": "verb"
+        },
+        {
+          "start": 38,
+          "end": 40,
+          "label": "preposition"
+        },
+        {
+          "start": 41,
+          "end": 42,
+          "label": "determiner"
+        },
+        {
+          "start": 43,
+          "end": 49,
+          "label": "adjective"
+        },
+        {
+          "start": 50,
+          "end": 56,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "He has refused his Assent to Laws, the most wholesome and necessary for the public good.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "verb"
+        },
+        {
+          "start": 7,
+          "end": 14,
+          "label": "verb"
+        },
+        {
+          "start": 15,
+          "end": 18,
+          "label": "determiner"
+        },
+        {
+          "start": 19,
+          "end": 25,
+          "label": "noun"
+        },
+        {
+          "start": 26,
+          "end": 28,
+          "label": "preposition"
+        },
+        {
+          "start": 29,
+          "end": 34,
+          "label": "noun"
+        },
+        {
+          "start": 35,
+          "end": 38,
+          "label": "determiner"
+        },
+        {
+          "start": 39,
+          "end": 43,
+          "label": "adverb",
+          "note": "“most” forms the superlative — an adverb of degree."
+        },
+        {
+          "start": 44,
+          "end": 53,
+          "label": "adjective"
+        },
+        {
+          "start": 54,
+          "end": 57,
+          "label": "conjunction"
+        },
+        {
+          "start": 58,
+          "end": 67,
+          "label": "adjective"
+        },
+        {
+          "start": 68,
+          "end": 71,
+          "label": "preposition"
+        },
+        {
+          "start": 72,
+          "end": 75,
+          "label": "determiner"
+        },
+        {
+          "start": 76,
+          "end": 82,
+          "label": "adjective"
+        },
+        {
+          "start": 83,
+          "end": 88,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "He has forbidden his Governors to pass Laws of immediate and pressing importance, unless suspended in their operation till his Assent should be obtained; and when so suspended, he has utterly neglected to attend to them.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "verb"
+        },
+        {
+          "start": 7,
+          "end": 16,
+          "label": "verb"
+        },
+        {
+          "start": 17,
+          "end": 20,
+          "label": "determiner"
+        },
+        {
+          "start": 21,
+          "end": 30,
+          "label": "noun"
+        },
+        {
+          "start": 31,
+          "end": 38,
+          "label": "infinitive"
+        },
+        {
+          "start": 39,
+          "end": 43,
+          "label": "noun"
+        },
+        {
+          "start": 44,
+          "end": 46,
+          "label": "preposition"
+        },
+        {
+          "start": 47,
+          "end": 56,
+          "label": "adjective"
+        },
+        {
+          "start": 57,
+          "end": 60,
+          "label": "conjunction"
+        },
+        {
+          "start": 61,
+          "end": 69,
+          "label": "adjective"
+        },
+        {
+          "start": 70,
+          "end": 81,
+          "label": "noun"
+        },
+        {
+          "start": 82,
+          "end": 88,
+          "label": "conjunction"
+        },
+        {
+          "start": 89,
+          "end": 98,
+          "label": "participle",
+          "note": "A past participle — “unless [they are] suspended.”"
+        },
+        {
+          "start": 99,
+          "end": 101,
+          "label": "preposition"
+        },
+        {
+          "start": 102,
+          "end": 107,
+          "label": "determiner"
+        },
+        {
+          "start": 108,
+          "end": 117,
+          "label": "noun"
+        },
+        {
+          "start": 118,
+          "end": 122,
+          "label": "conjunction",
+          "note": "“till” introduces a clause, so it acts as a conjunction."
+        },
+        {
+          "start": 123,
+          "end": 126,
+          "label": "determiner"
+        },
+        {
+          "start": 127,
+          "end": 133,
+          "label": "noun"
+        },
+        {
+          "start": 134,
+          "end": 140,
+          "label": "verb"
+        },
+        {
+          "start": 141,
+          "end": 143,
+          "label": "verb"
+        },
+        {
+          "start": 144,
+          "end": 153,
+          "label": "verb"
+        },
+        {
+          "start": 154,
+          "end": 157,
+          "label": "conjunction"
+        },
+        {
+          "start": 158,
+          "end": 162,
+          "label": "conjunction"
+        },
+        {
+          "start": 163,
+          "end": 165,
+          "label": "adverb"
+        },
+        {
+          "start": 166,
+          "end": 176,
+          "label": "participle"
+        },
+        {
+          "start": 177,
+          "end": 179,
+          "label": "pronoun"
+        },
+        {
+          "start": 180,
+          "end": 183,
+          "label": "verb"
+        },
+        {
+          "start": 184,
+          "end": 191,
+          "label": "adverb"
+        },
+        {
+          "start": 192,
+          "end": 201,
+          "label": "verb"
+        },
+        {
+          "start": 202,
+          "end": 211,
+          "label": "infinitive"
+        },
+        {
+          "start": 212,
+          "end": 214,
+          "label": "preposition"
+        },
+        {
+          "start": 215,
+          "end": 220,
+          "label": "pronoun"
+        }
+      ]
+    },
+    {
+      "text": "He has refused to pass other Laws for the accommodation of large districts of people, unless those people would relinquish the right of Representation in the Legislature, a right inestimable to them and formidable to tyrants only.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "verb"
+        },
+        {
+          "start": 7,
+          "end": 14,
+          "label": "verb"
+        },
+        {
+          "start": 15,
+          "end": 22,
+          "label": "infinitive"
+        },
+        {
+          "start": 23,
+          "end": 28,
+          "label": "adjective"
+        },
+        {
+          "start": 29,
+          "end": 33,
+          "label": "noun"
+        },
+        {
+          "start": 34,
+          "end": 37,
+          "label": "preposition"
+        },
+        {
+          "start": 38,
+          "end": 41,
+          "label": "determiner"
+        },
+        {
+          "start": 42,
+          "end": 55,
+          "label": "noun"
+        },
+        {
+          "start": 56,
+          "end": 58,
+          "label": "preposition"
+        },
+        {
+          "start": 59,
+          "end": 64,
+          "label": "adjective"
+        },
+        {
+          "start": 65,
+          "end": 74,
+          "label": "noun"
+        },
+        {
+          "start": 75,
+          "end": 77,
+          "label": "preposition"
+        },
+        {
+          "start": 78,
+          "end": 85,
+          "label": "noun"
+        },
+        {
+          "start": 86,
+          "end": 92,
+          "label": "conjunction"
+        },
+        {
+          "start": 93,
+          "end": 98,
+          "label": "determiner"
+        },
+        {
+          "start": 99,
+          "end": 105,
+          "label": "noun"
+        },
+        {
+          "start": 106,
+          "end": 111,
+          "label": "verb"
+        },
+        {
+          "start": 112,
+          "end": 122,
+          "label": "verb"
+        },
+        {
+          "start": 123,
+          "end": 126,
+          "label": "determiner"
+        },
+        {
+          "start": 127,
+          "end": 132,
+          "label": "noun"
+        },
+        {
+          "start": 133,
+          "end": 135,
+          "label": "preposition"
+        },
+        {
+          "start": 136,
+          "end": 150,
+          "label": "noun"
+        },
+        {
+          "start": 151,
+          "end": 153,
+          "label": "preposition"
+        },
+        {
+          "start": 154,
+          "end": 157,
+          "label": "determiner"
+        },
+        {
+          "start": 158,
+          "end": 170,
+          "label": "noun"
+        },
+        {
+          "start": 171,
+          "end": 172,
+          "label": "determiner"
+        },
+        {
+          "start": 173,
+          "end": 178,
+          "label": "noun"
+        },
+        {
+          "start": 179,
+          "end": 190,
+          "label": "adjective"
+        },
+        {
+          "start": 191,
+          "end": 193,
+          "label": "preposition"
+        },
+        {
+          "start": 194,
+          "end": 198,
+          "label": "pronoun"
+        },
+        {
+          "start": 199,
+          "end": 202,
+          "label": "conjunction"
+        },
+        {
+          "start": 203,
+          "end": 213,
+          "label": "adjective"
+        },
+        {
+          "start": 214,
+          "end": 216,
+          "label": "preposition"
+        },
+        {
+          "start": 217,
+          "end": 224,
+          "label": "noun"
+        },
+        {
+          "start": 225,
+          "end": 230,
+          "label": "adverb",
+          "note": "“only” limits the phrase — an adverb."
+        }
+      ]
+    },
+    {
+      "text": "He has called together legislative bodies at places unusual, uncomfortable, and distant from the depository of their public Records, for the sole purpose of fatiguing them into compliance with his measures.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "verb"
+        },
+        {
+          "start": 7,
+          "end": 13,
+          "label": "verb"
+        },
+        {
+          "start": 14,
+          "end": 22,
+          "label": "adverb",
+          "note": "A particle completing “called together.”"
+        },
+        {
+          "start": 23,
+          "end": 34,
+          "label": "adjective"
+        },
+        {
+          "start": 35,
+          "end": 41,
+          "label": "noun"
+        },
+        {
+          "start": 42,
+          "end": 44,
+          "label": "preposition"
+        },
+        {
+          "start": 45,
+          "end": 51,
+          "label": "noun"
+        },
+        {
+          "start": 52,
+          "end": 60,
+          "label": "adjective"
+        },
+        {
+          "start": 61,
+          "end": 75,
+          "label": "adjective"
+        },
+        {
+          "start": 76,
+          "end": 79,
+          "label": "conjunction"
+        },
+        {
+          "start": 80,
+          "end": 87,
+          "label": "adjective"
+        },
+        {
+          "start": 88,
+          "end": 92,
+          "label": "preposition"
+        },
+        {
+          "start": 93,
+          "end": 96,
+          "label": "determiner"
+        },
+        {
+          "start": 97,
+          "end": 107,
+          "label": "noun"
+        },
+        {
+          "start": 108,
+          "end": 110,
+          "label": "preposition"
+        },
+        {
+          "start": 111,
+          "end": 116,
+          "label": "determiner"
+        },
+        {
+          "start": 117,
+          "end": 123,
+          "label": "adjective"
+        },
+        {
+          "start": 124,
+          "end": 132,
+          "label": "noun"
+        },
+        {
+          "start": 133,
+          "end": 136,
+          "label": "preposition"
+        },
+        {
+          "start": 137,
+          "end": 140,
+          "label": "determiner"
+        },
+        {
+          "start": 141,
+          "end": 145,
+          "label": "adjective"
+        },
+        {
+          "start": 146,
+          "end": 153,
+          "label": "noun"
+        },
+        {
+          "start": 154,
+          "end": 156,
+          "label": "preposition"
+        },
+        {
+          "start": 157,
+          "end": 166,
+          "label": "gerund",
+          "note": "An -ing verb form acting as a noun."
+        },
+        {
+          "start": 167,
+          "end": 171,
+          "label": "pronoun"
+        },
+        {
+          "start": 172,
+          "end": 176,
+          "label": "preposition"
+        },
+        {
+          "start": 177,
+          "end": 187,
+          "label": "noun"
+        },
+        {
+          "start": 188,
+          "end": 192,
+          "label": "preposition"
+        },
+        {
+          "start": 193,
+          "end": 196,
+          "label": "determiner"
+        },
+        {
+          "start": 197,
+          "end": 206,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "He has dissolved Representative Houses repeatedly, for opposing with manly firmness his invasions on the rights of the people.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "verb"
+        },
+        {
+          "start": 7,
+          "end": 16,
+          "label": "verb"
+        },
+        {
+          "start": 17,
+          "end": 31,
+          "label": "adjective"
+        },
+        {
+          "start": 32,
+          "end": 38,
+          "label": "noun"
+        },
+        {
+          "start": 39,
+          "end": 50,
+          "label": "adverb"
+        },
+        {
+          "start": 51,
+          "end": 54,
+          "label": "preposition"
+        },
+        {
+          "start": 55,
+          "end": 63,
+          "label": "gerund",
+          "note": "An -ing verb form acting as a noun."
+        },
+        {
+          "start": 64,
+          "end": 68,
+          "label": "preposition"
+        },
+        {
+          "start": 69,
+          "end": 74,
+          "label": "adjective"
+        },
+        {
+          "start": 75,
+          "end": 83,
+          "label": "noun"
+        },
+        {
+          "start": 84,
+          "end": 87,
+          "label": "determiner"
+        },
+        {
+          "start": 88,
+          "end": 97,
+          "label": "noun"
+        },
+        {
+          "start": 98,
+          "end": 100,
+          "label": "preposition"
+        },
+        {
+          "start": 101,
+          "end": 104,
+          "label": "determiner"
+        },
+        {
+          "start": 105,
+          "end": 111,
+          "label": "noun"
+        },
+        {
+          "start": 112,
+          "end": 114,
+          "label": "preposition"
+        },
+        {
+          "start": 115,
+          "end": 118,
+          "label": "determiner"
+        },
+        {
+          "start": 119,
+          "end": 126,
+          "label": "noun"
+        }
+      ]
+    },
+    {
+      "text": "He has refused for a long time, after such dissolutions, to cause others to be elected; whereby the Legislative powers, incapable of Annihilation, have returned to the People at large for their exercise; the State remaining in the mean time exposed to all the dangers of invasion from without, and convulsions within.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 6,
+          "label": "verb"
+        },
+        {
+          "start": 7,
+          "end": 14,
+          "label": "verb"
+        },
+        {
+          "start": 15,
+          "end": 18,
+          "label": "preposition"
+        },
+        {
+          "start": 19,
+          "end": 20,
+          "label": "determiner"
+        },
+        {
+          "start": 21,
+          "end": 25,
+          "label": "adjective"
+        },
+        {
+          "start": 26,
+          "end": 31,
+          "label": "noun"
+        },
+        {
+          "start": 32,
+          "end": 37,
+          "label": "preposition"
+        },
+        {
+          "start": 38,
+          "end": 42,
+          "label": "determiner"
+        },
+        {
+          "start": 43,
+          "end": 56,
+          "label": "noun"
+        },
+        {
+          "start": 57,
+          "end": 65,
+          "label": "infinitive"
+        },
+        {
+          "start": 66,
+          "end": 72,
+          "label": "pronoun"
+        },
+        {
+          "start": 73,
+          "end": 78,
+          "label": "infinitive"
+        },
+        {
+          "start": 79,
+          "end": 87,
+          "label": "participle",
+          "note": "A past participle — passive infinitive “to be elected.”"
+        },
+        {
+          "start": 88,
+          "end": 95,
+          "label": "conjunction",
+          "note": "“whereby” links this result to the cause."
+        },
+        {
+          "start": 96,
+          "end": 99,
+          "label": "determiner"
+        },
+        {
+          "start": 100,
+          "end": 111,
+          "label": "adjective"
+        },
+        {
+          "start": 112,
+          "end": 119,
+          "label": "noun"
+        },
+        {
+          "start": 120,
+          "end": 129,
+          "label": "adjective"
+        },
+        {
+          "start": 130,
+          "end": 132,
+          "label": "preposition"
+        },
+        {
+          "start": 133,
+          "end": 146,
+          "label": "noun"
+        },
+        {
+          "start": 147,
+          "end": 151,
+          "label": "verb"
+        },
+        {
+          "start": 152,
+          "end": 160,
+          "label": "verb"
+        },
+        {
+          "start": 161,
+          "end": 163,
+          "label": "preposition"
+        },
+        {
+          "start": 164,
+          "end": 167,
+          "label": "determiner"
+        },
+        {
+          "start": 168,
+          "end": 174,
+          "label": "noun"
+        },
+        {
+          "start": 175,
+          "end": 177,
+          "label": "preposition"
+        },
+        {
+          "start": 178,
+          "end": 183,
+          "label": "adjective"
+        },
+        {
+          "start": 184,
+          "end": 187,
+          "label": "preposition"
+        },
+        {
+          "start": 188,
+          "end": 193,
+          "label": "determiner"
+        },
+        {
+          "start": 194,
+          "end": 203,
+          "label": "noun"
+        },
+        {
+          "start": 204,
+          "end": 207,
+          "label": "determiner"
+        },
+        {
+          "start": 208,
+          "end": 213,
+          "label": "noun"
+        },
+        {
+          "start": 214,
+          "end": 223,
+          "label": "participle",
+          "note": "Opens an absolute phrase — “the State remaining …”"
+        },
+        {
+          "start": 224,
+          "end": 226,
+          "label": "preposition"
+        },
+        {
+          "start": 227,
+          "end": 230,
+          "label": "determiner"
+        },
+        {
+          "start": 231,
+          "end": 235,
+          "label": "adjective"
+        },
+        {
+          "start": 236,
+          "end": 240,
+          "label": "noun"
+        },
+        {
+          "start": 241,
+          "end": 248,
+          "label": "participle",
+          "note": "A past participle in the absolute phrase."
+        },
+        {
+          "start": 249,
+          "end": 251,
+          "label": "preposition"
+        },
+        {
+          "start": 252,
+          "end": 255,
+          "label": "determiner"
+        },
+        {
+          "start": 256,
+          "end": 259,
+          "label": "determiner"
+        },
+        {
+          "start": 260,
+          "end": 267,
+          "label": "noun"
+        },
+        {
+          "start": 268,
+          "end": 270,
+          "label": "preposition"
+        },
+        {
+          "start": 271,
+          "end": 279,
+          "label": "noun"
+        },
+        {
+          "start": 280,
+          "end": 284,
+          "label": "preposition"
+        },
+        {
+          "start": 285,
+          "end": 293,
+          "label": "adverb",
+          "note": "“from without” — from the outside."
+        },
+        {
+          "start": 294,
+          "end": 297,
+          "label": "conjunction"
+        },
+        {
+          "start": 298,
+          "end": 309,
+          "label": "noun"
+        },
+        {
+          "start": 310,
+          "end": 317,
+          "label": "adverb",
+          "note": "“within” — inside."
+        }
+      ]
+    }
+  ]
+}

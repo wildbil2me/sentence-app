@@ -1,0 +1,1114 @@
+{
+  "format": "sentence-forge-lesson",
+  "version": 1,
+  "title": "The Declaration of Independence — Full Analysis",
+  "description": "The first three sentences of the 1776 Declaration, tagged at every layer the app supports: parts of speech, sentence parts, phrases, clauses, and the structure/purpose badges. A companion to the parts-of-speech-only “Opening” lesson — same text, the full loadout. Jefferson's long periodic sentences make the clause and phrase nesting a genuine stress test of the presentation view.",
+  "layers": [
+    "pos",
+    "part",
+    "phrase",
+    "clause"
+  ],
+  "sentences": [
+    {
+      "text": "When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "conjunction",
+          "note": "Here “when” opens a long introductory clause."
+        },
+        {
+          "start": 5,
+          "end": 7,
+          "label": "preposition"
+        },
+        {
+          "start": 8,
+          "end": 11,
+          "label": "determiner"
+        },
+        {
+          "start": 12,
+          "end": 18,
+          "label": "noun"
+        },
+        {
+          "start": 19,
+          "end": 21,
+          "label": "preposition"
+        },
+        {
+          "start": 22,
+          "end": 27,
+          "label": "adjective"
+        },
+        {
+          "start": 28,
+          "end": 35,
+          "label": "noun"
+        },
+        {
+          "start": 36,
+          "end": 38,
+          "label": "pronoun"
+        },
+        {
+          "start": 39,
+          "end": 46,
+          "label": "verb"
+        },
+        {
+          "start": 47,
+          "end": 56,
+          "label": "adjective"
+        },
+        {
+          "start": 57,
+          "end": 60,
+          "label": "preposition"
+        },
+        {
+          "start": 61,
+          "end": 64,
+          "label": "determiner"
+        },
+        {
+          "start": 65,
+          "end": 71,
+          "label": "noun"
+        },
+        {
+          "start": 72,
+          "end": 83,
+          "label": "infinitive",
+          "note": "“to” + the base verb — an infinitive."
+        },
+        {
+          "start": 84,
+          "end": 87,
+          "label": "determiner"
+        },
+        {
+          "start": 88,
+          "end": 97,
+          "label": "adjective"
+        },
+        {
+          "start": 98,
+          "end": 103,
+          "label": "noun"
+        },
+        {
+          "start": 104,
+          "end": 109,
+          "label": "pronoun",
+          "note": "A relative pronoun standing for the bands."
+        },
+        {
+          "start": 110,
+          "end": 114,
+          "label": "verb"
+        },
+        {
+          "start": 115,
+          "end": 124,
+          "label": "verb"
+        },
+        {
+          "start": 125,
+          "end": 129,
+          "label": "pronoun"
+        },
+        {
+          "start": 130,
+          "end": 134,
+          "label": "preposition"
+        },
+        {
+          "start": 135,
+          "end": 143,
+          "label": "pronoun"
+        },
+        {
+          "start": 144,
+          "end": 147,
+          "label": "conjunction"
+        },
+        {
+          "start": 148,
+          "end": 157,
+          "label": "infinitive"
+        },
+        {
+          "start": 158,
+          "end": 163,
+          "label": "preposition"
+        },
+        {
+          "start": 164,
+          "end": 167,
+          "label": "determiner"
+        },
+        {
+          "start": 168,
+          "end": 174,
+          "label": "noun"
+        },
+        {
+          "start": 175,
+          "end": 177,
+          "label": "preposition"
+        },
+        {
+          "start": 178,
+          "end": 181,
+          "label": "determiner"
+        },
+        {
+          "start": 182,
+          "end": 188,
+          "label": "noun"
+        },
+        {
+          "start": 189,
+          "end": 192,
+          "label": "determiner"
+        },
+        {
+          "start": 193,
+          "end": 201,
+          "label": "adjective"
+        },
+        {
+          "start": 202,
+          "end": 205,
+          "label": "conjunction"
+        },
+        {
+          "start": 206,
+          "end": 211,
+          "label": "adjective"
+        },
+        {
+          "start": 212,
+          "end": 219,
+          "label": "noun"
+        },
+        {
+          "start": 220,
+          "end": 222,
+          "label": "preposition"
+        },
+        {
+          "start": 223,
+          "end": 228,
+          "label": "pronoun"
+        },
+        {
+          "start": 229,
+          "end": 232,
+          "label": "determiner"
+        },
+        {
+          "start": 233,
+          "end": 237,
+          "label": "noun"
+        },
+        {
+          "start": 238,
+          "end": 240,
+          "label": "preposition"
+        },
+        {
+          "start": 241,
+          "end": 247,
+          "label": "noun"
+        },
+        {
+          "start": 248,
+          "end": 251,
+          "label": "conjunction"
+        },
+        {
+          "start": 252,
+          "end": 254,
+          "label": "preposition"
+        },
+        {
+          "start": 255,
+          "end": 263,
+          "label": "noun",
+          "note": "“Nature's” is a possessive noun."
+        },
+        {
+          "start": 264,
+          "end": 267,
+          "label": "noun"
+        },
+        {
+          "start": 268,
+          "end": 275,
+          "label": "verb"
+        },
+        {
+          "start": 276,
+          "end": 281,
+          "label": "pronoun"
+        },
+        {
+          "start": 282,
+          "end": 283,
+          "label": "determiner"
+        },
+        {
+          "start": 284,
+          "end": 290,
+          "label": "adjective"
+        },
+        {
+          "start": 291,
+          "end": 298,
+          "label": "noun"
+        },
+        {
+          "start": 299,
+          "end": 301,
+          "label": "preposition"
+        },
+        {
+          "start": 302,
+          "end": 305,
+          "label": "determiner"
+        },
+        {
+          "start": 306,
+          "end": 314,
+          "label": "noun"
+        },
+        {
+          "start": 315,
+          "end": 317,
+          "label": "preposition"
+        },
+        {
+          "start": 318,
+          "end": 325,
+          "label": "noun"
+        },
+        {
+          "start": 326,
+          "end": 334,
+          "label": "verb"
+        },
+        {
+          "start": 335,
+          "end": 339,
+          "label": "conjunction",
+          "note": "“that” introduces a noun clause, so it is a conjunction here."
+        },
+        {
+          "start": 340,
+          "end": 344,
+          "label": "pronoun"
+        },
+        {
+          "start": 345,
+          "end": 351,
+          "label": "verb"
+        },
+        {
+          "start": 352,
+          "end": 359,
+          "label": "verb"
+        },
+        {
+          "start": 360,
+          "end": 363,
+          "label": "determiner"
+        },
+        {
+          "start": 364,
+          "end": 370,
+          "label": "noun"
+        },
+        {
+          "start": 371,
+          "end": 376,
+          "label": "pronoun"
+        },
+        {
+          "start": 377,
+          "end": 382,
+          "label": "verb"
+        },
+        {
+          "start": 383,
+          "end": 387,
+          "label": "pronoun"
+        },
+        {
+          "start": 388,
+          "end": 390,
+          "label": "preposition"
+        },
+        {
+          "start": 391,
+          "end": 394,
+          "label": "determiner"
+        },
+        {
+          "start": 395,
+          "end": 406,
+          "label": "noun"
+        },
+        {
+          "start": 36,
+          "end": 38,
+          "label": "simple-subject",
+          "note": "The anticipatory “it” — the grammatical subject of the introductory clause."
+        },
+        {
+          "start": 39,
+          "end": 46,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 47,
+          "end": 56,
+          "label": "predicate-adjective",
+          "note": "Follows the linking verb “becomes” and describes “it.”"
+        },
+        {
+          "start": 104,
+          "end": 109,
+          "label": "simple-subject",
+          "note": "The relative pronoun is the subject of its own clause."
+        },
+        {
+          "start": 110,
+          "end": 124,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 229,
+          "end": 267,
+          "label": "complete-subject",
+          "note": "The subject of the “to which … entitle” clause."
+        },
+        {
+          "start": 233,
+          "end": 237,
+          "label": "simple-subject"
+        },
+        {
+          "start": 268,
+          "end": 275,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 282,
+          "end": 325,
+          "label": "complete-subject",
+          "note": "The full subject of the main clause."
+        },
+        {
+          "start": 291,
+          "end": 298,
+          "label": "simple-subject"
+        },
+        {
+          "start": 326,
+          "end": 406,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 326,
+          "end": 334,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 340,
+          "end": 344,
+          "label": "simple-subject"
+        },
+        {
+          "start": 345,
+          "end": 359,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 371,
+          "end": 376,
+          "label": "simple-subject"
+        },
+        {
+          "start": 377,
+          "end": 382,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 84,
+          "end": 103,
+          "label": "direct-object",
+          "note": "What it becomes necessary “to dissolve.”"
+        },
+        {
+          "start": 360,
+          "end": 370,
+          "label": "direct-object",
+          "note": "The object of “declare.”"
+        },
+        {
+          "start": 318,
+          "end": 325,
+          "label": "object-of-preposition"
+        },
+        {
+          "start": 391,
+          "end": 406,
+          "label": "object-of-preposition"
+        },
+        {
+          "start": 5,
+          "end": 35,
+          "label": "prepositional-phrase",
+          "note": "Tells when it becomes necessary."
+        },
+        {
+          "start": 19,
+          "end": 35,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 72,
+          "end": 103,
+          "label": "infinitive-phrase",
+          "note": "The first of two parallel infinitive phrases."
+        },
+        {
+          "start": 84,
+          "end": 103,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 130,
+          "end": 143,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 148,
+          "end": 219,
+          "label": "infinitive-phrase",
+          "note": "The second parallel infinitive — its object “the station” trails the phrase."
+        },
+        {
+          "start": 158,
+          "end": 188,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 175,
+          "end": 188,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 189,
+          "end": 219,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 299,
+          "end": 325,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 315,
+          "end": 325,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 388,
+          "end": 406,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 0,
+          "end": 281,
+          "label": "adverbial-clause",
+          "note": "The long introductory clause telling when the main statement holds."
+        },
+        {
+          "start": 104,
+          "end": 143,
+          "label": "relative-clause",
+          "note": "Describes the political bands."
+        },
+        {
+          "start": 220,
+          "end": 281,
+          "label": "relative-clause",
+          "note": "Describes the station; the preposition “to” is fronted with “which.”"
+        },
+        {
+          "start": 282,
+          "end": 406,
+          "label": "independent-clause",
+          "note": "The main clause — everything before it is introductory."
+        },
+        {
+          "start": 335,
+          "end": 406,
+          "label": "noun-clause",
+          "note": "The direct object of “requires” — it names what respect requires."
+        },
+        {
+          "start": 371,
+          "end": 406,
+          "label": "relative-clause",
+          "note": "Describes the causes."
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      },
+      "notes": "One independent clause carrying a long introductory adverbial clause and, inside the main clause, a noun clause (the object of “requires”) with its own relative clause — so the whole sentence is complex, not compound."
+    },
+    {
+      "text": "We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 2,
+          "label": "pronoun"
+        },
+        {
+          "start": 3,
+          "end": 7,
+          "label": "verb"
+        },
+        {
+          "start": 8,
+          "end": 13,
+          "label": "determiner"
+        },
+        {
+          "start": 14,
+          "end": 20,
+          "label": "noun"
+        },
+        {
+          "start": 21,
+          "end": 26,
+          "label": "infinitive"
+        },
+        {
+          "start": 27,
+          "end": 40,
+          "label": "adjective",
+          "note": "Hyphenated, so it is one token."
+        },
+        {
+          "start": 41,
+          "end": 45,
+          "label": "conjunction"
+        },
+        {
+          "start": 46,
+          "end": 49,
+          "label": "determiner"
+        },
+        {
+          "start": 50,
+          "end": 53,
+          "label": "noun"
+        },
+        {
+          "start": 54,
+          "end": 57,
+          "label": "verb"
+        },
+        {
+          "start": 58,
+          "end": 65,
+          "label": "verb"
+        },
+        {
+          "start": 66,
+          "end": 72,
+          "label": "adjective"
+        },
+        {
+          "start": 73,
+          "end": 77,
+          "label": "conjunction"
+        },
+        {
+          "start": 78,
+          "end": 82,
+          "label": "pronoun"
+        },
+        {
+          "start": 83,
+          "end": 86,
+          "label": "verb"
+        },
+        {
+          "start": 87,
+          "end": 94,
+          "label": "verb"
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "label": "preposition"
+        },
+        {
+          "start": 98,
+          "end": 103,
+          "label": "determiner"
+        },
+        {
+          "start": 104,
+          "end": 111,
+          "label": "noun"
+        },
+        {
+          "start": 112,
+          "end": 116,
+          "label": "preposition"
+        },
+        {
+          "start": 117,
+          "end": 124,
+          "label": "adjective"
+        },
+        {
+          "start": 125,
+          "end": 136,
+          "label": "adjective",
+          "note": "Archaic spelling of “inalienable.”"
+        },
+        {
+          "start": 137,
+          "end": 144,
+          "label": "noun"
+        },
+        {
+          "start": 145,
+          "end": 149,
+          "label": "conjunction"
+        },
+        {
+          "start": 150,
+          "end": 155,
+          "label": "preposition"
+        },
+        {
+          "start": 156,
+          "end": 161,
+          "label": "pronoun",
+          "note": "“these” stands alone here, so it is a pronoun."
+        },
+        {
+          "start": 162,
+          "end": 165,
+          "label": "verb"
+        },
+        {
+          "start": 166,
+          "end": 171,
+          "label": "noun"
+        },
+        {
+          "start": 172,
+          "end": 179,
+          "label": "noun"
+        },
+        {
+          "start": 180,
+          "end": 183,
+          "label": "conjunction"
+        },
+        {
+          "start": 184,
+          "end": 187,
+          "label": "determiner"
+        },
+        {
+          "start": 188,
+          "end": 195,
+          "label": "noun"
+        },
+        {
+          "start": 196,
+          "end": 198,
+          "label": "preposition"
+        },
+        {
+          "start": 199,
+          "end": 209,
+          "label": "noun"
+        },
+        {
+          "start": 0,
+          "end": 2,
+          "label": "simple-subject"
+        },
+        {
+          "start": 3,
+          "end": 40,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 3,
+          "end": 7,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 8,
+          "end": 20,
+          "label": "direct-object",
+          "note": "What “we hold.”"
+        },
+        {
+          "start": 27,
+          "end": 40,
+          "label": "object-complement",
+          "note": "Describes “these truths” — what we hold them to be."
+        },
+        {
+          "start": 50,
+          "end": 53,
+          "label": "simple-subject"
+        },
+        {
+          "start": 54,
+          "end": 65,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 66,
+          "end": 72,
+          "label": "predicate-adjective"
+        },
+        {
+          "start": 78,
+          "end": 82,
+          "label": "simple-subject"
+        },
+        {
+          "start": 83,
+          "end": 94,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 98,
+          "end": 111,
+          "label": "object-of-preposition"
+        },
+        {
+          "start": 117,
+          "end": 144,
+          "label": "object-of-preposition"
+        },
+        {
+          "start": 166,
+          "end": 209,
+          "label": "compound-subject",
+          "note": "Three subjects sharing the verb “are”; the clause is inverted (“… are Life, Liberty …”)."
+        },
+        {
+          "start": 162,
+          "end": 165,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 8,
+          "end": 20,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 21,
+          "end": 40,
+          "label": "infinitive-phrase",
+          "note": "Acts as the complement of “these truths.”"
+        },
+        {
+          "start": 54,
+          "end": 65,
+          "label": "verb-phrase",
+          "note": "Passive voice — helping verb “are” plus the participle “created.”"
+        },
+        {
+          "start": 83,
+          "end": 94,
+          "label": "verb-phrase"
+        },
+        {
+          "start": 95,
+          "end": 111,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 112,
+          "end": 144,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 117,
+          "end": 144,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 150,
+          "end": 161,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 184,
+          "end": 209,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 196,
+          "end": 209,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 0,
+          "end": 40,
+          "label": "independent-clause",
+          "note": "The main clause; the three “that …” clauses that follow all stand in apposition to “these truths.”"
+        },
+        {
+          "start": 41,
+          "end": 72,
+          "label": "noun-clause",
+          "note": "First of three noun clauses naming the truths held."
+        },
+        {
+          "start": 73,
+          "end": 144,
+          "label": "noun-clause"
+        },
+        {
+          "start": 145,
+          "end": 209,
+          "label": "noun-clause"
+        }
+      ],
+      "types": {
+        "structure": "complex",
+        "purpose": "declarative"
+      },
+      "notes": "The main clause “We hold these truths …” takes three parallel noun clauses (each opening with “that”) that unpack the truths — an independent clause plus dependent clauses, so it is complex."
+    },
+    {
+      "text": "That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed.",
+      "annotations": [
+        {
+          "start": 0,
+          "end": 4,
+          "label": "conjunction",
+          "note": "Carries over the “we hold that …” sense."
+        },
+        {
+          "start": 5,
+          "end": 14,
+          "label": "infinitive"
+        },
+        {
+          "start": 15,
+          "end": 20,
+          "label": "determiner"
+        },
+        {
+          "start": 21,
+          "end": 28,
+          "label": "noun"
+        },
+        {
+          "start": 29,
+          "end": 40,
+          "label": "noun"
+        },
+        {
+          "start": 41,
+          "end": 44,
+          "label": "verb"
+        },
+        {
+          "start": 45,
+          "end": 55,
+          "label": "verb"
+        },
+        {
+          "start": 56,
+          "end": 61,
+          "label": "preposition"
+        },
+        {
+          "start": 62,
+          "end": 66,
+          "label": "noun"
+        },
+        {
+          "start": 67,
+          "end": 75,
+          "label": "participle",
+          "note": "An -ing participle describing Governments."
+        },
+        {
+          "start": 76,
+          "end": 81,
+          "label": "determiner"
+        },
+        {
+          "start": 82,
+          "end": 86,
+          "label": "adjective"
+        },
+        {
+          "start": 87,
+          "end": 93,
+          "label": "noun"
+        },
+        {
+          "start": 94,
+          "end": 98,
+          "label": "preposition"
+        },
+        {
+          "start": 99,
+          "end": 102,
+          "label": "determiner"
+        },
+        {
+          "start": 103,
+          "end": 110,
+          "label": "noun"
+        },
+        {
+          "start": 111,
+          "end": 113,
+          "label": "preposition"
+        },
+        {
+          "start": 114,
+          "end": 117,
+          "label": "determiner"
+        },
+        {
+          "start": 118,
+          "end": 127,
+          "label": "noun",
+          "note": "“the governed” — an adjective used as a noun."
+        },
+        {
+          "start": 29,
+          "end": 40,
+          "label": "simple-subject"
+        },
+        {
+          "start": 41,
+          "end": 127,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 15,
+          "end": 28,
+          "label": "direct-object",
+          "note": "What the Governments are instituted “to secure.”"
+        },
+        {
+          "start": 76,
+          "end": 93,
+          "label": "direct-object",
+          "note": "The object of the participle “deriving.”"
+        },
+        {
+          "start": 62,
+          "end": 66,
+          "label": "object-of-preposition"
+        },
+        {
+          "start": 99,
+          "end": 127,
+          "label": "object-of-preposition"
+        },
+        {
+          "start": 114,
+          "end": 127,
+          "label": "object-of-preposition"
+        },
+        {
+          "start": 5,
+          "end": 28,
+          "label": "infinitive-phrase",
+          "note": "Tells why Governments are instituted."
+        },
+        {
+          "start": 15,
+          "end": 28,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "label": "verb-phrase",
+          "note": "Passive voice — “are” plus the participle “instituted.”"
+        },
+        {
+          "start": 56,
+          "end": 66,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 67,
+          "end": 127,
+          "label": "participial-phrase",
+          "note": "Describes Governments — how they hold their power."
+        },
+        {
+          "start": 76,
+          "end": 93,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 94,
+          "end": 127,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 99,
+          "end": 127,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 111,
+          "end": 127,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 0,
+          "end": 127,
+          "label": "independent-clause",
+          "note": "A single independent clause; the infinitive and participial phrases are not clauses, so the sentence is simple."
+        }
+      ],
+      "types": {
+        "structure": "simple",
+        "purpose": "declarative"
+      },
+      "notes": "One independent clause — “Governments are instituted” — framed by an infinitive phrase (“to secure these rights”) and a participial phrase (“deriving …”); neither is a clause, so the structure is simple."
+    }
+  ]
+}
