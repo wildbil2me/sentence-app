@@ -246,7 +246,6 @@
       '  <div class="section-head">' +
       '    <h2 class="section-title">Your lessons</h2>' +
       '    <span class="spacer"></span>' +
-      '    <button class="btn btn-sm btn-primary" data-act="new" title="Start a new lesson">＋ New lesson</button>' +
       '    <button class="btn btn-sm" data-act="import" title="Import lessons from a JSON file">⬆ Import</button>' +
       '    <button class="btn btn-sm" data-act="export-all" title="Download every lesson as one JSON">⬇ Export all</button>' +
       '    <input type="file" accept=".json,application/json" data-role="file" hidden multiple />' +
@@ -262,18 +261,40 @@
     var lessonsEl = view.querySelector('[data-role="lessons"]');
     var examplesEl = view.querySelector('[data-role="examples"]');
 
+    function newLesson() {
+      try {
+        var lesson = wjt.store.save(wjt.store.create());
+        location.hash = "#/edit/" + lesson.id;
+      } catch (e) {
+        wjt.toast(e.message, 6000);
+      }
+    }
+
     function renderLessons() {
       var lessons = wjt.store.list();
       lessonsEl.innerHTML = "";
-      if (!lessons.length) {
-        lessonsEl.innerHTML =
-          '<div class="card empty-state"><svg class="empty-anvil" viewBox="0 0 24 24" aria-hidden="true">' +
-          '<polygon points="1.5,8.5 8,6.5 21.5,6.5 21.5,10.5 8,10.5"/>' +
-          '<polygon points="10,10.5 16,10.5 15,15 11,15"/>' +
-          '<polygon points="5.5,19.5 20.5,19.5 17.5,15 8.5,15"/></svg>' +
-          "<h3>No lessons yet</h3><p>Create one, import a JSON file, or load the sample to see how it works.</p></div>";
-        return;
-      }
+
+      // "Add a Lesson" is always the first tile — it's the empty state and the
+      // primary create action rolled into one card.
+      var addTile = document.createElement("article");
+      addTile.className = "card lesson-card add-lesson-card";
+      addTile.setAttribute("role", "button");
+      addTile.setAttribute("tabindex", "0");
+      addTile.setAttribute("aria-label", "Add a lesson");
+      addTile.innerHTML =
+        '<svg class="empty-anvil" viewBox="0 0 24 24" aria-hidden="true">' +
+        '<polygon points="1.5,8.5 8,6.5 21.5,6.5 21.5,10.5 8,10.5"/>' +
+        '<polygon points="10,10.5 16,10.5 15,15 11,15"/>' +
+        '<polygon points="5.5,19.5 20.5,19.5 17.5,15 8.5,15"/></svg>' +
+        "<h3>＋ Add a Lesson</h3>" +
+        '<p class="lesson-desc">Start a fresh lesson' +
+        (lessons.length ? "" : ", import a JSON file, or load an example below") + ".</p>";
+      addTile.addEventListener("click", newLesson);
+      addTile.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); newLesson(); }
+      });
+      lessonsEl.appendChild(addTile);
+
       lessons.forEach(function (lesson) {
         var nAnn = lesson.sentences.reduce(function (n, s) { return n + (s.annotations || []).length; }, 0);
         var card = document.createElement("article");
@@ -354,15 +375,6 @@
     view.querySelector('[data-act="export-all"]').addEventListener("click", function () {
       if (!wjt.store.list().length) { wjt.toast("No lessons to export."); return; }
       wjt.downloadJson(wjt.exportAllLessons(), "sentence-forge-lessons.json");
-    });
-
-    view.querySelector('[data-act="new"]').addEventListener("click", function () {
-      try {
-        var lesson = wjt.store.save(wjt.store.create());
-        location.hash = "#/edit/" + lesson.id;
-      } catch (e) {
-        wjt.toast(e.message, 6000);
-      }
     });
 
     var fileInput = view.querySelector('[data-role="file"]');

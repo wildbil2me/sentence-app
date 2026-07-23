@@ -273,12 +273,12 @@ div.view.view-library
 │  ├─ div.section-head              ← flex row: title + spacer + actions
 │  │  ├─ h2.section-title "Your lessons"
 │  │  ├─ span.spacer
-│  │  ├─ button[data-act=new]        "＋ New lesson"   (.btn-primary)
 │  │  ├─ button[data-act=import]     "⬆ Import"        ← triggers the hidden file input
 │  │  ├─ button[data-act=export-all] "⬇ Export all"   ← wjt.exportAllLessons()
 │  │  └─ input[type=file][data-role=file][hidden][multiple]  ← → wjt.importLessonFiles()
 │  └─ div.lesson-grid[data-role=lessons]
-│     └─ article.card.lesson-card    ×N   (or .empty-state card if none)
+│     ├─ article.card.lesson-card.add-lesson-card  ← always first; role=button → newLesson()
+│     └─ article.card.lesson-card    ×N   (none extra when the library is empty)
 │        ├─ h3, p.lesson-desc
 │        ├─ div.lesson-meta          ← "N sentences · M labels"
 │        ├─ div.lesson-layers        ← span.mini-pill per layer

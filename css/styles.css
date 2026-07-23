@@ -484,6 +484,24 @@ body {
 }
 .lesson-card { display: flex; flex-direction: column; transition: transform 0.15s ease, border-color 0.15s ease; }
 .lesson-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+.add-lesson-card {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-style: dashed;
+  cursor: pointer;
+  min-height: 180px;
+}
+.add-lesson-card:hover,
+.add-lesson-card:focus-visible {
+  border-style: solid;
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  outline: none;
+}
+.add-lesson-card .empty-anvil { margin-bottom: 12px; }
+.add-lesson-card h3 { color: var(--accent); }
+.add-lesson-card .lesson-desc { max-width: 260px; }
 .lesson-card h3 { font-size: 18px; }
 .lesson-desc { color: var(--muted); font-size: 13px; margin-top: 4px; flex: 0; }
 .lesson-meta { display: flex; gap: 6px; color: var(--muted); font-size: 13px; margin-top: 10px; }
