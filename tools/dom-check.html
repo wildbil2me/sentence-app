@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>Sentence Forge — DOM check</title>
   <link rel="stylesheet" href="../css/styles.css" />
+  <!-- Deterministic layout measurement: collapse entry animations to 0s so the
+       presentation checks (9–10) measure settled bounds, not a mid-animation
+       transform (e.g. view-in's translateY). Test-only; not part of the app. -->
+  <style>*, *::before, *::after { animation-duration: 0s !important; animation-delay: 0s !important; transition-duration: 0s !important; }</style>
 </head>
 <!--
   Headless render + runtime check. Not part of the app. It has two parts:
@@ -14,6 +18,11 @@
     - Runtime checks (6–8): load the FULL app (app.js/display.js/quiz.js) against
       the real page chrome and verify boot, storage guards, the keyboard token
       selection path, and the confirmation dialog's a11y (audit P0-2/P0-3).
+    - Presentation checks (9–10): drive the real Present and Quiz views and assert
+      the slide-shell contract (UI audit 0.1.0) — no document overflow, stage/nav/
+      controls/panel within the viewport, clean state reserves no hidden lanes,
+      Key panel focus + Escape restore, dot labels, and Practice question focus.
+      These need a sized window; pass --window-size=1280,720 (the 720p gate).
 
   Run it (the Git-Bash `>` redirect returns an EMPTY dump for this GUI process —
   use PowerShell Start-Process, which waits for the child and captures stdout):
@@ -23,9 +32,12 @@
     $dump = Join-Path $env:TEMP ("dom-" + [guid]::NewGuid() + ".html")
     Start-Process -FilePath $edge -Wait -NoNewWindow -RedirectStandardOutput $dump `
       -ArgumentList "--headless=new","--disable-gpu","--no-sandbox",`
-      "--virtual-time-budget=8000","--dump-dom","--user-data-dir=$udd",`
+      "--virtual-time-budget=8000","--window-size=1280,720","--dump-dom","--user-data-dir=$udd",`
       "file:///C:/dev/sentences/tools/dom-check.html"
     node tools/dom-check-report.js $dump
+
+  Spot-check the other matrix sizes by re-running with --window-size=1366,768 /
+  1920,1080 / 1024,768; the required contract is 0 failed at each.
 
   The temp user-data-dir and a Windows-style drive (file:///C:/…) are both
   required. Results are summarized in #result as PASS/FAIL lines. Read them with
@@ -190,10 +202,61 @@
      * registered its DOMContentLoaded boot before this script, so its handler
      * fires first (clearing #app and routing to Home) and ours runs after.
      * -------------------------------------------------------------------- */
+    /* Wrap stress fixture. A span bar carries its label's full NAME, which can be
+     * far wider than the tokens it covers ("Prepositional Phrase" over "up"), and
+     * the grid's max-content columns grow to fit it. Wrapping used to be decided
+     * from token widths alone, so a line that "fit" rendered past the container
+     * and scrolled sideways in silence (.gl-grid hides its scrollbar). Render one
+     * of those into a deliberately narrow host here, before the settle timer, and
+     * assert after it that it wrapped instead of running off. */
+    var stressHost = null;
+    function buildWrapStress() {
+      var text = "up in the old house on the hill by the sea at dawn in the cold";
+      var anns = [];
+      // A prepositional phrase over each 2-word pair: every bar's name is much
+      // wider than the two short tokens it spans.
+      for (var at = 0; at + 6 <= text.length; at += 7) {
+        anns.push({ id: wjt.uid(), start: at, end: Math.min(at + 6, text.length), label: "prepositional-phrase", note: "" });
+      }
+      stressHost = document.createElement("div");
+      stressHost.style.cssText = "width:640px;position:absolute;left:-9999px;top:0;";
+      document.body.appendChild(stressHost);
+      var r = wjt.renderSentence({ id: wjt.uid(), text: text, annotations: anns },
+        { layers: ["phrase"], size: "lg" });
+      stressHost.appendChild(r.root);
+    }
+    function checkWrapStress() {
+      if (!stressHost) return;
+      var grids = stressHost.querySelectorAll(".gl-grid");
+      var worst = 0, runOff = 0;
+      Array.prototype.forEach.call(grids, function (g) {
+        var over = g.scrollWidth - g.clientWidth;
+        if (over > worst) worst = over;
+        if (over > 1 && g.querySelectorAll(".gl-token").length > 1) runOff++;
+      });
+      check("wrap stress: a wide span label wraps the line instead of running off " +
+        "(" + grids.length + " lines, worst overflow " + worst + "px)",
+        grids.length > 1 && runOff === 0);
+      stressHost.parentNode.removeChild(stressHost);
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       try { runtimeChecks(); }
       catch (e) { check("runtime checks threw: " + e.message, false); }
-      finish();
+      try { buildWrapStress(); }
+      catch (e) { check("wrap stress fixture threw: " + e.message, false); }
+      // The Present/Quiz checks (9–10) drive the real views and measure layout,
+      // so they wait for the renderer's reflow to settle before the bounds
+      // assertions. A plain timer (not rAF, which headless virtual-time doesn't
+      // reliably service) is fast-forwarded within --virtual-time-budget.
+      // finish() still runs exactly once, here, after they complete.
+      setTimeout(function () {
+        try { checkWrapStress(); }
+        catch (e) { check("wrap stress check threw: " + e.message, false); }
+        try { presentationChecks(); }
+        catch (e) { check("presentation checks threw: " + e.message, false); }
+        finish();
+      }, 200);
     });
 
     function key(el, opts) {
@@ -292,6 +355,133 @@
       key(document, { key: "Escape" });
       check("P0-3: Escape closes the dialog without confirming",
         !document.querySelector(".modal") && confirmed === false);
+    }
+
+    // A rect is "in viewport" when it sits inside the window with a 1px rounding
+    // tolerance — the bounds contract for the slide shell and its panel.
+    function inViewport(el, tol) {
+      tol = tol || 1;
+      var r = el.getBoundingClientRect();
+      return r.top >= -tol && r.left >= -tol &&
+        r.bottom <= window.innerHeight + tol && r.right <= window.innerWidth + tol;
+    }
+    function noDocScroll(tag) {
+      var d = document.documentElement;
+      check("UI-1: no document overflow in Present " + tag,
+        d.scrollWidth <= d.clientWidth + 1 && d.scrollHeight <= d.clientHeight + 1);
+    }
+
+    /* -------------------------------------------------------------------- *
+     * Presentation checks (9–10) — the slide-shell contract (UI audit 0.1.0)
+     * against the real Present and Quiz views. These need a sized window; CI and
+     * the documented local recipe pass --window-size=1280,720 (the primary 720p
+     * projector gate). The other matrix sizes are the manual browser pass.
+     * -------------------------------------------------------------------- */
+    function presentationChecks() {
+      // Load the densest built-in example (the intended stress fixture) so the
+      // shell is tested against real annotation density, not a toy sentence.
+      var densest = null, max = -1;
+      wjt.EXAMPLES.forEach(function (ex) {
+        var l = ex.build(), n = 0;
+        l.sentences.forEach(function (s) { n += (s.annotations || []).length; });
+        if (n > max) { max = n; densest = l; }
+      });
+      wjt.store.save(densest);
+      var id = densest.id;
+
+      // 9. Present — clean state. (route() scrolls to top before rendering; we
+      //    call the view directly, so mirror that or leftover scroll from the
+      //    earlier checks offsets every viewport-relative measurement.)
+      window.scrollTo(0, 0);
+      wjt.views.present(app, id);
+      var view = app.querySelector(".view-present");
+      check("UI-1: Present view rendered", !!view);
+      if (!view) return;
+      noDocScroll("(clean)");
+
+      var stage = view.querySelector('[data-role="stage"]');
+      check("UI-2: clean sentence reserves no .gl-hidden annotation lanes",
+        stage.querySelectorAll(".gl-hidden").length === 0);
+      check("UI-1: stage is within the viewport", inViewport(stage));
+      check("UI-1: sentence nav is within the viewport", inViewport(view.querySelector(".present-nav")));
+      check("UI-1: reveal controls are within the viewport", inViewport(view.querySelector(".present-controls")));
+
+      var dots = view.querySelectorAll(".dot");
+      var labelled = dots.length > 0;
+      Array.prototype.forEach.call(dots, function (d) { if (!d.getAttribute("aria-label")) labelled = false; });
+      check("UI-9: every sentence dot has an accessible label", labelled);
+      check("UI-9: exactly one dot is aria-current",
+        view.querySelectorAll('.dot[aria-current="true"]').length === 1);
+
+      // 9b. Present — breakdown (all layers on) stays bounded and renders marks.
+      view.querySelector('[data-act="all"]').click();
+      stage = view.querySelector('[data-role="stage"]');
+      check("UI-2: breakdown renders annotation marks",
+        stage.querySelectorAll(".gl-bar, .gl-chip").length > 0);
+      noDocScroll("(breakdown, all layers)");
+
+      // A span bar's label can be wider than the tokens it covers, which used to
+      // push the line past the container and scroll it sideways (silently — the
+      // .gl-grid scrollbar is hidden). The renderer now wraps on measured width,
+      // so a long sentence spills onto another line instead of running off.
+      // Multi-token lines must not overflow; a lone token can't wrap, so it's
+      // exempt (its bar label ellipsizes instead).
+      var runOff = 0, widest = 0;
+      Array.prototype.forEach.call(stage.querySelectorAll(".gl-grid"), function (g) {
+        var over = g.scrollWidth - g.clientWidth;
+        if (over > widest) widest = over;
+        if (over > 1 && g.querySelectorAll(".gl-token").length > 1) runOff++;
+      });
+      check("UI-4: no wrapped line runs off sideways (worst overflow " + widest + "px)",
+        runOff === 0);
+      // The page, not the stage, is the scroller once a breakdown outgrows the slide.
+      check("UI-1: the stage never becomes its own scroll container",
+        stage.scrollHeight <= stage.clientHeight + 1);
+
+      // 9c. Key panel opens inside the viewport, takes focus, Escape closes and
+      //     restores focus to the Key button.
+      var keyBtn = view.querySelector('[data-act="key"]');
+      keyBtn.click();
+      var panel = view.querySelector('[data-role="panel"]');
+      var panelTitle = view.querySelector('[data-role="panel-title"]');
+      check("UI-3: Key panel is visible when open", !panel.hidden);
+      check("UI-3: open Key panel is within the viewport", inViewport(panel));
+      noDocScroll("(Key open)");
+      if (document.activeElement === panelTitle) {
+        check("UI-3: opening the Key panel moves focus to its heading", true);
+        key(document, { key: "Escape" });
+        check("UI-3: Escape closes the panel", panel.hidden);
+        check("UI-3: closing restores focus to the Key button", document.activeElement === keyBtn);
+      } else {
+        check("UI-3: panel focus NOT EXERCISED (headless focus unavailable)", true);
+        keyBtn.click();
+        check("UI-3: clicking Key again closes the panel", panel.hidden);
+      }
+
+      // 9d. Route-away removes the shell state and restores document scrolling.
+      wjt.views.library(app);
+      check("UI-1: leaving Present removes the .view-present shell",
+        !app.querySelector(".view-present"));
+      check("UI-1: document scroll restored outside Present",
+        getComputedStyle(document.body).overflow !== "hidden");
+
+      // 10. Practice — a new question render establishes a focus target.
+      wjt.views.quiz(app, id);
+      var startBtn = app.querySelector('[data-act="start"]');
+      check("UI-7: Practice setup rendered a Start button", !!startBtn);
+      if (startBtn) {
+        startBtn.click();  // startQuiz -> renderQuestion, which focuses the prompt
+        var prompt = app.querySelector('[data-role="prompt"]');
+        check("UI-7: a question prompt heading rendered", !!prompt);
+        if (prompt && document.activeElement) {
+          if (document.activeElement === prompt) {
+            check("UI-7: question render focuses the prompt heading", true);
+          } else {
+            check("UI-7: question focus NOT EXERCISED (headless focus unavailable)",
+              prompt.getAttribute("tabindex") === "-1");
+          }
+        }
+      }
     }
   })();
   </script>

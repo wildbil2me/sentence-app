@@ -59,7 +59,7 @@ $udd  = Join-Path $env:TEMP ("edge-udd-" + [guid]::NewGuid())
 $dump = Join-Path $env:TEMP ("dom-" + [guid]::NewGuid() + ".html")
 Start-Process -FilePath $edge -Wait -NoNewWindow -RedirectStandardOutput $dump `
   -ArgumentList "--headless=new","--disable-gpu","--no-sandbox",`
-  "--virtual-time-budget=8000","--dump-dom","--user-data-dir=$udd",`
+  "--virtual-time-budget=8000","--window-size=1280,720","--dump-dom","--user-data-dir=$udd",`
   "file:///C:/dev/sentences/tools/dom-check.html"
 node tools/dom-check-report.js $dump
 ```
@@ -78,7 +78,7 @@ Hard-won details, all of which produce a *silent* wrong answer:
   `tools/dom-check-report.js`, which reads only the `<pre id="result">` block.
 
 A healthy run reports **0 failed** (the stable contract). The pass *count* is an
-implementation detail — it grows as checks are added (currently 261).
+implementation detail — it grows as checks are added (currently 282).
 
 Report results honestly. If a check fails, say so with the output; don't
 summarize a red run as done.

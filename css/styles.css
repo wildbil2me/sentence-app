@@ -103,6 +103,16 @@ body {
   top: 12px;
 }
 
+/* Views move focus to their heading after a route swap so assistive tech lands
+   on the new content. Those headings/containers are only focusable because we
+   add tabindex="-1", so they can never be reached by the Tab key and never need
+   a keyboard focus ring — suppress the browser's page-sized default outline on
+   that programmatic focus unconditionally. (A :not(:focus-visible) guard here
+   fails on initial load, where Chromium's focus-visible heuristic matches the
+   route-focus and paints a box around the hero h1.) Real controls reached by
+   keyboard keep their own :focus-visible ring. */
+[tabindex="-1"]:focus { outline: none; }
+
 /* ---------------- top bar ---------------- */
 .topbar {
   display: flex;
@@ -887,16 +897,77 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
 /* ====================================================================
    Present mode
    ==================================================================== */
-/* Present gets a wider column than the rest of the app so the sentence has more
-   room to breathe (and wraps less), and a trimmed bottom padding so the stage
-   can claim the height. The view is a full-height flex column whose middle —
-   the stage — is the only part that scrolls. */
-#app:has(.view-present) { max-width: 1280px; padding-bottom: 28px; }
-
+/* Present is a slide that fills the viewport when its content fits, and grows
+   into a scrolling page when a long, fully-revealed sentence doesn't. It fills at
+   least 100dvh so a short breakdown reads as a centred slide with no scrollbar;
+   the page scrolls only when the diagram is genuinely taller than the viewport
+   (the "spill over" long sentences need). The global topbar and footer are hidden
+   here (Present has its own header row). The desktop shell lives in the
+   min-width:641px block below; the phone breakpoint (<=640px) uses the same
+   document-scroll model with a stacked switcher. */
 .view-present {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 120px);
+  position: relative;   /* anchor for the panel's bottom-sheet overlay */
+  min-height: calc(100vh - 120px);   /* phone/base fallback; the shell overrides it */
+}
+
+/* The presentation shell — desktop, tablet, and projector. Excludes the phone
+   fallback so the small-screen switcher can stack below the stage. */
+@media (min-width: 641px) {
+  body:has(.view-present) .topbar,
+  body:has(.view-present) .appfoot { display: none; }
+  #app:has(.view-present) { max-width: none; margin: 0; padding: 0; }
+  .view-present {
+    /* Grid, so the stage row is minmax(min-content, 1fr): when the breakdown is
+       shorter than the viewport the 1fr expands the row to fill 100dvh and the
+       stage centres its content like a slide; when it's taller, min-content wins,
+       the row grows past the viewport, and — with no overflow lock — the page
+       scrolls. So a sentence that fits never scrolls; only a long one does.
+       (Rows: present-head, present-controls, present-main; the sr-only live
+       region is position:absolute and out of flow.) */
+    display: grid;
+    grid-template-rows: auto auto minmax(min-content, 1fr);
+    /* Explicit minmax(0,1fr) column: the stage is no longer a scroll container,
+       so its min-content width is the whole unwrapped sentence. Left implicit,
+       that intrinsic width would widen this column and hand the renderer a bogus
+       "available width", so nothing would ever wrap. Pinning the column to the
+       shell's width gives the renderer the real width to wrap against. */
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 100vh;    /* fallback for browsers without dvh */
+    min-height: 100dvh;
+    /* Near-full safe width with a modest inset — no 1280px cap wasting projectors. */
+    padding: 18px clamp(16px, 3vw, 48px);
+  }
+}
+/* The sentence switcher is one dot per sentence, so a long lesson makes the rail
+   intrinsically taller than the slide. Take it out of the stage row's height math
+   (absolute, pinned to that row) so only the STAGE decides whether the page grows
+   past one screen — otherwise a 20-sentence lesson would scroll the page even on a
+   short, one-line slide. The rail scrolls within itself when it runs out of room. */
+@media (min-width: 641px) {
+  .present-main { position: relative; padding-right: 56px; }
+  .present-nav {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .present-nav::-webkit-scrollbar { display: none; }
+}
+
+@media (min-width: 641px) and (max-height: 800px) {
+  /* Short landscape (720p/768p projectors): give the stage back the room the
+     header cluster would otherwise take. */
+  .view-present { padding-top: 10px; padding-bottom: 10px; }
+  .present-head, .present-controls { margin-bottom: 8px; }
+  .stage { padding: 18px 22px; }
+}
+@media (min-width: 641px) and (max-width: 1100px) {
+  /* Tablet/older projector landscape: trim the side inset. */
+  .view-present { padding-left: clamp(12px, 2vw, 24px); padding-right: clamp(12px, 2vw, 24px); }
 }
 
 /* Title and the Edit / Quiz / Full screen actions share one row: the title
@@ -920,21 +991,22 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
 
 /* Stage + the vertical sentence switcher sit side by side; the stage takes all
    remaining width and height, the switcher is a fixed rail on the right. */
-.present-main { display: flex; align-items: stretch; gap: 16px; flex: 1 1 auto; min-height: 0; }
+.present-main { display: flex; align-items: stretch; gap: 16px; flex: 1 1 auto; min-height: 0; min-width: 0; }
 
 .stage {
   flex: 1 1 auto;
   min-width: 0;
-  min-height: 260px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* safe center: centers when it fits, falls back to start when the breakdown
-     is taller than the card so the top can't be clipped past the scroll edge. */
+  /* safe center: centers the breakdown while it fits the viewport-filled row;
+     when it's taller the row grows to its content and the page scrolls, so the
+     stage itself never needs an inner scrollbar — overflow stays visible. */
   justify-content: safe center;
   text-align: center;
   padding: 34px 30px;
-  overflow: auto;
+  overflow: visible;
 }
 .stage .gl-sentence { max-width: 100%; }
 .stage-counter {
@@ -950,17 +1022,29 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
 /* Key button reuses the pill "on" look so its pressed state reads at a glance. */
 .btn[data-act="key"].is-on { background: var(--accent-soft); border-color: var(--accent); color: var(--text); }
 
-/* The Key legend: a muted full-width band under the stage. Each shown layer is a
-   group (heading + its labels); every label is a swatch · abbr · name item, with
-   generous gaps so it stays legible on a projector. */
-.present-legend {
-  margin-top: 14px;
-  padding: 14px 18px;
-  background: var(--card-2);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  animation: view-in 0.25s ease both;
+/* Key and explanations share one bounded panel. On wide screens it's a drawer
+   beside the stage: the stage shrinks to make room, so nothing is hidden and the
+   sentence switcher stays put. On narrower screens it becomes a bottom sheet (see
+   the max-width rules). It scrolls internally, so its bounds and Close control
+   always stay inside the viewport. Each shown layer in the Key is a group
+   (heading + its labels); every label is a swatch · abbr · name item. */
+/* Fade only (no translate): a vertical entry transform would briefly push the
+   drawer's bottom past the viewport edge before settling. */
+@keyframes panel-in { from { opacity: 0; } }
+.present-panel {
+  flex: 0 0 min(360px, 32vw);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+  overflow: hidden;
+  animation: panel-in 0.2s ease both;
 }
+.present-panel[hidden] { display: none; }
+.present-panel-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.present-panel-title { font-size: 16px; flex: 1 1 auto; min-width: 0; }
+.present-panel-body { flex: 1 1 auto; min-height: 0; overflow: auto; text-align: left; }
+.present-panel-body .ann-details-sub { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
 .legend-group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; }
 .legend-group + .legend-group { margin-top: 12px; }
 .legend-layer {
@@ -975,8 +1059,6 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
 .legend-item { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; }
 .legend-item b { font-weight: 700; }
 
-.explain { margin-top: 14px; animation: view-in 0.25s ease both; }
-
 .present-nav {
   display: flex;
   flex-direction: column;
@@ -990,27 +1072,59 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
-  gap: 8px;
+  gap: 4px;
   justify-content: center;
 }
+/* The dot stays visually tiny (an 11px pseudo-element) but the button carries a
+   40×40 hit target for touch and keyboard — the visible layout footprint doesn't
+   grow, so the larger targets can't reintroduce overflow. */
 .dot {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.dot::before {
+  content: "";
   width: 11px;
   height: 11px;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: var(--card-2);
-  cursor: pointer;
-  padding: 0;
   transition: all 0.15s ease;
 }
-.dot.is-on { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
+.dot.is-on::before { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
+
+/* Narrower than a comfortable drawer (a 360px drawer would compete with the
+   dense stage for horizontal room and get clipped): the panel becomes a
+   full-width bottom sheet anchored inside the view, bounded to the lower half
+   and scrolling internally. Covers tablet/1024px projectors down to phones. */
+@media (max-width: 1024px) {
+  .present-panel {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    flex-basis: auto;
+    max-height: 55%;
+    border-radius: 14px 14px 0 0;
+    z-index: 5;
+  }
+}
 
 /* Full screen: the view leaves #app's centered column, so it supplies its own
-   backdrop and padding. The stage still owns the scroll. */
+   backdrop and padding. It fills the screen; a breakdown taller than the screen
+   scrolls within the fullscreen element (there's no page to scroll behind it). */
 .view-present.is-fullscreen {
   background: var(--bg);
   padding: 26px 40px;
   min-height: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: auto;
 }
 
 /* ====================================================================
@@ -1152,10 +1266,12 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   .hero p br { display: none; }
 
   /* Not enough width for a side rail: drop the switcher below the stage, laid
-     out horizontally again, and let the page scroll rather than the stage. */
+     out horizontally again, and let the page scroll rather than the stage. The
+     shared panel returns to normal block flow instead of a fixed bottom sheet. */
   .view-present { min-height: 0; }
   .present-main { flex-direction: column; }
   .stage { overflow: visible; }
   .present-nav { flex-direction: row; margin-top: 4px; }
   .dots { flex-direction: row; flex-wrap: wrap; }
+  .present-panel { position: static; max-height: none; margin-top: 12px; }
 }

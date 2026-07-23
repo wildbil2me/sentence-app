@@ -1,10 +1,31 @@
 # Sentence Forge — Road to 0.1.0 (Polish Pass)
 
-**Status:** Blockers cleared — ready to tag `v0.1.0` · **Date:** 2026-07-22
+**Status:** Presentation UI remediation is the current release gate — **not yet
+ready to tag `v0.1.0`** · **Date:** 2026-07-22
 (release blockers from the [code audit](code-audit-0.1.0.md) resolved; see the
 2026-07-22 audit-remediation "As built" note below and
-[audit-remediation-0.1.0.md](audit-remediation-0.1.0.md). Creating the `v0.1.0`
-tag is the maintainer's call.)
+[audit-remediation-0.1.0.md](audit-remediation-0.1.0.md).)
+
+> **2026-07-22 correction — supersedes "ready to tag" above.** A later UI audit
+> ([ui-audit-0.1.0.md](ui-audit-0.1.0.md)) found Present is not yet a dependable
+> slide surface: the page scrolls at every tested size (including 1920×1080), the
+> clean sentence reserves the whole diagram, and Key/explanation land offscreen.
+> These are `0.1.0` blockers. Do **not** create the `v0.1.0` tag until the P0 work
+> and the desktop viewport matrix in
+> [plans/005-presentation-ui-remediation.md](../plans/005-presentation-ui-remediation.md)
+> pass. Earlier close-out history below is preserved as-is.
+>
+> **2026-07-22 update — remediation landed, gate not yet fully cleared.** The
+> presentation-UI work (Present viewport shell, clean/breakdown phases, contained
+> Key/explanation panel, route/Practice focus, dot hit areas) is implemented and
+> the **automated** gate is green: all repo logic checks plus the browser DOM
+> check (which now drives the real Present/Quiz views) report **0 failed** at
+> 1280×720, 1366×768, 1920×1080, and 1024×768 in headless Edge. See the audit's
+> "As remediated" table. **Still owed before "ready to tag":** the manual
+> cross-browser pass (Firefox, Safari/iPad landscape, Fullscreen, 125%/150% zoom,
+> touch, light theme / CB-safe palette / reduced motion). UI-6 (palette) and
+> UI-10 (Editor navigation) are deferred to [plans/006](../plans/006-palette-scale-followup.md)
+> and [plans/007](../plans/007-editor-navigation-followup.md).
 **Scope:** Harden the current proof of concept into a coherent, trustworthy
 `0.1.0`. Additive and format-safe throughout — no taxonomy or lesson-format
 changes. The student-as-creator pivot is deliberately *out* of this milestone

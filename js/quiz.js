@@ -209,8 +209,8 @@
           (streak >= 2 ? '<span class="quiz-streak">🔥 ' + streak + "</span>" : "") +
           "</header>" +
           '<section class="card quiz-card">' +
-          '  <div class="quiz-count">Question ' + (qi + 1) + " of " + questions.length + "</div>" +
-          '  <h3 class="quiz-prompt" data-role="prompt"></h3>' +
+          '  <div class="quiz-count" id="quiz-count">Question ' + (qi + 1) + " of " + questions.length + "</div>" +
+          '  <h3 class="quiz-prompt" data-role="prompt" aria-describedby="quiz-count"></h3>' +
           '  <div class="quiz-stage" data-role="stage"></div>' +
           '  <div class="quiz-answers" data-role="answers" role="group"></div>' +
           '  <div class="quiz-feedback" data-role="feedback" role="status" aria-live="polite" hidden></div>' +
@@ -354,6 +354,13 @@
         // Name the answer group after the (now-populated) prompt so a screen
         // reader announces what the options belong to.
         answersEl.setAttribute("aria-label", promptEl.textContent);
+
+        // Each question replaces view.innerHTML, which drops focus to <body>.
+        // Land it on the new question heading (which describes itself with the
+        // "Question N of M" count) so keyboard/AT users restart at the top.
+        // preventScroll keeps the card from jumping.
+        promptEl.setAttribute("tabindex", "-1");
+        try { promptEl.focus({ preventScroll: true }); } catch (e) { promptEl.focus(); }
       }
 
       /* -------- results -------- */
@@ -376,6 +383,15 @@
           '    <a class="btn" href="#/library">← Library</a>' +
           "  </div>" +
           "</section>";
+
+        // The innerHTML swap drops focus to <body>; move it to the results
+        // heading so keyboard/AT users are told the outcome and land on the
+        // retry/setup actions next. preventScroll avoids a jump.
+        var resultsHeading = view.querySelector("h2");
+        if (resultsHeading) {
+          resultsHeading.setAttribute("tabindex", "-1");
+          try { resultsHeading.focus({ preventScroll: true }); } catch (e) { resultsHeading.focus(); }
+        }
 
         if (pct >= 80) burstConfetti(view);
 

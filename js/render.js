@@ -315,6 +315,61 @@
       return lines;
     }
 
+    /* --- refine the break points by real geometry --- *
+     * computeLines() sizes breaks from token widths alone, but a span bar's
+     * label can force the columns it covers wider than those tokens, so a line
+     * it believes fits can render past the container edge (and then scroll
+     * sideways under .gl-grid's overflow-x). Rather than predict grid track
+     * growth, lay the line out and measure: if a .gl-grid overflows its box,
+     * break it after the last token whose right edge is still inside the box, so
+     * the sentence spills onto another line instead of running off. A one-token
+     * line can't wrap — it's left to ellipsize its bar label. */
+    function refineOverflow(lines) {
+      var grids = root.getElementsByClassName("gl-grid");
+      if (grids.length !== lines.length) return null;
+      var lastToken = lines[lines.length - 1].last;
+      for (var gi = 0; gi < grids.length; gi++) {
+        var grid = grids[gi], line = lines[gi];
+        if (grid.scrollWidth - grid.clientWidth <= 1 || line.last <= line.first) continue;
+
+        var limit = grid.getBoundingClientRect().right -
+          (parseFloat(window.getComputedStyle(grid).paddingRight) || 0);
+        var splitAt = line.first;   // at least one token stays on this line
+        for (var i = line.first; i <= line.last; i++) {
+          if (tokenEls[i].getBoundingClientRect().right <= limit + 0.5) splitAt = i;
+          else break;
+        }
+        if (splitAt >= line.last) continue;   // can't split further
+
+        /* Fix the first overflowing line and re-flow everything after it as one
+         * trailing line, which the next pass breaks the same way. Splitting in
+         * place instead would orphan the tokens that didn't fit onto a line of
+         * their own — "clad" stranded above "in black from head to foot." —
+         * because they could never rejoin the line that follows. Left to right,
+         * one line settled per pass, this is a greedy fill on real geometry. */
+        return lines.slice(0, gi).concat([
+          { first: line.first, last: splitAt },
+          { first: splitAt + 1, last: lastToken },
+        ]);
+      }
+      return null;
+    }
+
+    // Lay out `lines`, then re-break until no line overflows. Bounded: each pass
+    // settles the leftmost still-overflowing line, so the settled prefix grows
+    // every pass and there can't be more lines than tokens. Returns the lines
+    // actually laid out.
+    function layoutFitted(lines) {
+      layout(lines);
+      for (var pass = 0; pass < tokens.length; pass++) {
+        var refined = refineOverflow(lines);
+        if (!refined) break;
+        lines = refined;
+        layout(lines);
+      }
+      return lines;
+    }
+
     // Start as a single line — byte-for-byte the legacy layout, and the state
     // we measure from once the caller has inserted `root`.
     layout([{ first: 0, last: tokens.length - 1 }]);
@@ -344,7 +399,10 @@
       var key = lines.map(function (l) { return l.first + ":" + l.last; }).join(",");
       if (key === lastKey) return;
       lastKey = key;
-      layout(lines);
+      // Lay out the token-width estimate, then refine to the real fit. lastKey
+      // stays the raw estimate's key so the width short-circuit above keeps
+      // working — refineOverflow is deterministic for a given estimate.
+      layoutFitted(lines);
     }
     // Relayout on the next frame, not inside the observer callback: rebuilding
     // the grids changes `root`'s own size, and doing that synchronously trips

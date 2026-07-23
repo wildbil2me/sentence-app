@@ -122,10 +122,16 @@ $udd  = Join-Path $env:TEMP ("edge-udd-" + [guid]::NewGuid())
 $dump = Join-Path $env:TEMP ("dom-" + [guid]::NewGuid() + ".html")
 Start-Process -FilePath $edge -Wait -NoNewWindow -RedirectStandardOutput $dump `
   -ArgumentList "--headless=new","--disable-gpu","--no-sandbox",`
-  "--virtual-time-budget=8000","--dump-dom","--user-data-dir=$udd",`
+  "--virtual-time-budget=8000","--window-size=1280,720","--dump-dom","--user-data-dir=$udd",`
   "file:///C:/dev/sentences/tools/dom-check.html"
 node tools/dom-check-report.js $dump
 ```
+
+`--window-size=1280,720` gives the presentation checks (9–10) a real 720p
+projector viewport to assert the slide-shell bounds against; without it headless
+defaults to 800×600 and that gate is meaningless. Spot-check the rest of the
+presentation matrix by re-running with `--window-size=1366,768`, `1920,1080`, and
+`1024,768` — the required contract is **0 failed** at each.
 
 Things that will waste your afternoon if you don't know them:
 
@@ -146,9 +152,15 @@ aren't there. CI runs the Chrome equivalent through the same script.
 
 The harness now boots the **full app** (`app.js`/`display.js`/`quiz.js`) against
 the real page chrome, so it also covers boot, the storage guards, keyboard token
-selection, and the confirm-dialog a11y. A healthy run reports **0 failed** and
-ends with `ALL DOM CHECKS PASSED`. The pass *count* is an implementation detail
-that grows as checks are added — don't hard-code it into a green/red judgment.
+selection, and the confirm-dialog a11y. It also drives the real **Present** and
+**Quiz** views to assert the slide-shell contract (checks 9–10): no document
+overflow, stage/nav/controls/panel within the viewport, the clean phase reserving
+no hidden lanes, the Key panel opening in-viewport with focus + Escape restore,
+labelled sentence dots, and Practice question focus. (Those checks disable CSS
+animations via a test-only `<style>` so bounds are measured settled, and wait a
+tick for the renderer's reflow.) A healthy run reports **0 failed** and ends with
+`ALL DOM CHECKS PASSED`. The pass *count* is an implementation detail that grows
+as checks are added — don't hard-code it into a green/red judgment.
 
 ## Manual pass
 
@@ -159,8 +171,13 @@ touches a view, walk one lesson through the whole loop:
 2. **✎ Edit** — drag a span, apply a base label, drill down to a subtype, add a
    note, remove a label. Toggle a teaching level off and back on. Toggle
    **Essential only** and confirm an already-placed Advanced label still renders.
-3. **▶ Present** — all levels start hidden; toggling each one reveals its layer;
-   ← / → move between sentences; clicking a label opens its popover.
+3. **▶ Present** — all levels start hidden and the clean sentence wraps with no
+   blank annotation gaps; the first level reveal enters the breakdown; ← / → (or
+   ↑ / ↓) move between sentences; clicking a label opens the Key/explanation
+   **panel** (drawer on wide screens, bottom sheet on narrow), which takes focus,
+   closes on ✕ / Escape, and restores focus to what opened it. The page itself
+   must **not** scroll — verify at 1280×720, 1366×768, 1920×1080, and 1024×768, in
+   both the clean and all-layers-plus-Key states, windowed and in Fullscreen.
 4. **🎯 Practice** — run a short quiz; check that a *select* question accepts the
    span you'd expect, and that feedback shows your note.
 5. **⬇ Export → ⬆ Import** the lesson and confirm it comes back identical, with

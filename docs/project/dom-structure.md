@@ -55,9 +55,12 @@ between the two buttons while open, and restores focus on close.
 `#app` is the single mount point. `route()` in [`js/app.js`](../../js/app.js)
 clears it and calls one view function per hash, then `focusView()` moves focus to
 the new view's first `h1`/`h2` (given `tabindex="-1"`, focused with
-`preventScroll`) — or to `#app` itself when a view has none, e.g. the editor,
-whose title is an `<input>`. This keeps keyboard/AT users on the content after a
-swap instead of dropping to `<body>`. `#toasts`, `#palette-toggle`,
+`preventScroll`) — the editor supplies a visually hidden `h1.sr-only "Lesson
+editor"` for this, so focus no longer falls back to the whole `#app` container.
+This keeps keyboard/AT users on the content after a swap instead of dropping to
+`<body>`. The programmatic `tabindex="-1"` focus target is styled without the
+page-sized default outline (`[tabindex="-1"]:focus:not(:focus-visible)`), while
+controls reached by keyboard keep their `:focus-visible` ring. `#toasts`, `#palette-toggle`,
 `#theme-toggle`, and `.appfoot` live *outside* `#app`, so they persist across
 navigations — the footer version string is written once at boot, not per route.
 The palette toggle rewrites grammar colors in `wjt.LABELS`/`SENTENCE_TYPES` and
@@ -163,8 +166,21 @@ are bare bars.
   `[data-layer]` elements and repaints POS underlines — **without a rebuild**.
   This is how Present toggles a layer with no flash and no vertical shift.
 - A **`ResizeObserver`** on `root` recomputes line breaks when the container
-  width changes (measures real token widths, re-runs `layout()`). Relayout is
-  deferred to `requestAnimationFrame` to avoid the "ResizeObserver loop" warning.
+  width changes. Relayout is deferred to `requestAnimationFrame` to avoid the
+  "ResizeObserver loop" warning.
+- **Line breaking is a two-stage fit.** `computeLines()` estimates breaks from
+  token widths, then `layoutFitted()` lays that estimate out and **measures the
+  result**, splitting any `.gl-grid` that still overflows its box. The second
+  stage exists because a span bar carries its label's full *name*, which can be
+  wider than the tokens it covers — the grid's `max-content` columns then grow to
+  fit the bar, so a line the token-width estimate thought fit renders past the
+  container and scrolls sideways in silence (`.gl-grid` hides its scrollbar).
+  Each pass settles one line left-to-right and re-flows everything after it, so
+  the tokens that didn't fit rejoin the following line instead of being orphaned
+  onto one of their own. Net effect: a long sentence **spills onto another line**
+  rather than running off the edge. A lone token can't wrap and is exempt — its
+  bar label ellipsizes instead. `tools/dom-check.html` guards this with a "wrap
+  stress" fixture (short tokens under wide `Prepositional Phrase` bars).
 
 ### Selection (`wjt.attachSelection`)
 
@@ -285,6 +301,7 @@ own sub-renders.
 ```
 div.view.view-editor
 ├─ header.editor-head.card
+│  ├─ h1.sr-only "Lesson editor"      ← programmatic focus target after a route swap
 │  ├─ div.editor-head-top
 │  │  ├─ a[href=#/library] "← Library"
 │  │  ├─ span.saved-flash "Saved ✓"   ← flashes on save()
@@ -357,35 +374,74 @@ div.view.view-present   (.is-fullscreen when the Fullscreen API is active)
 ├─ div.present-main
 │  ├─ section.card.stage[data-role=stage]
 │  │  ├─ div.stage-counter "Sentence i of N"
-│  │  ├─ [ renderSentence root, size:lg, reserve: all lesson layers ]
+│  │  ├─ [ renderSentence root, size:lg; reserve: all lesson layers in breakdown,
+│  │  │    none in the clean phase (see below) ]
 │  │  ├─ [ div.type-badges, if any — structure/purpose badges + note chip ]
 │  │  └─ div.stage-tip              ← "Turn on a level…", hidden once a layer is on
+│  ├─ aside.present-panel.card[data-role=panel][hidden][aria-labelledby=present-panel-title]
+│  │  ├─ div.present-panel-head
+│  │  │  ├─ h3.present-panel-title[data-role=panel-title][tabindex=-1]  ← focused on open
+│  │  │  └─ button[data-act=panel-close][aria-label="Close panel"] "✕"
+│  │  └─ div.present-panel-body[data-role=panel-body]  ← Key legend OR an explanation
 │  └─ nav.present-nav
 │     ├─ button[data-act=prev] "↑"
-│     ├─ div.dots[data-role=dots]  ← button.dot per sentence (.is-on = current)
+│     ├─ div.dots[data-role=dots]  ← button.dot per sentence (.is-on = current;
+│     │                               aria-label "Sentence i of N"; aria-current on current)
 │     └─ button[data-act=next] "↓"
-├─ div.present-legend[data-role=legend][hidden]    ← Key legend, filled by wjt.renderLegend()
-│  └─ div.legend-group ×(shown layers)             ← div.legend-layer heading +
-│                                                     div.legend-items (span.legend-item ×labels:
-│                                                     span.swatch + b abbr + name)
-├─ aside.explain.card[data-role=explain][hidden]   ← label explainer, filled on chip click
 └─ div.sr-only[data-role=slide-live][aria-live=polite]  ← persistent (outside the
                                                      rebuilt stage) so paging to a
                                                      new sentence is announced;
                                                      renderStage() sets its text
 ```
 
-The `.explain` aside is filled by `showExplain()` (annotation),
-`showTypeExplain()` (sentence type), or `showNoteExplain()` (the sentence note
-chip); all reuse the `.ann-details-*` class family. Keyboard: ↑/← prev, ↓/→
-next, `f` fullscreen.
+**Clean vs breakdown.** With no layers shown (the clean phase) `renderStage()`
+passes `reserve: visible` (nothing), so the sentence wraps naturally with no
+hidden annotation lanes. The first reveal enters breakdown (`reserve:
+lesson.layers`), reserving every layer's rows so later reveals/hides slot into a
+stable diagram. Crossing that 0↔N boundary rebuilds the stage (`renderStage`);
+toggles within breakdown are in-place patches (`applyVisible`/`setLayers`).
 
-The `.present-legend` is a transient, off-by-default view toggle (the `🔑 Key`
-button), a **sibling after `present-main`** so it reads as a full-width band under
-the stage rather than a column inside the horizontal stage/nav flex. `renderLegend()`
-rebuilds it on the same triggers as the chips — sentence change (`renderStage`) and
-layer toggle (`applyVisible`) — from `wjt.renderLegend(currentSentence, visible)`,
-listing per shown layer the distinct labels annotated in the on-screen sentence.
+**One shared panel.** Key and every explanation render into the single
+`.present-panel` (a drawer beside the stage on wide viewports, a bottom sheet at
+`max-width:1024px`), never a normal-flow block below the stage. Only one is active
+at a time (`panelMode` = `"key" | "explain" | null`). `showExplain()` (annotation),
+`showTypeExplain()` (sentence type) and `showNoteExplain()` (note chip) open it in
+explain mode (reusing the `.ann-details-*` family); the `🔑 Key` button toggles it
+in key mode (`wjt.renderLegend(currentSentence, visible)`). Opening focuses the
+panel heading (`preventScroll`); closing (the ✕, Escape, or a sentence/route
+change) restores focus to the triggering control when it still exists. Keyboard:
+↑/← prev, ↓/→ next, Escape closes the panel, `f` fullscreen.
+
+The presentation shell (`css/styles.css`, `@media (min-width:641px)`) route-scopes
+via `:has(.view-present)`: it hides the global topbar and footer and makes
+`.view-present` a grid of `auto auto minmax(min-content,1fr)` rows by a
+`minmax(0,1fr)` column, at `min-height:100dvh`.
+
+**A slide that fits never scrolls; only a long one does.** The shell is sized so
+the page — not the stage — owns overflow:
+
+- `min-height:100dvh` + the `1fr` stage row means a breakdown shorter than the
+  viewport expands to fill it and centres like a slide, with nothing to scroll.
+  A breakdown taller than the viewport grows the row past one screen and the
+  **document** scrolls. `.stage` is therefore `overflow:visible` — it never
+  becomes its own scroll container (that inner scrollbar was the thing long
+  sentences got trapped in).
+- The **column is an explicit `minmax(0,1fr)`**. Now that `.stage` isn't a scroll
+  container, its min-content width is the whole *unwrapped* sentence; left
+  implicit, that intrinsic width would widen the column and hand the renderer a
+  bogus "available width", so nothing would ever wrap. Pinning the column gives
+  it the real width. `.present-main` carries `min-width:0` for the same reason.
+- The **`.present-nav` rail is `position:absolute`** within `.present-main` (which
+  is `position:relative` and reserves `padding-right`). The rail is one dot per
+  sentence, so it's intrinsically taller than the slide on a long lesson; taking
+  it out of the row's height math keeps the **stage** the only thing that decides
+  whether the page grows. It scrolls within itself when it runs out of room.
+- Full screen (`.is-fullscreen`) keeps a fixed `100dvh` but uses `overflow:auto`,
+  so a too-tall breakdown scrolls inside the fullscreen element — there's no page
+  behind it to scroll.
+
+The `≤640px` phone breakpoint stacks the switcher below the stage and uses the
+same document-scroll model.
 
 ## Quiz view
 
@@ -413,8 +469,11 @@ div.view.view-quiz
 │  ├─ span.quiz-score "N ✓"
 │  └─ span.quiz-streak "🔥 N"        ← only at streak ≥ 2
 └─ section.card.quiz-card
-   ├─ div.quiz-count "Question i of N"
-   ├─ h3.quiz-prompt[data-role=prompt]     ← <mark> for "highlighted"; .prompt-label for "find"
+   ├─ div.quiz-count#quiz-count "Question i of N"
+   ├─ h3.quiz-prompt[data-role=prompt][tabindex=-1][aria-describedby=quiz-count]
+   │                                        ← focused after each question render (the
+   │                                          count is announced via aria-describedby);
+   │                                          <mark> for "highlighted"; .prompt-label for "find"
    ├─ div.quiz-stage[data-role=stage]      ← renderSentence(showAnnotations:false)
    ├─ div.quiz-answers[data-role=answers][role=group][aria-label=<prompt text>]
    │  └─ button.quiz-option ×options       (mc / sentence-type)   .is-right/.is-wrong
@@ -435,7 +494,8 @@ matching words on an interactive stage, then Check).
 div.view.view-quiz
 └─ section.card.quiz-results
    ├─ div.score-ring[style=--pct] > span "NN%"
-   ├─ h2 (message) + p.muted-note "N of M correct"
+   ├─ h2[tabindex=-1] (message)      ← focused after the results render
+   │  + p.muted-note "N of M correct"
    ├─ div[data-role=missed]           ← h3 + div.missed-row per missed question
    │                                     (span.swatch + text)
    └─ div.btn-row.btn-row-center  button[data-act=retry|setup] + a #/

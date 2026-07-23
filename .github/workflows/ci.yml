@@ -53,7 +53,11 @@ jobs:
       # literal strings "PASS" and "FAIL" in it.
       - name: Dump tools/dom-check.html and report
         run: |
+          # --window-size gives the presentation checks (9–10) a real 720p
+          # projector viewport to assert against; without it headless defaults to
+          # 800x600 and the slide-shell bounds gate is meaningless.
           google-chrome --headless=new --disable-gpu --no-sandbox \
-            --user-data-dir="$(mktemp -d)" --virtual-time-budget=5000 --dump-dom \
+            --user-data-dir="$(mktemp -d)" --virtual-time-budget=5000 \
+            --window-size=1280,720 --dump-dom \
             "file://$PWD/tools/dom-check.html" > "$RUNNER_TEMP/dom.html"
           node tools/dom-check-report.js "$RUNNER_TEMP/dom.html"

@@ -40,6 +40,9 @@
     var header = document.createElement("header");
     header.className = "editor-head card";
     header.innerHTML =
+      // A real (visually hidden) heading so the post-route focus lands here
+      // instead of falling back to the whole #app container (a page-sized outline).
+      '<h1 class="sr-only">Lesson editor</h1>' +
       '<div class="editor-head-top">' +
       '  <a class="btn btn-ghost" href="#/library">← Library</a>' +
       '  <span class="saved-flash" aria-live="polite">Saved ✓</span>' +
