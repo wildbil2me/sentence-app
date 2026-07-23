@@ -215,6 +215,10 @@ body {
 .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
 .btn:active { transform: translateY(0); }
 .btn:disabled { opacity: 0.55; cursor: default; transform: none; }
+/* .btn's own display beats the UA's [hidden]{display:none}, so a button hidden
+   from script (the pinned drawer's ✕, Full screen where the API is missing)
+   would otherwise still paint. Same reason .present-panel[hidden] exists. */
+.btn[hidden] { display: none; }
 
 .btn-primary {
   background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, var(--accent-2)));
@@ -897,14 +901,15 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
 /* ====================================================================
    Present mode
    ==================================================================== */
-/* Present is a slide that fills the viewport when its content fits, and grows
-   into a scrolling page when a long, fully-revealed sentence doesn't. It fills at
-   least 100dvh so a short breakdown reads as a centred slide with no scrollbar;
-   the page scrolls only when the diagram is genuinely taller than the viewport
-   (the "spill over" long sentences need). The global topbar and footer are hidden
+/* Present is a slide that fills the viewport exactly: the shell is locked to
+   100dvh and the STAGE CARD owns any overflow, so the chrome around it (header,
+   layer chips, panel, sentence rail) never scrolls away mid-lesson. A breakdown
+   shorter than the stage still centres like a slide with nothing to scroll; a
+   taller one scrolls inside the card. The global topbar and footer are hidden
    here (Present has its own header row). The desktop shell lives in the
-   min-width:641px block below; the phone breakpoint (<=640px) uses the same
-   document-scroll model with a stacked switcher. */
+   min-width:641px block below; the phone breakpoint (<=640px) keeps the
+   document-scroll model with a stacked switcher — there is no room there to
+   split the viewport between a stage and its chrome. */
 .view-present {
   display: flex;
   flex-direction: column;
@@ -919,43 +924,69 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   body:has(.view-present) .appfoot { display: none; }
   #app:has(.view-present) { max-width: none; margin: 0; padding: 0; }
   .view-present {
-    /* Grid, so the stage row is minmax(min-content, 1fr): when the breakdown is
-       shorter than the viewport the 1fr expands the row to fill 100dvh and the
-       stage centres its content like a slide; when it's taller, min-content wins,
-       the row grows past the viewport, and — with no overflow lock — the page
-       scrolls. So a sentence that fits never scrolls; only a long one does.
+    /* Grid, so the stage row is minmax(0, 1fr): it takes whatever height is left
+       after the header and control rows and never more. A breakdown shorter than
+       that row is centred like a slide; a taller one scrolls inside .stage. The
+       row can't grow past the viewport, so the page has nothing to scroll.
        (Rows: present-head, present-controls, present-main; the sr-only live
        region is position:absolute and out of flow.) */
     display: grid;
-    grid-template-rows: auto auto minmax(min-content, 1fr);
-    /* Explicit minmax(0,1fr) column: the stage is no longer a scroll container,
-       so its min-content width is the whole unwrapped sentence. Left implicit,
-       that intrinsic width would widen this column and hand the renderer a bogus
-       "available width", so nothing would ever wrap. Pinning the column to the
-       shell's width gives the renderer the real width to wrap against. */
+    grid-template-rows: auto auto minmax(0, 1fr);
+    /* Explicit minmax(0,1fr) column. A scroll container's min-content width is
+       0, so .stage's own overflow:auto now covers this too — but keep the pin:
+       the moment the stage stops scrolling (it did once), its min-content width
+       becomes the whole unwrapped sentence, which would widen this column and
+       hand the renderer a bogus "available width", so nothing would ever wrap. */
     grid-template-columns: minmax(0, 1fr);
-    min-height: 100vh;    /* fallback for browsers without dvh */
-    min-height: 100dvh;
+    height: 100vh;        /* fallback for browsers without dvh */
+    height: 100dvh;
+    overflow: hidden;     /* the stage is the scroller, never the document */
     /* Near-full safe width with a modest inset — no 1280px cap wasting projectors. */
     padding: 18px clamp(16px, 3vw, 48px);
   }
+  /* The stage card owns the overflow. scrollbar-gutter is load-bearing, not
+     cosmetic: the renderer measures this element's clientWidth to decide line
+     breaks (render.js computeLines), so a scrollbar that appears only after the
+     content is laid out would make every line ~15px too wide. Reserving the
+     gutter keeps the measured width honest whether or not it scrolls. */
+  .stage { overflow: auto; scrollbar-gutter: stable; }
 }
 /* The sentence switcher is one dot per sentence, so a long lesson makes the rail
    intrinsically taller than the slide. Take it out of the stage row's height math
-   (absolute, pinned to that row) so only the STAGE decides whether the page grows
-   past one screen — otherwise a 20-sentence lesson would scroll the page even on a
-   short, one-line slide. The rail scrolls within itself when it runs out of room. */
+   (absolute, pinned to that row) so a 20-sentence lesson can't stretch the row —
+   the dot strip scrolls within the rail instead, and the stage keeps the full
+   height. Prev/Next stay pinned to the rail's ends either way. */
 @media (min-width: 641px) {
-  .present-main { position: relative; padding-right: 56px; }
+  /* The rail's width is pinned rather than intrinsic so the gutter beside it can
+     be derived: reserved padding = rail + the same 16px .present-main uses as its
+     flex gap, which makes the panel-to-rail gap match the stage-to-panel one. */
+  .present-main {
+    position: relative;
+    --nav-w: 48px;
+    padding-right: calc(var(--nav-w) + 16px);
+  }
   .present-nav {
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
-    overflow-y: auto;
-    scrollbar-width: none;
+    width: var(--nav-w);
+    overflow: hidden;
   }
-  .present-nav::-webkit-scrollbar { display: none; }
+  /* The scrolling dot strip that lets this work is in the base `.dots` rule
+     further down — declaring it here would be overridden by that later rule.
+     See the note there. */
+  /* Fill the pinned track instead of sizing to the arrow glyph's own padding.
+     justify-content is not optional here: .btn is an inline-flex box that never
+     sets one, so at its natural width the default flex-start is invisible — but
+     stretched to 100% it parks the arrow against the left edge of the rail. */
+  .present-nav .btn-big {
+    flex: none;
+    width: 100%;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 @media (min-width: 641px) and (max-height: 800px) {
@@ -1000,24 +1031,42 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* safe center: centers the breakdown while it fits the viewport-filled row;
-     when it's taller the row grows to its content and the page scrolls, so the
-     stage itself never needs an inner scrollbar — overflow stays visible. */
+  /* safe center: centers the breakdown while it fits the bounded row; when it's
+     taller, "safe" falls back to start alignment so scrolling reaches the top of
+     the diagram instead of clipping it. */
   justify-content: safe center;
   text-align: center;
   padding: 34px 30px;
-  overflow: visible;
+  /* NO `overflow` here. This rule sits AFTER the >=641px shell block that sets
+     `overflow:auto`, and a media query adds no specificity — an `overflow:visible`
+     declared here silently wins and the stage stops scrolling at every desktop
+     size (it did: a too-tall breakdown was clipped by the shell's overflow:hidden
+     with no way to reach it). The phone's visible-overflow model is declared in
+     the <=640px block at the bottom of this file instead. */
 }
+/* The scroll container is focusable, so it needs a ring — and the ring doubles as
+   the affordance that says this box scrolls. */
+.stage:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .stage .gl-sentence { max-width: 100%; }
-.stage-counter {
+/* "Sentence i of N", the type badges and the reveal tip are the SLIDE's own
+   information, not the stage's — js/display.js moves them into the pinned drawer
+   so the stage is nothing but the sentence, and back into the stage below the
+   drawer breakpoint (where the panel is a hidden-while-idle sheet). Hence the
+   neutral names: these rules have to read right in both homes. */
+.slide-counter {
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1.4px;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 18px;
 }
-.stage-tip { color: var(--muted); font-style: italic; margin-top: 16px; }
+.stage > .slide-counter { margin-bottom: 18px; }
+/* The block owns its own gap from the sentence; the shared .type-badges rule's
+   own margin-top would otherwise double it. */
+.stage > .slide-info { margin-top: 16px; }
+.slide-info .type-badges { margin-top: 0; }
+.slide-tip { color: var(--muted); font-style: italic; }
+.slide-info .type-badges + .slide-tip { margin-top: 16px; }
 
 /* Key button reuses the pill "on" look so its pressed state reads at a glance. */
 .btn[data-act="key"].is-on { background: var(--accent-soft); border-color: var(--accent); color: var(--text); }
@@ -1041,10 +1090,24 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   animation: panel-in 0.2s ease both;
 }
 .present-panel[hidden] { display: none; }
+/* The counter is a permanent strip above the heading, not part of the swappable
+   body: it is the teacher's place in the passage, so it has to survive an open
+   explanation. flex:none keeps it off the body's scroll. */
+.present-slide-meta {
+  flex: none;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.present-slide-meta:empty { display: none; }
 .present-panel-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .present-panel-title { font-size: 16px; flex: 1 1 auto; min-width: 0; }
 .present-panel-body { flex: 1 1 auto; min-height: 0; overflow: auto; text-align: left; }
 .present-panel-body .ann-details-sub { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+/* In the drawer the info block reads as prose down the left edge, not as a
+   centred caption the way it does under the sentence on the stage. */
+.present-panel-body .slide-info { margin-bottom: 10px; }
+.present-panel-body .type-badges { justify-content: flex-start; }
 .legend-group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; }
 .legend-group + .legend-group { margin-top: 12px; }
 .legend-layer {
@@ -1067,14 +1130,30 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   gap: 18px;
   flex: none;
 }
+/* The dot strip is the only part of the rail that scrolls — Prev/Next stay
+   pinned to its ends. When the whole rail was the scroller, a lesson with enough
+   dots to outgrow it pushed ↓ Next off the bottom edge: the presenter's main
+   control, clipped inside a rail that still measured as on-screen.
+   nowrap because a second column of dots inside a 48px track isn't a fallback,
+   it's a break; the wrap belongs to the phone layout's horizontal row and is
+   restored in the <=640px block. With nowrap, align-content (wrap-only) retires
+   and align-items keeps the column on the rail's centre line.
+   Declared here rather than in the >=641px shell block above, because THIS rule
+   is later in the file and a media query adds no specificity — the properties
+   would have been silently overridden from here (they were, once). */
 .dots {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  align-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: safe center;
   gap: 4px;
-  justify-content: center;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
+.dots::-webkit-scrollbar { display: none; }
 /* The dot stays visually tiny (an 11px pseudo-element) but the button carries a
    40×40 hit target for touch and keyboard — the visible layout footprint doesn't
    grow, so the larger targets can't reintroduce overflow. */
@@ -1116,15 +1195,15 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
 }
 
 /* Full screen: the view leaves #app's centered column, so it supplies its own
-   backdrop and padding. It fills the screen; a breakdown taller than the screen
-   scrolls within the fullscreen element (there's no page to scroll behind it). */
+   backdrop and padding. Same model as the windowed shell — it fills the screen
+   and the stage card scrolls a too-tall breakdown. */
 .view-present.is-fullscreen {
   background: var(--bg);
   padding: 26px 40px;
   min-height: 0;
   height: 100vh;
   height: 100dvh;
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* ====================================================================
@@ -1266,12 +1345,26 @@ button.type-badge:hover { transform: translateY(-1px); background: color-mix(in 
   .hero p br { display: none; }
 
   /* Not enough width for a side rail: drop the switcher below the stage, laid
-     out horizontally again, and let the page scroll rather than the stage. The
-     shared panel returns to normal block flow instead of a fixed bottom sheet. */
+     out horizontally again, and let the page scroll rather than the stage (a
+     phone viewport can't spare the height to split between a stage and its
+     chrome). The shared panel returns to normal block flow instead of a fixed
+     bottom sheet. The >=641px shell rules — locked height, stage overflow,
+     pinned rail width — never apply here. */
   .view-present { min-height: 0; }
-  .present-main { flex-direction: column; }
+  /* The document is the scroller here, so the card must not clip or trap a tall
+     breakdown. Declared in this block rather than on the base .stage rule, which
+     sits after the >=641px shell and would override it at every size. */
   .stage { overflow: visible; }
+  .present-main { flex-direction: column; }
   .present-nav { flex-direction: row; margin-top: 4px; }
-  .dots { flex-direction: row; flex-wrap: wrap; }
+  /* Back to a wrapping horizontal strip that grows the page instead of scrolling
+     inside a rail — there is no rail down here. */
+  .dots {
+    flex: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
+  }
   .present-panel { position: static; max-height: none; margin-top: 12px; }
 }

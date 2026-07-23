@@ -46,10 +46,16 @@
       '  <button class="btn btn-sm" data-act="key" aria-pressed="false">🔑 Key</button>' +
       "</div>" +
       '<div class="present-main">' +
-      '  <section class="card stage" data-role="stage"></section>' +
-      // Key and every explanation share this one bounded, in-viewport panel
-      // (drawer beside the stage on wide screens, bottom sheet on narrow ones).
+      // The stage is the scroll container for a breakdown taller than the slide,
+      // so it is focusable and labelled — otherwise the overflow is mouse-only.
+      '  <section class="card stage" data-role="stage" tabindex="0" role="group"' +
+      '           aria-label="Sentence breakdown"></section>' +
+      // Key and every explanation share this one bounded, in-viewport panel: a
+      // drawer pinned open beside the stage on wide screens (idle state = this
+      // sentence's badges and the reveal tip), an on-demand bottom sheet on
+      // narrow ones. The counter strip above the heading survives either state.
       '  <aside class="present-panel card" data-role="panel" hidden aria-labelledby="present-panel-title">' +
+      '    <div class="present-slide-meta" data-role="slide-meta"></div>' +
       '    <div class="present-panel-head">' +
       '      <h3 class="present-panel-title" id="present-panel-title" data-role="panel-title" tabindex="-1"></h3>' +
       '      <button class="btn btn-sm" data-act="panel-close" aria-label="Close panel">✕</button>' +
@@ -74,6 +80,8 @@
     var panelEl = view.querySelector('[data-role="panel"]');
     var panelTitleEl = view.querySelector('[data-role="panel-title"]');
     var panelBodyEl = view.querySelector('[data-role="panel-body"]');
+    var panelMetaEl = view.querySelector('[data-role="slide-meta"]');
+    var panelCloseBtn = view.querySelector('[data-act="panel-close"]');
 
     // Key and every explanation share one bounded, in-viewport panel — only one
     // is active at a time. panelMode tracks which ("key" | "explain" | null);
@@ -81,10 +89,34 @@
     var panelMode = null;
     var panelTrigger = null;
 
-    // The current rendered sentence and its "turn on a level" tip. A layer
-    // toggle patches these in place (see applyVisible) instead of rebuilding.
+    // Wide screens keep the drawer pinned open — idle it shows a hint instead of
+    // vanishing. That stops the stage from re-wrapping the sentence every time a
+    // label is clicked, and gives the explanations a permanent home to land in.
+    // Below the drawer breakpoint the panel is an overlay bottom sheet, so it
+    // still opens on demand: pinning it there would cover half the slide.
+    var pinnedMq = window.matchMedia("(min-width: 1025px)");
+    function isPinned() { return pinnedMq.matches; }
+
+    // The current rendered sentence. A layer toggle patches it in place (see
+    // applyVisible) instead of rebuilding.
     var stageRender = null;
-    var tipEl = null;
+
+    // The slide's own information — which sentence this is, its type badges and
+    // teaching-note chip, and the "turn on a level" tip. These are LONG-LIVED
+    // nodes, refilled per sentence rather than rebuilt, because placeSlideInfo()
+    // moves them between two homes: the pinned drawer (so the stage is nothing
+    // but the sentence) and the stage itself (below the drawer breakpoint the
+    // panel is an on-demand sheet that is hidden while idle — info parked there
+    // would simply vanish).
+    var counterEl = document.createElement("div");
+    counterEl.className = "slide-counter";
+    var slideInfoEl = document.createElement("div");
+    slideInfoEl.className = "slide-info";
+    var tipEl = document.createElement("div");
+    tipEl.className = "slide-tip";
+    // No "above": the tip sits beside the chips in the drawer, below them in the
+    // stage. Direction-free wording reads right in both homes.
+    tipEl.textContent = "Turn on a level to reveal the breakdown.";
 
     function annsInLayer(annotations, layerId) {
       var n = 0;
@@ -148,7 +180,9 @@
       });
     }
 
-    function panelIsOpen() { return !panelEl.hidden; }
+    // "Open" means the panel is showing real content — the pinned drawer's idle
+    // hint doesn't count, so Escape falls through to the paging keys.
+    function panelIsOpen() { return panelMode !== null; }
 
     function syncKeyBtn() {
       var on = panelMode === "key";
@@ -172,19 +206,70 @@
       catch (e) { panelTitleEl.focus(); }
     }
 
-    // Close the panel. With restoreFocus, focus returns to the trigger when it is
-    // still on screen; sentence/route changes pass false because the trigger is
-    // being torn down.
+    // The pinned drawer's idle state: this sentence's badges and tip, plus the
+    // hint. Never takes focus itself — the first render must not pull focus off
+    // the page, and a close only ever hands focus back to its trigger.
+    function showSlideInfo() {
+      panelMode = null;
+      panelTitleEl.textContent = "Label details";
+      panelBodyEl.innerHTML = "";
+      panelBodyEl.appendChild(slideInfoEl);
+      var hint = document.createElement("p");
+      hint.className = "muted-note";
+      hint.textContent = "Click a label to see more.";
+      panelBodyEl.appendChild(hint);
+      panelEl.hidden = false;
+      syncKeyBtn();
+    }
+
+    // Put the counter and the info block in the home the current breakpoint
+    // wants. Pinned: the counter is a permanent strip above the panel heading
+    // (so it survives an open explanation) and the info block is the idle body.
+    // Unpinned: both live in the stage, counter first and info last, with the
+    // sentence between them. Called after every render and on every breakpoint
+    // change, so a mid-lesson resize relocates them instead of losing them.
+    function placeSlideInfo() {
+      if (isPinned()) {
+        panelMetaEl.appendChild(counterEl);
+        // slideInfoEl is placed by showSlideInfo(); while Key or an explanation
+        // owns the body it is detached — including when the breakpoint changes
+        // with content open, or it would linger in the stage.
+        if (panelMode === null) showSlideInfo();
+        else if (slideInfoEl.parentNode) slideInfoEl.parentNode.removeChild(slideInfoEl);
+      } else {
+        stageEl.insertBefore(counterEl, stageEl.firstChild);
+        stageEl.appendChild(slideInfoEl);
+      }
+    }
+
+    // Dismiss whatever the panel is showing: back to the slide info where the
+    // drawer is pinned, hidden where it's an overlay sheet. With restoreFocus, focus returns
+    // to the trigger when it is still on screen; sentence/route changes pass false
+    // because the trigger is being torn down.
     function closePanel(restoreFocus) {
       var t = panelTrigger;
-      var wasOpen = !panelEl.hidden;
-      panelEl.hidden = true;
-      panelMode = null;
+      var wasOpen = panelMode !== null;
+      if (isPinned()) showSlideInfo();
+      else {
+        panelEl.hidden = true;
+        panelMode = null;
+        syncKeyBtn();
+      }
       panelTrigger = null;
-      syncKeyBtn();
       if (wasOpen && restoreFocus && t && view.contains(t)) {
         try { t.focus({ preventScroll: true }); } catch (e) { /* trigger gone */ }
       }
+    }
+
+    // Keep the panel's chrome in step with the breakpoint. The ✕ is pointless on
+    // a pinned drawer (there is nothing to close it to but the slide info it
+    // already falls back to), and a focusable control that does nothing is worse
+    // than absent — so it's hidden, not just unstyled.
+    function syncPinned() {
+      panelCloseBtn.hidden = isPinned();
+      placeSlideInfo();                    // counter/badges move to this breakpoint's home
+      if (panelMode !== null) return;      // real content stays put either way
+      if (!isPinned()) panelEl.hidden = true;
     }
 
     // The Key legend for the current sentence + visible layers, or a hint when
@@ -259,7 +344,7 @@
       for (var i = 0; i < pills.length; i++) {
         pills[i].classList.toggle("is-on", visible.indexOf(pills[i].dataset.layer) !== -1);
       }
-      if (tipEl) tipEl.hidden = visible.length > 0;
+      tipEl.hidden = visible.length > 0;
       refreshKeyPanel();
     }
 
@@ -279,8 +364,11 @@
       // about the sentence as a whole, so it stays open and is refreshed below.
       if (panelMode === "explain") closePanel(false);
       renderChips();
-      stageEl.innerHTML =
-        '<div class="stage-counter">Sentence ' + (idx + 1) + " of " + lesson.sentences.length + "</div>";
+      // Safe to clear: counterEl and slideInfoEl are long-lived nodes held above,
+      // so this detaches them rather than destroying them, and placeSlideInfo()
+      // at the end puts them back in whichever home the breakpoint wants.
+      stageEl.innerHTML = "";
+      counterEl.textContent = "Sentence " + (idx + 1) + " of " + lesson.sentences.length;
       var sentence = lesson.sentences[idx];
       if (liveEl) {
         liveEl.textContent = "Sentence " + (idx + 1) + " of " +
@@ -297,25 +385,27 @@
         onAnnClick: function (ann, el, labelId) { showExplain(sentence, ann, labelId, el); },
       });
       stageRender = r;
+      // r.root's parent must stay the stage itself: the renderer measures
+      // root.parentNode.clientWidth to decide line breaks, so a shrink-to-fit
+      // wrapper here would hand it a bogus available width.
       stageEl.appendChild(r.root);
-      // Type badges and the note chip share one row; clicking any of them
-      // opens the explain card. The note stays a chip, not a printed line, so
-      // long teaching notes don't push the breakdown around.
+      // Refill the slide-info block for this sentence. Type badges and the note
+      // chip share one row; clicking any of them opens the explain card. The note
+      // stays a chip, not a printed line, so long teaching notes don't push the
+      // layout around. The tip is a persistent child so a layer toggle can
+      // show/hide it (applyVisible) without rebuilding anything.
+      slideInfoEl.innerHTML = "";
       var badges = wjt.renderTypeBadges(sentence, showTypeExplain);
       var noteChip = wjt.renderSentenceNote(sentence, function () { showNoteExplain(sentence); });
       if (badges || noteChip) {
         var row = badges || document.createElement("div");
         if (!badges) row.className = "type-badges";
         if (noteChip) row.appendChild(noteChip);
-        stageEl.appendChild(row);
+        slideInfoEl.appendChild(row);
       }
-      // The tip lives in the stage full-time so a toggle can show/hide it
-      // without touching the rest of the breakdown.
-      tipEl = document.createElement("div");
-      tipEl.className = "stage-tip";
-      tipEl.textContent = "Turn on a level above to reveal the breakdown.";
       tipEl.hidden = visible.length > 0;
-      stageEl.appendChild(tipEl);
+      slideInfoEl.appendChild(tipEl);
+      placeSlideInfo();
       refreshKeyPanel();
       renderDots();
     }
@@ -369,6 +459,14 @@
       // Escape closes the Key/explanation panel first and restores focus to its
       // trigger (before any Fullscreen-exit the browser might also do).
       if (e.key === "Escape" && panelIsOpen()) { closePanel(true); e.preventDefault(); return; }
+      // The stage is the scroll container for a breakdown taller than the slide.
+      // While it holds focus itself, Up/Down scroll it natively instead of paging
+      // — otherwise the overflow would be mouse-only. Measured at keypress time,
+      // so there's no layout-timing guesswork. Deliberately `=== stageEl`, not
+      // `contains`: tabbing to a label inside the stage still pages the lesson.
+      if ((e.key === "ArrowUp" || e.key === "ArrowDown") &&
+          document.activeElement === stageEl &&
+          stageEl.scrollHeight > stageEl.clientHeight + 1) return;
       // The switcher reads top-to-bottom now, so Up/Down page too, alongside
       // the original Left/Right. preventDefault keeps Up/Down from scrolling the
       // page out from under a presenter mid-lesson.
@@ -377,13 +475,19 @@
       if ((e.key === "f" || e.key === "F") && !fsBtn.hidden) toggleFullscreen();
     }
     document.addEventListener("keydown", onKey);
+    // Crossing the drawer breakpoint mid-lesson (a projector switch, a resize)
+    // has to settle the panel, or an idle drawer would linger as a bottom sheet
+    // covering the slide — or vanish from a layout that reserves room for it.
+    if (pinnedMq.addEventListener) pinnedMq.addEventListener("change", syncPinned);
     wjt.onViewCleanup(function () {
       document.removeEventListener("keydown", onKey);
+      if (pinnedMq.removeEventListener) pinnedMq.removeEventListener("change", syncPinned);
       document.removeEventListener("fullscreenchange", syncFsBtn);
       document.removeEventListener("webkitfullscreenchange", syncFsBtn);
       if (fsActive() && exitFs) exitFs.call(document);
     });
 
+    syncPinned();
     renderStage();
   };
 })();

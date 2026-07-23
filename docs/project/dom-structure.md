@@ -372,17 +372,23 @@ div.view.view-present   (.is-fullscreen when the Fullscreen API is active)
 │  └─ button[data-act=all|none|key]  "Show all" / "Hide all" / "🔑 Key"
 │                                     (key is aria-pressed, .is-on when the legend shows)
 ├─ div.present-main
-│  ├─ section.card.stage[data-role=stage]
-│  │  ├─ div.stage-counter "Sentence i of N"
-│  │  ├─ [ renderSentence root, size:lg; reserve: all lesson layers in breakdown,
-│  │  │    none in the clean phase (see below) ]
-│  │  ├─ [ div.type-badges, if any — structure/purpose badges + note chip ]
-│  │  └─ div.stage-tip              ← "Turn on a level…", hidden once a layer is on
-│  ├─ aside.present-panel.card[data-role=panel][hidden][aria-labelledby=present-panel-title]
+│  ├─ section.card.stage[data-role=stage][tabindex=0][role=group]
+│  │  │                          ← aria-label "Sentence breakdown"; it is the scroll
+│  │  │                            container ≥641px, so it is focusable
+│  │  ├─ [ div.slide-counter, div.slide-info — only ≤1024px; see "slide info" below ]
+│  │  └─ [ renderSentence root, size:lg; reserve: all lesson layers in breakdown,
+│  │       none in the clean phase (see below) ]
+│  ├─ aside.present-panel.card[data-role=panel][aria-labelledby=present-panel-title]
+│  │  │                          ← [hidden] only ≤1024px; ≥1025px it is pinned open
+│  │  ├─ div.present-slide-meta[data-role=slide-meta]
+│  │  │                          ← holds div.slide-counter while pinned; empty (and
+│  │  │                            display:none) otherwise
 │  │  ├─ div.present-panel-head
 │  │  │  ├─ h3.present-panel-title[data-role=panel-title][tabindex=-1]  ← focused on open
 │  │  │  └─ button[data-act=panel-close][aria-label="Close panel"] "✕"
-│  │  └─ div.present-panel-body[data-role=panel-body]  ← Key legend OR an explanation
+│  │  │                          ← [hidden] while the drawer is pinned
+│  │  └─ div.present-panel-body[data-role=panel-body]  ← Key legend, an explanation,
+│  │                                                     or the idle div.slide-info
 │  └─ nav.present-nav
 │     ├─ button[data-act=prev] "↑"
 │     ├─ div.dots[data-role=dots]  ← button.dot per sentence (.is-on = current;
@@ -394,6 +400,31 @@ div.view.view-present   (.is-fullscreen when the Fullscreen API is active)
                                                      renderStage() sets its text
 ```
 
+**The slide info has two homes.** "Sentence i of N" (`div.slide-counter`) and the
+badge/tip block below it —
+
+```
+div.slide-info
+├─ [ div.type-badges, if any — structure/purpose badges + the 📌 note chip ]
+└─ div.slide-tip     ← "Turn on a level…", hidden once a layer is on
+```
+
+— are **long-lived nodes** created once per view and refilled per sentence, not
+rebuilt. `placeSlideInfo()` moves them on every render and every breakpoint change:
+
+- **≥1025px (pinned):** the counter goes in `.present-slide-meta`, above the panel
+  heading, so it survives an open Key/explanation. `.slide-info` becomes the
+  drawer's idle body (`showSlideInfo()`), and is detached while Key or an
+  explanation owns the body. The stage then holds nothing but the sentence.
+- **≤1024px (unpinned):** both go back into the stage — counter first, sentence,
+  then `.slide-info` — because the panel is `hidden` while idle down here and
+  anything parked in it would simply disappear.
+
+`renderStage()` may still clear the stage with `innerHTML = ""`: that detaches
+these two nodes rather than destroying them, and `placeSlideInfo()` re-homes them.
+The sentence root's parent must stay `.stage` itself (no wrapper div) — `render.js`
+measures `root.parentNode.clientWidth` to decide line breaks.
+
 **Clean vs breakdown.** With no layers shown (the clean phase) `renderStage()`
 passes `reserve: visible` (nothing), so the sentence wraps naturally with no
 hidden annotation lanes. The first reveal enters breakdown (`reserve:
@@ -402,46 +433,75 @@ stable diagram. Crossing that 0↔N boundary rebuilds the stage (`renderStage`);
 toggles within breakdown are in-place patches (`applyVisible`/`setLayers`).
 
 **One shared panel.** Key and every explanation render into the single
-`.present-panel` (a drawer beside the stage on wide viewports, a bottom sheet at
-`max-width:1024px`), never a normal-flow block below the stage. Only one is active
-at a time (`panelMode` = `"key" | "explain" | null`). `showExplain()` (annotation),
+`.present-panel`, never a normal-flow block below the stage. Only one is active at
+a time (`panelMode` = `"key" | "explain" | null`). `showExplain()` (annotation),
 `showTypeExplain()` (sentence type) and `showNoteExplain()` (note chip) open it in
 explain mode (reusing the `.ann-details-*` family); the `🔑 Key` button toggles it
 in key mode (`wjt.renderLegend(currentSentence, visible)`). Opening focuses the
-panel heading (`preventScroll`); closing (the ✕, Escape, or a sentence/route
-change) restores focus to the triggering control when it still exists. Keyboard:
-↑/← prev, ↓/→ next, Escape closes the panel, `f` fullscreen.
+panel heading (`preventScroll`); dismissing it (Escape, the ✕ where shown, or a
+sentence/route change) restores focus to the triggering control when it still
+exists. Keyboard: ↑/← prev, ↓/→ next, Escape dismisses the panel, `f` fullscreen —
+except that ↑/↓ fall through to native scrolling while `.stage` itself holds focus
+and actually overflows, so a too-tall breakdown isn't mouse-only.
+
+**Where the panel rests depends on the breakpoint**, tracked in JS by
+`pinnedMq` / `isPinned()` (`matchMedia("(min-width: 1025px)")`) and settled by
+`syncPinned()` on first render and on every `change`:
+
+- **≥1025px — pinned drawer.** It sits beside the stage and is never hidden. Its
+  idle state is the heading `Label details` over this sentence's `.slide-info` and
+  a `.muted-note` hint ("Click a label to see more."), written by
+  `showSlideInfo()`; `closePanel()` returns it there instead of hiding. The
+  counter strip above the heading stays put in every state. The ✕ is `hidden`
+  (nothing to close *to*), which needs
+  `.btn[hidden]{display:none}` because `.btn`'s own `display` beats the UA rule.
+  Because the drawer is always in flow the stage width never changes when a label
+  is clicked, so the sentence doesn't re-wrap.
+- **≤1024px — on-demand bottom sheet.** The panel starts `hidden`, overlays the
+  lower part of the view when opened, and the ✕ is shown. Pinning it here would
+  cover half the slide. `showSlideInfo()` is never used in this state — the slide
+  info lives in the stage instead.
 
 The presentation shell (`css/styles.css`, `@media (min-width:641px)`) route-scopes
 via `:has(.view-present)`: it hides the global topbar and footer and makes
-`.view-present` a grid of `auto auto minmax(min-content,1fr)` rows by a
-`minmax(0,1fr)` column, at `min-height:100dvh`.
+`.view-present` a grid of `auto auto minmax(0,1fr)` rows by a `minmax(0,1fr)`
+column, at `height:100dvh; overflow:hidden`. `.stage` is the only scroller inside
+it, and in the sentence rail only `.dots` scrolls — Prev/Next are pinned to its
+ends. **Watch the source order in that stylesheet:** the base `.stage`, `.dots`
+and `.present-nav` rules sit *after* the `@media (min-width:641px)` shell block,
+and a media query adds no specificity, so a property declared in both is decided
+by position, not by the breakpoint. Both the stage's `overflow` and the dot
+strip's `flex-wrap` were silently reverted this way.
 
-**A slide that fits never scrolls; only a long one does.** The shell is sized so
-the page — not the stage — owns overflow:
+**The stage card owns the scroll; the page never moves.** The shell is sized so
+the chrome around the slide stays put:
 
-- `min-height:100dvh` + the `1fr` stage row means a breakdown shorter than the
-  viewport expands to fill it and centres like a slide, with nothing to scroll.
-  A breakdown taller than the viewport grows the row past one screen and the
-  **document** scrolls. `.stage` is therefore `overflow:visible` — it never
-  becomes its own scroll container (that inner scrollbar was the thing long
-  sentences got trapped in).
-- The **column is an explicit `minmax(0,1fr)`**. Now that `.stage` isn't a scroll
-  container, its min-content width is the whole *unwrapped* sentence; left
-  implicit, that intrinsic width would widen the column and hand the renderer a
-  bogus "available width", so nothing would ever wrap. Pinning the column gives
-  it the real width. `.present-main` carries `min-width:0` for the same reason.
+- `height:100dvh` + `overflow:hidden` + a `minmax(0,1fr)` stage row bound the row
+  to what's left after the header and control rows. A breakdown shorter than that
+  is centred like a slide (`justify-content: safe center`) with nothing to
+  scroll; a taller one scrolls inside `.stage` (`overflow:auto`), so the header,
+  layer chips, panel and sentence rail never scroll away mid-lesson.
+- `.stage` carries **`scrollbar-gutter: stable`**, which is load-bearing: the
+  renderer decides line breaks from this element's `clientWidth`
+  (`computeLines()`), so a scrollbar appearing only *after* layout would make
+  every line ~15px too wide. Reserving the gutter keeps the measured width honest.
+- The **column is an explicit `minmax(0,1fr)`** and `.present-main` carries
+  `min-width:0`: without them the stage's intrinsic min-content width (the whole
+  unwrapped sentence) would widen the column and hand the renderer a bogus
+  "available width", so nothing would ever wrap.
 - The **`.present-nav` rail is `position:absolute`** within `.present-main` (which
-  is `position:relative` and reserves `padding-right`). The rail is one dot per
-  sentence, so it's intrinsically taller than the slide on a long lesson; taking
-  it out of the row's height math keeps the **stage** the only thing that decides
-  whether the page grows. It scrolls within itself when it runs out of room.
-- Full screen (`.is-fullscreen`) keeps a fixed `100dvh` but uses `overflow:auto`,
-  so a too-tall breakdown scrolls inside the fullscreen element — there's no page
-  behind it to scroll.
+  is `position:relative`). Its width is pinned (`--nav-w: 48px`) and the reserved
+  `padding-right` is `calc(var(--nav-w) + 16px)`, so the panel→rail gutter equals
+  the 16px flex `gap` between stage and panel. The rail is one dot per sentence,
+  so it's intrinsically taller than the slide on a long lesson; being absolute
+  keeps it out of the row's height math, and it scrolls within itself.
+- Full screen (`.is-fullscreen`) is the same model — fixed `100dvh`,
+  `overflow:hidden`, the stage scrolling inside it.
 
-The `≤640px` phone breakpoint stacks the switcher below the stage and uses the
-same document-scroll model.
+The `≤640px` phone breakpoint is the exception: it stacks the switcher below the
+stage and keeps the **document**-scroll model (none of the shell's height lock,
+stage overflow, or pinned rail width apply), because a phone viewport can't spare
+the height to split between a stage and its chrome.
 
 ## Quiz view
 

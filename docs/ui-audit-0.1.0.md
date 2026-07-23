@@ -293,9 +293,9 @@ The original evidence above is preserved unchanged.
 
 | ID | Status | Notes |
 |---|---|---|
-| UI-1 | **Fixed** — but see [revision 2](#as-built-revision-2-2026-07-22--ui-1s-hard-lock-is-superseded) | Present is a `100dvh` grid shell (`auto auto minmax(0,1fr)`) that route-scopes via `:has(.view-present)`, hides the topbar/footer, and locks `html`/`body` to `overflow:hidden`. The stage owns any overflow; the page never scrolls. **Superseded:** the hard lock trapped long sentences in an inner stage scroller and masked a wrapping bug. The page now scrolls when — and only when — the breakdown is genuinely taller than the viewport. |
+| UI-1 | **Fixed** — but see [revision 2](#as-built-revision-2-2026-07-22--ui-1s-hard-lock-is-superseded) and [revision 3](#as-built-revision-3-2026-07-23--the-stage-owns-the-scroll-again) | Present is a `100dvh` grid shell (`auto auto minmax(0,1fr)`) that route-scopes via `:has(.view-present)`, hides the topbar/footer, and locks `html`/`body` to `overflow:hidden`. The stage owns any overflow; the page never scrolls. **Superseded (rev 2):** the hard lock trapped long sentences in an inner stage scroller and masked a wrapping bug, so the page scrolled instead. **Revised again (rev 3):** with the wrapping bug fixed at its source, the scroll moved back into `.stage` — but bounded per-card and gutter-reserved, not a `body` lock. |
 | UI-2 | **Fixed** | Clean phase reserves nothing (`reserve: visible`) → natural wrap, no hidden lanes; the first reveal enters breakdown (`reserve: lesson.layers`). The 0↔N crossing rebuilds; reveals within breakdown stay in-place. |
-| UI-3 | **Fixed** | Key and explanations share one bounded, in-viewport `.present-panel` (drawer ≥1025px, bottom sheet ≤1024px). Opens with focus on its heading, closes on ✕ / Escape / sentence / route change, restores focus to the trigger. |
+| UI-3 | **Fixed** — extended in [revision 3](#as-built-revision-3-2026-07-23--the-stage-owns-the-scroll-again) | Key and explanations share one bounded, in-viewport `.present-panel` (drawer ≥1025px, bottom sheet ≤1024px). Opens with focus on its heading, closes on ✕ / Escape / sentence / route change, restores focus to the trigger. **Rev 3:** the ≥1025px drawer is now pinned open on an idle hint rather than appearing and disappearing. |
 | UI-4 | **Fixed** | 1280px cap removed; Present uses `padding: 18px clamp(16px,3vw,48px)`. |
 | UI-5 | **Fixed** | Editor gained a visually hidden `h1`; programmatic `tabindex="-1"` focus loses only its default outline (`:not(:focus-visible)`), control focus rings intact. |
 | UI-6 | **Deferred** | The palette is already layer-grouped one level deep; tabs/search/recent/repeat-last are a follow-up order ([plans/006](../plans/006-palette-scale-followup.md)), not a release blocker. |
@@ -339,3 +339,78 @@ overflows, plus a check that the stage never becomes its own scroll container.
 Confirmed to have teeth: with the fit refinement disabled it fails at 115px
 overflow. **285 passed, 0 failed** at all four matrix sizes. The manual
 cross-browser pass above is still owed.
+
+### As built, revision 3 (2026-07-23) — the stage owns the scroll again
+
+Revision 2 gave the page back its scrollbar for two reasons. One was taste (an
+inner scroller read as "trapping" long sentences); the other was a real bug —
+`computeLines()` estimated line breaks from token widths alone, so lines ran off
+sideways *inside* the scroller, in silence. **The second reason is gone:** the
+renderer now lays out and measures (`layoutFitted`/`refineOverflow`), and the
+wrap-stress check measures `.gl-grid` overflow directly, so it keeps its teeth
+whether or not `.stage` scrolls.
+
+That leaves the taste call, and in use the page-scroll model has its own cost: a
+long breakdown scrolls the *chrome* away — the layer chips, the Key drawer and
+the sentence rail all leave the screen exactly when a teacher is mid-reveal.
+
+Decision (maintainer, 2026-07-23): **the stage card scrolls, the page never
+does** — but bounded per-card, not by locking `body`, and with the gutter
+reserved so the renderer can't be lied to about its width.
+
+| Change | Where |
+|---|---|
+| Shell is `height:100dvh; overflow:hidden` with a `minmax(0,1fr)` stage row, so the row is bounded by what's left under the header/controls. Fits → still centred like a slide (`justify-content: safe center`); taller → `.stage` scrolls (`overflow:auto`) and the chrome stays put. | `css/styles.css` |
+| `.stage { scrollbar-gutter: stable }`. Load-bearing, not cosmetic: `computeLines()` measures the stage's `clientWidth`, so a scrollbar that appears only *after* layout would make every line ~15px too wide. | `css/styles.css` |
+| Fullscreen matches the windowed model (`overflow:hidden`, stage scrolls). | `css/styles.css` |
+| The ≥1025px drawer is **pinned open**: idle it shows `Label details` over the slide's own info (see the follow-up below) + "Click a label to see more." (`showSlideInfo()`); `closePanel()` returns it there instead of hiding, and the ✕ is hidden because there is nothing to close *to*. Breakpoint state lives in `pinnedMq`/`isPinned()`/`syncPinned()`, re-settled on `change`. ≤1024px keeps the on-demand bottom sheet — pinning an overlay would cover half the slide. | `js/display.js` |
+| Side effect worth having: because the drawer is always in flow, the stage width no longer changes when a label is clicked, so the sentence never re-wraps mid-lesson (measured: 735.0px before and after opening the Key at 1280×720). | — |
+| `.present-nav` width is pinned (`--nav-w: 48px`) and `.present-main`'s reserved `padding-right` is `calc(var(--nav-w) + 16px)`, so the panel→rail gutter equals the stage→panel flex `gap`. Measured 16.00 / 16.00 at 1280×720 and 1920×1080 (it was ~10px against 16px). | `css/styles.css` |
+| **Bug found while verifying:** `.btn`'s own `display` beats the UA's `[hidden]{display:none}`, so a script-hidden button still painted — the drawer's ✕ did, and so would `⛶ Full screen` on a browser without the Fullscreen API. Added `.btn[hidden]{display:none}` (the same reason `.present-panel[hidden]` already existed). | `css/styles.css` |
+
+**Regression guard.** The old "stage never becomes its own scroll container"
+check is inverted — the stage must stay *within the viewport* while
+`noDocScroll()` still passes, which is the new contract. The panel checks now
+assert its resting state for the breakpoint (hint-visible vs hidden), that it
+takes no focus on first render, and that the ✕'s *computed display* matches
+(the `hidden` property alone couldn't see the bug above). **288 passed, 0
+failed** at 1280×720, 1024×768, 1366×768 and 1920×1080.
+
+**Not verified headlessly:** headless Edge draws zero-width overlay scrollbars
+(measured: reserved gutter 2px = the borders only, with `scrollbar-gutter`
+computing as `stable`), so the space-taking-scrollbar path — the one
+`scrollbar-gutter` exists for — needs the manual desktop-browser pass that is
+already owed above.
+
+#### Driving the real screen (2026-07-23) — three of rev 3's own bugs, and the aside earns its keep
+
+Rev 3 was verified by checks that passed while the screen was wrong. Presenting
+with it found four things; all are folded into rev 3 rather than a rev 4, since it
+had not shipped.
+
+| Found | Cause | Fix |
+|---|---|---|
+| **The stage never scrolled at all.** A breakdown taller than the slide was clipped by the shell's `overflow:hidden` with no way to reach it — the exact failure the revision existed to prevent. | Source order, not a missing rule. The shell sets `.stage{overflow:auto}` inside `@media (min-width:641px)`; the base `.stage` rule *later in the file* still ended `overflow:visible`. A media query adds no specificity, so the later rule won at every desktop size. | `overflow` removed from the base rule; the phone's `visible` model declared in the `<=640px` block where it belongs. |
+| **↓ Next was clipped off the bottom of the rail** on any lesson with enough dots to outgrow it — the presenter's main control, gone. | `.present-nav` itself was the scroller, so the buttons scrolled with the dots. | Only `.dots` scrolls (`flex:1 1 auto; min-height:0; overflow-y:auto`); Prev/Next are `flex:none` at the rail's ends. Declared on the *base* `.dots` rule — putting it in the shell block hit the same source-order trap, and did, once. |
+| **The rail arrows sat against the left edge** of their track. | Rev 3's own `.present-nav .btn-big{width:100%}`. `.btn` is an inline-flex box that never sets `justify-content`, which is invisible until a button is stretched. | `justify-content:center` on the rail buttons. |
+| The stage was a mouse-only scroller (WCAG 2.1.1), because ↑/↓ are captured for paging. | — | `.stage` is `tabindex="0" role="group"` with a focus ring; `onKey()` lets ↑/↓ through to native scrolling while the stage *itself* holds focus and actually overflows. `=== stageEl`, not `contains`, so tabbing to a label inside it still pages. |
+
+**And the drawer earned its keep.** With the drawer pinned open it was idling on a
+one-line hint while the stage — the thing a projector should maximise — spent three
+bands of vertical room on chrome. "Sentence i of N", the type badges + 📌 note chip,
+and the reveal tip moved into the aside: the counter as a permanent strip above the
+heading (so it survives an open explanation), the badges and tip as the drawer's
+idle body, replaced when a label is clicked. Below 1025px, where the panel is a
+sheet that is `hidden` while idle, they stay in the stage — `placeSlideInfo()` moves
+one set of long-lived nodes between the two homes on the `pinnedMq` change. The
+stage now holds the sentence and nothing else.
+
+**Regression guards, this time with teeth.** Verified by reintroducing each bug and
+watching the check go red: the stage's computed `overflow-y` matches the
+breakpoint, and a stage capped to 90px must actually take a `scrollTop` (the old
+`inViewport(stage)` check passed straight through the clipping bug); Prev and Next
+must each sit fully inside the rail's bounds; the rail buttons' computed
+`justify-content`; `stage.tabIndex`; and that the slide info is in exactly one
+home for the breakpoint — drawer or stage, never both, checked at rest and after a
+dismiss. **297 passed, 0 failed** at 1280×720, 1024×768, 1366×768 and 1920×1080,
+plus a screenshot pass at 1440×900 (pinned) and 900×700 (unpinned).

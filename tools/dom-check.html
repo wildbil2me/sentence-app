@@ -21,7 +21,8 @@
     - Presentation checks (9–10): drive the real Present and Quiz views and assert
       the slide-shell contract (UI audit 0.1.0) — no document overflow, stage/nav/
       controls/panel within the viewport, clean state reserves no hidden lanes,
-      Key panel focus + Escape restore, dot labels, and Practice question focus.
+      the detail panel's resting state for the breakpoint, Key panel focus +
+      Escape restore, dot labels, and Practice question focus.
       These need a sized window; pass --window-size=1280,720 (the 720p gate).
 
   Run it (the Git-Bash `>` redirect returns an EMPTY dump for this GUI process —
@@ -404,6 +405,17 @@
         stage.querySelectorAll(".gl-hidden").length === 0);
       check("UI-1: stage is within the viewport", inViewport(stage));
       check("UI-1: sentence nav is within the viewport", inViewport(view.querySelector(".present-nav")));
+      // The rail's own bounds passing is not enough: when the RAIL was the
+      // scroller, a lesson with enough dots to outgrow it pushed ↓ Next off the
+      // bottom, clipped inside a rail that still measured as in-viewport. Only
+      // the dot strip scrolls now, so both controls must be fully on screen.
+      ["prev", "next"].forEach(function (act) {
+        var b = view.querySelector('[data-act="' + act + '"]');
+        var nav = view.querySelector(".present-nav").getBoundingClientRect();
+        var r = b.getBoundingClientRect();
+        check("UI-1: the " + act + " control is not clipped by its rail",
+          inViewport(b) && r.top >= nav.top - 1 && r.bottom <= nav.bottom + 1);
+      });
       check("UI-1: reveal controls are within the viewport", inViewport(view.querySelector(".present-controls")));
 
       var dots = view.querySelectorAll(".dot");
@@ -434,28 +446,98 @@
       });
       check("UI-4: no wrapped line runs off sideways (worst overflow " + widest + "px)",
         runOff === 0);
-      // The page, not the stage, is the scroller once a breakdown outgrows the slide.
-      check("UI-1: the stage never becomes its own scroll container",
-        stage.scrollHeight <= stage.clientHeight + 1);
+      // The stage card, not the page, is the scroller: it stays bounded by the
+      // viewport however tall the breakdown gets (noDocScroll above proves the
+      // page didn't grow instead). UI-4 stays the guard that an inner scroller
+      // can't go back to hiding a sideways run-off.
+      check("UI-1: the stage stays bounded by the viewport and owns any overflow",
+        inViewport(stage));
+      // ...and "owns" has to mean it actually scrolls. inViewport() alone has no
+      // teeth: the shell is overflow:hidden, so a stage that ISN'T a scroll
+      // container is clipped by its parent and still passes. It shipped that way
+      // once — the base .stage rule sits after the >=641px shell block and its
+      // `overflow:visible` silently won. Assert the computed value, and then
+      // actually try to scroll it when there is something to scroll.
+      var shell = window.matchMedia("(min-width: 641px)").matches;
+      check("UI-1: the stage is a scroll container in the slide shell (shell=" + shell + ")",
+        (getComputedStyle(stage).overflowY === "auto") === shell);
+      // Force the overflow case rather than hoping the sample breakdown is taller
+      // than this particular window: cap the card and it must become scrollable.
+      // This is the check with teeth — with overflow:visible back on .stage the
+      // content is clipped by the shell instead and scrollTop stays 0.
+      var capped = stage.style.maxHeight;
+      stage.style.maxHeight = "90px";
+      var canScroll = stage.scrollHeight > stage.clientHeight + 1;
+      stage.scrollTop = 9999;
+      var moved = stage.scrollTop;
+      stage.style.maxHeight = capped;
+      stage.scrollTop = 0;
+      check("UI-1: a capped stage scrolls instead of clipping (scrollTop " + moved + ")",
+        !shell || (canScroll && moved > 0));
+      // A scroll container that only a mouse can reach fails WCAG 2.1.1, so the
+      // stage is focusable and Up/Down fall through to it while it holds focus.
+      check("UI-1: the stage is keyboard-reachable", stage.tabIndex === 0);
+      // In the shell the rail buttons are stretched to the track width; .btn is an
+      // inline-flex box with no justify-content of its own, so without this the
+      // arrow glyph sits against the left edge.
+      check("UI-1: rail arrows are centred in their track",
+        !shell || getComputedStyle(view.querySelector('[data-act="prev"]')).justifyContent === "center");
 
-      // 9c. Key panel opens inside the viewport, takes focus, Escape closes and
-      //     restores focus to the Key button.
+      // 9c. The shared detail panel. At >=1025px it is a drawer pinned open on an
+      //     idle hint; below that, an on-demand bottom sheet. Either way the Key
+      //     button fills it inside the viewport and takes focus, and Escape
+      //     dismisses it to its resting state with focus back on the trigger.
+      var pinned = window.matchMedia("(min-width: 1025px)").matches;
       var keyBtn = view.querySelector('[data-act="key"]');
-      keyBtn.click();
       var panel = view.querySelector('[data-role="panel"]');
       var panelTitle = view.querySelector('[data-role="panel-title"]');
+      var panelClose = view.querySelector('[data-act="panel-close"]');
+      // Resting: visible-with-hint where pinned, hidden where it's an overlay.
+      function atRest(tag) {
+        check("UI-3: panel is at rest " + tag + " (pinned=" + pinned + ")",
+          pinned ? (!panel.hidden && panelTitle.textContent === "Label details")
+                 : panel.hidden);
+      }
+      atRest("before any interaction");
+      check("UI-3: the panel takes no focus on first render",
+        document.activeElement !== panelTitle);
+      // The slide's own info — counter, type badges, reveal tip — has exactly one
+      // home: the pinned drawer, so the stage is nothing but the sentence; or the
+      // stage itself below that breakpoint, where the panel is hidden while idle
+      // and would swallow it. Never both, never neither.
+      function slideInfoHome(tag) {
+        var inPanel = !!panel.querySelector(".slide-counter") && !!panel.querySelector(".slide-info");
+        var inStage = !!stage.querySelector(".slide-counter") && !!stage.querySelector(".slide-info");
+        check("UI-1: slide info is in the " + (pinned ? "drawer" : "stage") + " " + tag,
+          pinned ? (inPanel && !inStage) : (inStage && !inPanel));
+      }
+      slideInfoHome("at rest");
+      // Computed display, not just the property: .btn sets its own display, which
+      // beats the UA's [hidden]{display:none} — the ✕ stayed painted until
+      // .btn[hidden] was added, and the property alone can't see that.
+      check("UI-3: the pinned drawer hides its redundant ✕",
+        (getComputedStyle(panelClose).display === "none") === pinned);
+
+      keyBtn.click();
       check("UI-3: Key panel is visible when open", !panel.hidden);
       check("UI-3: open Key panel is within the viewport", inViewport(panel));
       noDocScroll("(Key open)");
+      // The counter is a strip above the heading, not part of the swappable body:
+      // it is the teacher's place in the passage, so open content must not take it
+      // away. (The badges/tip DO get swapped out — that's the point of the drawer.)
+      check("UI-3: the counter survives open panel content",
+        pinned ? !!panel.querySelector(".slide-counter") : !!stage.querySelector(".slide-counter"));
       if (document.activeElement === panelTitle) {
         check("UI-3: opening the Key panel moves focus to its heading", true);
         key(document, { key: "Escape" });
-        check("UI-3: Escape closes the panel", panel.hidden);
+        atRest("after Escape");
+        slideInfoHome("after Escape");
         check("UI-3: closing restores focus to the Key button", document.activeElement === keyBtn);
       } else {
         check("UI-3: panel focus NOT EXERCISED (headless focus unavailable)", true);
         keyBtn.click();
-        check("UI-3: clicking Key again closes the panel", panel.hidden);
+        atRest("after a second Key click");
+        slideInfoHome("after a second Key click");
       }
 
       // 9d. Route-away removes the shell state and restores document scrolling.
