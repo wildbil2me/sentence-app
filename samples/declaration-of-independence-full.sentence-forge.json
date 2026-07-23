@@ -2,7 +2,7 @@
   "format": "sentence-forge-lesson",
   "version": 1,
   "title": "The Declaration of Independence — Full Analysis",
-  "description": "The first three sentences of the 1776 Declaration, tagged at every layer the app supports: parts of speech, sentence parts, phrases, clauses, and the structure/purpose badges. A companion to the parts-of-speech-only “Opening” lesson — same text, the full loadout. Jefferson's long periodic sentences make the clause and phrase nesting a genuine stress test of the presentation view.",
+  "description": "The first three sentences of the 1776 Declaration, tagged exhaustively at every layer the app supports: parts of speech, sentence parts (simple and complete subjects and predicates, objects, complements), phrases (every prepositional, noun, verb, infinitive, and participial phrase, nested), clauses, and the structure/purpose badges. A companion to the parts-of-speech-only “Opening” lesson — same text, the full loadout. Jefferson's long periodic sentences make the clause and phrase nesting a genuine stress test of the presentation view.",
   "layers": [
     "pos",
     "part",
@@ -367,12 +367,24 @@
           "start": 36,
           "end": 38,
           "label": "simple-subject",
-          "note": "The anticipatory “it” — the grammatical subject of the introductory clause."
+          "note": "The anticipatory “it” — grammatical subject of the introductory clause."
+        },
+        {
+          "start": 36,
+          "end": 38,
+          "label": "complete-subject",
+          "note": "No modifiers, so the complete subject is just “it.”"
         },
         {
           "start": 39,
           "end": 46,
           "label": "simple-predicate"
+        },
+        {
+          "start": 39,
+          "end": 281,
+          "label": "complete-predicate",
+          "note": "Everything the introductory clause asserts about “it.”"
         },
         {
           "start": 47,
@@ -381,15 +393,85 @@
           "note": "Follows the linking verb “becomes” and describes “it.”"
         },
         {
+          "start": 8,
+          "end": 35,
+          "label": "object-of-preposition",
+          "note": "Object of “in.”"
+        },
+        {
+          "start": 22,
+          "end": 35,
+          "label": "object-of-preposition",
+          "note": "Object of “of.”"
+        },
+        {
+          "start": 61,
+          "end": 71,
+          "label": "object-of-preposition",
+          "note": "Object of “for” — the doer of the two infinitives."
+        },
+        {
+          "start": 84,
+          "end": 103,
+          "label": "direct-object",
+          "note": "What it becomes necessary “to dissolve.”"
+        },
+        {
+          "start": 164,
+          "end": 188,
+          "label": "object-of-preposition",
+          "note": "Object of “among.”"
+        },
+        {
+          "start": 178,
+          "end": 188,
+          "label": "object-of-preposition",
+          "note": "Object of “of.”"
+        },
+        {
+          "start": 189,
+          "end": 219,
+          "label": "direct-object",
+          "note": "What it becomes necessary “to assume.”"
+        },
+        {
           "start": 104,
           "end": 109,
           "label": "simple-subject",
           "note": "The relative pronoun is the subject of its own clause."
         },
         {
+          "start": 104,
+          "end": 109,
+          "label": "complete-subject"
+        },
+        {
           "start": 110,
           "end": 124,
           "label": "simple-predicate"
+        },
+        {
+          "start": 110,
+          "end": 143,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 125,
+          "end": 129,
+          "label": "direct-object",
+          "note": "Object of “connected.”"
+        },
+        {
+          "start": 135,
+          "end": 143,
+          "label": "object-of-preposition",
+          "note": "Object of “with.”"
+        },
+        {
+          "start": 223,
+          "end": 228,
+          "label": "object-of-preposition",
+          "note": "Object of the fronted preposition “to.”"
         },
         {
           "start": 229,
@@ -408,6 +490,29 @@
           "label": "simple-predicate"
         },
         {
+          "start": 268,
+          "end": 281,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 276,
+          "end": 281,
+          "label": "direct-object",
+          "note": "Object of “entitle.”"
+        },
+        {
+          "start": 241,
+          "end": 247,
+          "label": "object-of-preposition",
+          "note": "Object of “of.”"
+        },
+        {
+          "start": 255,
+          "end": 267,
+          "label": "object-of-preposition",
+          "note": "Object of the second “of.”"
+        },
+        {
           "start": 282,
           "end": 325,
           "label": "complete-subject",
@@ -420,13 +525,31 @@
         },
         {
           "start": 326,
+          "end": 334,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 326,
           "end": 406,
           "label": "complete-predicate"
         },
         {
-          "start": 326,
-          "end": 334,
-          "label": "simple-predicate"
+          "start": 335,
+          "end": 406,
+          "label": "direct-object",
+          "note": "The noun clause is the object of “requires.”"
+        },
+        {
+          "start": 302,
+          "end": 325,
+          "label": "object-of-preposition",
+          "note": "Object of “to.”"
+        },
+        {
+          "start": 318,
+          "end": 325,
+          "label": "object-of-preposition",
+          "note": "Object of “of.”"
         },
         {
           "start": 340,
@@ -434,25 +557,19 @@
           "label": "simple-subject"
         },
         {
+          "start": 340,
+          "end": 344,
+          "label": "complete-subject"
+        },
+        {
           "start": 345,
           "end": 359,
           "label": "simple-predicate"
         },
         {
-          "start": 371,
-          "end": 376,
-          "label": "simple-subject"
-        },
-        {
-          "start": 377,
-          "end": 382,
-          "label": "simple-predicate"
-        },
-        {
-          "start": 84,
-          "end": 103,
-          "label": "direct-object",
-          "note": "What it becomes necessary “to dissolve.”"
+          "start": 345,
+          "end": 406,
+          "label": "complete-predicate"
         },
         {
           "start": 360,
@@ -461,14 +578,36 @@
           "note": "The object of “declare.”"
         },
         {
-          "start": 318,
-          "end": 325,
-          "label": "object-of-preposition"
+          "start": 371,
+          "end": 376,
+          "label": "simple-subject"
+        },
+        {
+          "start": 371,
+          "end": 376,
+          "label": "complete-subject"
+        },
+        {
+          "start": 377,
+          "end": 382,
+          "label": "simple-predicate"
+        },
+        {
+          "start": 377,
+          "end": 406,
+          "label": "complete-predicate"
+        },
+        {
+          "start": 383,
+          "end": 387,
+          "label": "direct-object",
+          "note": "Object of “impel.”"
         },
         {
           "start": 391,
           "end": 406,
-          "label": "object-of-preposition"
+          "label": "object-of-preposition",
+          "note": "Object of “to.”"
         },
         {
           "start": 5,
@@ -477,9 +616,35 @@
           "note": "Tells when it becomes necessary."
         },
         {
+          "start": 8,
+          "end": 35,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 8,
+          "end": 18,
+          "label": "noun-phrase"
+        },
+        {
           "start": 19,
           "end": 35,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 22,
+          "end": 35,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 57,
+          "end": 71,
+          "label": "prepositional-phrase",
+          "note": "Names the doer of the following infinitives."
+        },
+        {
+          "start": 61,
+          "end": 71,
+          "label": "noun-phrase"
         },
         {
           "start": 72,
@@ -509,13 +674,69 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 164,
+          "end": 188,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 164,
+          "end": 174,
+          "label": "noun-phrase"
+        },
+        {
           "start": 175,
           "end": 188,
           "label": "prepositional-phrase"
         },
         {
+          "start": 178,
+          "end": 188,
+          "label": "noun-phrase"
+        },
+        {
           "start": 189,
           "end": 219,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 220,
+          "end": 228,
+          "label": "prepositional-phrase",
+          "note": "A fronted (pied-piped) prepositional phrase — “to which … God entitle them.”"
+        },
+        {
+          "start": 229,
+          "end": 267,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 229,
+          "end": 237,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 238,
+          "end": 247,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 252,
+          "end": 267,
+          "label": "prepositional-phrase"
+        },
+        {
+          "start": 255,
+          "end": 267,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 282,
+          "end": 325,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 282,
+          "end": 298,
           "label": "noun-phrase"
         },
         {
@@ -524,14 +745,46 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 302,
+          "end": 325,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 302,
+          "end": 314,
+          "label": "noun-phrase"
+        },
+        {
           "start": 315,
           "end": 325,
           "label": "prepositional-phrase"
         },
         {
+          "start": 110,
+          "end": 124,
+          "label": "verb-phrase",
+          "note": "Helping verb “have” plus the participle “connected.”"
+        },
+        {
+          "start": 345,
+          "end": 359,
+          "label": "verb-phrase",
+          "note": "Modal “should” plus the verb “declare.”"
+        },
+        {
+          "start": 360,
+          "end": 370,
+          "label": "noun-phrase"
+        },
+        {
           "start": 388,
           "end": 406,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 391,
+          "end": 406,
+          "label": "noun-phrase"
         },
         {
           "start": 0,
@@ -758,14 +1011,19 @@
           "label": "simple-subject"
         },
         {
-          "start": 3,
-          "end": 40,
-          "label": "complete-predicate"
+          "start": 0,
+          "end": 2,
+          "label": "complete-subject"
         },
         {
           "start": 3,
           "end": 7,
           "label": "simple-predicate"
+        },
+        {
+          "start": 3,
+          "end": 40,
+          "label": "complete-predicate"
         },
         {
           "start": 8,
@@ -785,9 +1043,19 @@
           "label": "simple-subject"
         },
         {
+          "start": 46,
+          "end": 53,
+          "label": "complete-subject"
+        },
+        {
           "start": 54,
           "end": 65,
           "label": "simple-predicate"
+        },
+        {
+          "start": 54,
+          "end": 72,
+          "label": "complete-predicate"
         },
         {
           "start": 66,
@@ -800,9 +1068,19 @@
           "label": "simple-subject"
         },
         {
+          "start": 78,
+          "end": 82,
+          "label": "complete-subject"
+        },
+        {
           "start": 83,
           "end": 94,
           "label": "simple-predicate"
+        },
+        {
+          "start": 83,
+          "end": 144,
+          "label": "complete-predicate"
         },
         {
           "start": 98,
@@ -818,12 +1096,24 @@
           "start": 166,
           "end": 209,
           "label": "compound-subject",
-          "note": "Three subjects sharing the verb “are”; the clause is inverted (“… are Life, Liberty …”)."
+          "note": "Three subjects sharing the verb “are.” The clause is inverted (“… are Life, Liberty …”), so it takes a simple predicate but no clean complete predicate."
         },
         {
           "start": 162,
           "end": 165,
           "label": "simple-predicate"
+        },
+        {
+          "start": 156,
+          "end": 161,
+          "label": "object-of-preposition",
+          "note": "Object of “among.”"
+        },
+        {
+          "start": 199,
+          "end": 209,
+          "label": "object-of-preposition",
+          "note": "Object of “of.”"
         },
         {
           "start": 8,
@@ -835,6 +1125,11 @@
           "end": 40,
           "label": "infinitive-phrase",
           "note": "Acts as the complement of “these truths.”"
+        },
+        {
+          "start": 46,
+          "end": 53,
+          "label": "noun-phrase"
         },
         {
           "start": 54,
@@ -853,6 +1148,11 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 98,
+          "end": 111,
+          "label": "noun-phrase"
+        },
+        {
           "start": 112,
           "end": 144,
           "label": "prepositional-phrase"
@@ -868,8 +1168,19 @@
           "label": "prepositional-phrase"
         },
         {
+          "start": 166,
+          "end": 209,
+          "label": "noun-phrase",
+          "note": "A compound noun phrase — three coordinated nouns."
+        },
+        {
           "start": 184,
           "end": 209,
+          "label": "noun-phrase"
+        },
+        {
+          "start": 184,
+          "end": 195,
           "label": "noun-phrase"
         },
         {
@@ -1013,14 +1324,19 @@
           "label": "simple-subject"
         },
         {
-          "start": 41,
-          "end": 127,
-          "label": "complete-predicate"
+          "start": 29,
+          "end": 40,
+          "label": "complete-subject"
         },
         {
           "start": 41,
           "end": 55,
           "label": "simple-predicate"
+        },
+        {
+          "start": 41,
+          "end": 127,
+          "label": "complete-predicate"
         },
         {
           "start": 15,
@@ -1047,7 +1363,8 @@
         {
           "start": 114,
           "end": 127,
-          "label": "object-of-preposition"
+          "label": "object-of-preposition",
+          "note": "Object of the second “of.”"
         },
         {
           "start": 5,
@@ -1093,9 +1410,19 @@
           "label": "noun-phrase"
         },
         {
+          "start": 99,
+          "end": 110,
+          "label": "noun-phrase"
+        },
+        {
           "start": 111,
           "end": 127,
           "label": "prepositional-phrase"
+        },
+        {
+          "start": 114,
+          "end": 127,
+          "label": "noun-phrase"
         },
         {
           "start": 0,

@@ -1383,16 +1383,23 @@
    * A companion to buildDeclaration above: the SAME opening sentences,
    * but tagged at every layer the app supports — parts of speech,
    * sentence parts, phrases, clauses, and the sentence-type badges —
-   * rather than the word layer alone. These three periodic sentences
-   * are syntactically dense (sentence 1 nests two relative clauses and
-   * a noun clause inside a long introductory adverbial clause), so the
-   * clause and part spans reflect defensible choices, not the only ones.
-   * Kept short on purpose: three sentences is already a heavy display.
+   * rather than the word layer alone. Coverage is exhaustive: every
+   * multi-word phrase is tagged (nested), every preposition has its
+   * object, and every clause carries a simple AND complete subject and
+   * predicate. The one exception is the inverted clause in sentence 2
+   * ("that among these are Life, Liberty …"), whose compound subject
+   * follows the verb, so it takes a compound subject and a simple
+   * predicate but no clean complete predicate.
+   * These three periodic sentences are syntactically dense (sentence 1
+   * nests two relative clauses and a noun clause inside a long
+   * introductory adverbial clause), so the clause and part spans reflect
+   * defensible choices, not the only ones. Kept to three sentences on
+   * purpose: fully tagged, this is already a very heavy display.
    * ================================================================ */
   function buildDeclarationFull() {
     return make(
       "The Declaration of Independence — Full Analysis",
-      "The first three sentences of the 1776 Declaration, tagged at every layer the app supports: parts of speech, sentence parts, phrases, clauses, and the structure/purpose badges. A companion to the parts-of-speech-only “Opening” lesson — same text, the full loadout. Jefferson's long periodic sentences make the clause and phrase nesting a genuine stress test of the presentation view.",
+      "The first three sentences of the 1776 Declaration, tagged exhaustively at every layer the app supports: parts of speech, sentence parts (simple and complete subjects and predicates, objects, complements), phrases (every prepositional, noun, verb, infinitive, and participial phrase, nested), clauses, and the structure/purpose badges. A companion to the parts-of-speech-only “Opening” lesson — same text, the full loadout. Jefferson's long periodic sentences make the clause and phrase nesting a genuine stress test of the presentation view.",
       [
         sentence("When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.", [
           /* -- parts of speech -- */
@@ -1467,40 +1474,92 @@
           ["separation.", "noun"],
 
           /* -- sentence parts -- */
-          ["it", "simple-subject", "The anticipatory “it” — the grammatical subject of the introductory clause."],
+          /* clause 1 — adverbial "When … entitle them," */
+          ["it", "simple-subject", "The anticipatory “it” — grammatical subject of the introductory clause."],
+          ["it", "complete-subject", "No modifiers, so the complete subject is just “it.”"],
           ["becomes", "simple-predicate"],
+          ["becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them,", "complete-predicate", "Everything the introductory clause asserts about “it.”"],
           ["necessary", "predicate-adjective", "Follows the linking verb “becomes” and describes “it.”"],
+          ["the Course of human events,", "object-of-preposition", "Object of “in.”"],
+          ["human events,", "object-of-preposition", "Object of “of.”"],
+          ["one people", "object-of-preposition", "Object of “for” — the doer of the two infinitives."],
+          ["the political bands", "direct-object", "What it becomes necessary “to dissolve.”"],
+          ["the powers of the earth,", "object-of-preposition", "Object of “among.”"],
+          ["the earth,", "object-of-preposition", "Object of “of.”"],
+          ["the separate and equal station", "direct-object", "What it becomes necessary “to assume.”"],
+          /* clause 2 — relative "which have connected them with another," */
           ["which", "simple-subject", "The relative pronoun is the subject of its own clause.", 1],
+          ["which", "complete-subject", "", 1],
           ["have connected", "simple-predicate"],
+          ["have connected them with another,", "complete-predicate"],
+          ["them", "direct-object", "Object of “connected.”", 1],
+          ["another,", "object-of-preposition", "Object of “with.”"],
+          /* clause 3 — relative "to which … entitle them," */
+          ["which", "object-of-preposition", "Object of the fronted preposition “to.”", 2],
           ["the Laws of Nature and of Nature's God", "complete-subject", "The subject of the “to which … entitle” clause."],
           ["Laws", "simple-subject"],
           ["entitle", "simple-predicate"],
+          ["entitle them,", "complete-predicate"],
+          ["them,", "direct-object", "Object of “entitle.”"],
+          ["Nature", "object-of-preposition", "Object of “of.”", 1],
+          ["Nature's God", "object-of-preposition", "Object of the second “of.”"],
+          /* clause 4 — independent (the main clause) */
           ["a decent respect to the opinions of mankind", "complete-subject", "The full subject of the main clause."],
           ["respect", "simple-subject"],
-          ["requires that they should declare the causes which impel them to the separation.", "complete-predicate"],
           ["requires", "simple-predicate"],
+          ["requires that they should declare the causes which impel them to the separation.", "complete-predicate"],
+          ["that they should declare the causes which impel them to the separation.", "direct-object", "The noun clause is the object of “requires.”"],
+          ["the opinions of mankind", "object-of-preposition", "Object of “to.”"],
+          ["mankind", "object-of-preposition", "Object of “of.”"],
+          /* clause 5 — noun clause "that they should declare …" */
           ["they", "simple-subject"],
+          ["they", "complete-subject"],
           ["should declare", "simple-predicate"],
-          ["which", "simple-subject", "", 3],
-          ["impel", "simple-predicate"],
-          ["the political bands", "direct-object", "What it becomes necessary “to dissolve.”"],
+          ["should declare the causes which impel them to the separation.", "complete-predicate"],
           ["the causes", "direct-object", "The object of “declare.”"],
-          ["mankind", "object-of-preposition"],
-          ["the separation.", "object-of-preposition"],
+          /* clause 6 — relative "which impel them to the separation." */
+          ["which", "simple-subject", "", 3],
+          ["which", "complete-subject", "", 3],
+          ["impel", "simple-predicate"],
+          ["impel them to the separation.", "complete-predicate"],
+          ["them", "direct-object", "Object of “impel.”", 3],
+          ["the separation.", "object-of-preposition", "Object of “to.”"],
 
-          /* -- phrases -- */
+          /* -- phrases (every constituent, nested) -- */
           ["in the Course of human events,", "prepositional-phrase", "Tells when it becomes necessary."],
+          ["the Course of human events,", "noun-phrase"],
+          ["the Course", "noun-phrase"],
           ["of human events,", "prepositional-phrase"],
+          ["human events,", "noun-phrase"],
+          ["for one people", "prepositional-phrase", "Names the doer of the following infinitives."],
+          ["one people", "noun-phrase"],
           ["to dissolve the political bands", "infinitive-phrase", "The first of two parallel infinitive phrases."],
           ["the political bands", "noun-phrase"],
           ["with another,", "prepositional-phrase"],
           ["to assume among the powers of the earth, the separate and equal station", "infinitive-phrase", "The second parallel infinitive — its object “the station” trails the phrase."],
           ["among the powers of the earth,", "prepositional-phrase"],
+          ["the powers of the earth,", "noun-phrase"],
+          ["the powers", "noun-phrase"],
           ["of the earth,", "prepositional-phrase"],
+          ["the earth,", "noun-phrase"],
           ["the separate and equal station", "noun-phrase"],
+          ["to which", "prepositional-phrase", "A fronted (pied-piped) prepositional phrase — “to which … God entitle them.”"],
+          ["the Laws of Nature and of Nature's God", "noun-phrase"],
+          ["the Laws", "noun-phrase"],
+          ["of Nature", "prepositional-phrase"],
+          ["of Nature's God", "prepositional-phrase"],
+          ["Nature's God", "noun-phrase"],
+          ["a decent respect to the opinions of mankind", "noun-phrase"],
+          ["a decent respect", "noun-phrase"],
           ["to the opinions of mankind", "prepositional-phrase"],
+          ["the opinions of mankind", "noun-phrase"],
+          ["the opinions", "noun-phrase"],
           ["of mankind", "prepositional-phrase"],
+          ["have connected", "verb-phrase", "Helping verb “have” plus the participle “connected.”"],
+          ["should declare", "verb-phrase", "Modal “should” plus the verb “declare.”"],
+          ["the causes", "noun-phrase"],
           ["to the separation.", "prepositional-phrase"],
+          ["the separation.", "noun-phrase"],
 
           /* -- clauses -- */
           ["When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them,", "adverbial-clause", "The long introductory clause telling when the main statement holds."],
@@ -1550,31 +1609,46 @@
           ["Happiness.", "noun"],
 
           /* -- sentence parts -- */
+          /* clause 1 — independent "We hold these truths to be self-evident," */
           ["We", "simple-subject"],
-          ["hold these truths to be self-evident,", "complete-predicate"],
+          ["We", "complete-subject"],
           ["hold", "simple-predicate"],
+          ["hold these truths to be self-evident,", "complete-predicate"],
           ["these truths", "direct-object", "What “we hold.”"],
           ["self-evident,", "object-complement", "Describes “these truths” — what we hold them to be."],
+          /* clause 2 — noun "that all men are created equal," */
           ["men", "simple-subject"],
+          ["all men", "complete-subject"],
           ["are created", "simple-predicate"],
+          ["are created equal,", "complete-predicate"],
           ["equal,", "predicate-adjective"],
+          /* clause 3 — noun "that they are endowed …" */
           ["they", "simple-subject"],
+          ["they", "complete-subject"],
           ["are endowed", "simple-predicate"],
+          ["are endowed by their Creator with certain unalienable Rights,", "complete-predicate"],
           ["their Creator", "object-of-preposition"],
           ["certain unalienable Rights,", "object-of-preposition"],
-          ["Life, Liberty and the pursuit of Happiness.", "compound-subject", "Three subjects sharing the verb “are”; the clause is inverted (“… are Life, Liberty …”)."],
+          /* clause 4 — noun "that among these are Life, Liberty …" (inverted) */
+          ["Life, Liberty and the pursuit of Happiness.", "compound-subject", "Three subjects sharing the verb “are.” The clause is inverted (“… are Life, Liberty …”), so it takes a simple predicate but no clean complete predicate."],
           ["are", "simple-predicate", "", 3],
+          ["these", "object-of-preposition", "Object of “among.”", 2],
+          ["Happiness.", "object-of-preposition", "Object of “of.”"],
 
-          /* -- phrases -- */
+          /* -- phrases (every constituent, nested) -- */
           ["these truths", "noun-phrase"],
           ["to be self-evident,", "infinitive-phrase", "Acts as the complement of “these truths.”"],
+          ["all men", "noun-phrase"],
           ["are created", "verb-phrase", "Passive voice — helping verb “are” plus the participle “created.”"],
           ["are endowed", "verb-phrase"],
           ["by their Creator", "prepositional-phrase"],
+          ["their Creator", "noun-phrase"],
           ["with certain unalienable Rights,", "prepositional-phrase"],
           ["certain unalienable Rights,", "noun-phrase"],
           ["among these", "prepositional-phrase"],
+          ["Life, Liberty and the pursuit of Happiness.", "noun-phrase", "A compound noun phrase — three coordinated nouns."],
           ["the pursuit of Happiness.", "noun-phrase"],
+          ["the pursuit", "noun-phrase"],
           ["of Happiness.", "prepositional-phrase"],
 
           /* -- clauses -- */
@@ -1608,16 +1682,18 @@
           ["governed.", "noun", "“the governed” — an adjective used as a noun."],
 
           /* -- sentence parts -- */
+          /* one independent clause */
           ["Governments", "simple-subject"],
-          ["are instituted among Men, deriving their just powers from the consent of the governed.", "complete-predicate"],
+          ["Governments", "complete-subject"],
           ["are instituted", "simple-predicate"],
+          ["are instituted among Men, deriving their just powers from the consent of the governed.", "complete-predicate"],
           ["these rights,", "direct-object", "What the Governments are instituted “to secure.”"],
           ["their just powers", "direct-object", "The object of the participle “deriving.”"],
           ["Men,", "object-of-preposition"],
           ["the consent of the governed.", "object-of-preposition"],
-          ["the governed.", "object-of-preposition"],
+          ["the governed.", "object-of-preposition", "Object of the second “of.”"],
 
-          /* -- phrases -- */
+          /* -- phrases (every constituent, nested) -- */
           ["to secure these rights,", "infinitive-phrase", "Tells why Governments are instituted."],
           ["these rights,", "noun-phrase"],
           ["are instituted", "verb-phrase", "Passive voice — “are” plus the participle “instituted.”"],
@@ -1626,7 +1702,9 @@
           ["their just powers", "noun-phrase"],
           ["from the consent of the governed.", "prepositional-phrase"],
           ["the consent of the governed.", "noun-phrase"],
+          ["the consent", "noun-phrase"],
           ["of the governed.", "prepositional-phrase"],
+          ["the governed.", "noun-phrase"],
 
           /* -- clauses -- */
           ["That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed.", "independent-clause", "A single independent clause; the infinitive and participial phrases are not clauses, so the sentence is simple."],
