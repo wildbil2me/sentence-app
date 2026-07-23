@@ -154,8 +154,8 @@ body {
   color: transparent;
 }
 
-/* Ko-fi badge lives in the footer, pinned to the far left (see .appfoot). */
-.appfoot .kofi { display: inline-flex; align-items: center; order: -1; }
+/* Ko-fi badge lives in the footer, pinned to the far right (see .appfoot). */
+.appfoot .kofi { display: inline-flex; align-items: center; }
 .appfoot .kofi img { height: 36px; width: auto; border: 0; display: block; }
 
 /* With the ko-fi badge gone from the topbar, the first toggle takes over the
@@ -500,7 +500,7 @@ body {
 }
 .section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .section-head .section-title { margin-bottom: 0; }
-/* Ko-fi badge (order:-1) at the far left, version at the far right, both centered. */
+/* Version at the far left, Ko-fi badge at the far right, both centered. */
 .appfoot { display: flex; align-items: center; justify-content: space-between; padding: 24px 22px; color: var(--muted); font-size: 12px; }
 .section-sub { margin: -6px 0 12px; }
 .examples-block { margin-top: 8px; }
